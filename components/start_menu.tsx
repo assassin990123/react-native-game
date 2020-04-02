@@ -3,7 +3,7 @@ import { Dimensions ,StyleSheet, Text, View,TouchableOpacity, Platform,StatusBar
 
 /*  тут очень полезый текст */
 
-const SM = () =>  
+export const  StartMenu = () =>  
 (
 <View style={styles.container}>
 <View style={styles.header} > 
@@ -181,6 +181,6 @@ const styles = StyleSheet.create({
 
   });
 
-export default SM
+
 
 
