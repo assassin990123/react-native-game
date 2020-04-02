@@ -1,7 +1,7 @@
 import React from "react"
 import { Dimensions ,StyleSheet, Text, View,TouchableOpacity, Platform,StatusBar } from 'react-native';
 
-
+/*  тут очень полезый текст */
 
 const SM = () =>  
 (
