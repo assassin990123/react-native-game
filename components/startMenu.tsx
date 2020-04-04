@@ -1,99 +1,109 @@
-import React from "react"
+import React, { Component } from "react"
 import { Dimensions ,StyleSheet, TextInput, Text, View, TouchableOpacity, Platform, StatusBar } from 'react-native';
 
-export const StartMenu = () => {
-    return (
-        <View style = {styles.container}>
-            <View style = {styles.header}> 
-                <TouchableOpacity onPress = {handleOnPress} style = {styles.header_button}></TouchableOpacity>
-            </View>
 
+export default class StartMenu extends Component {
+    constructor(props: any) {
+        super(props);
+        
+        this.state = {
+          username: String,
+          password: String,
+        }
+    }
+
+    onClickListener = (viewId: String) => {
+        alert('Button pressed ' + viewId);
+    }
+
+    render() {
+        return (
             <View style = {styles.content}>
-                <TouchableOpacity style = {styles.contentButton1}>
-                    <Text style = {styles.logInText}>Username</Text>
-                </TouchableOpacity>
+                <View style = {styles.header}> 
+                    <TouchableOpacity onPress = {handleOnPress} style = {styles.headerButton}/>
+                </View>
+    
+                <View style = {styles.content}>
+                    <View style = {styles.inputContainer}>
+                        <TextInput style          = {styles.input}
+                            placeholder           = "Username"
+                            keyboardType          = "default"
+                            underlineColorAndroid = 'transparent'
 
-                <TouchableOpacity style = {styles.contentButton2}>
-                    <Text style = {styles.logInText}>Passwor</Text>
-                </TouchableOpacity>
+                            onChangeText = { (username) => this.setState({username}) }
+                        />
+                    </View>
 
-                <TouchableOpacity style = {styles.contentButton3}>
-                    <Text style = {styles.logInText}>Log In</Text>
-                </TouchableOpacity>
+                    <View style = {styles.inputContainer}>
+                        <TextInput style          = {styles.input}
+                            placeholder           = "Password"
+                            keyboardType          = "default"
+                            secureTextEntry       = {true}
+                            underlineColorAndroid = 'transparent'
+
+                            onChangeText = { (password) => this.setState({password}) }
+                        />
+                    </View>
+
+                    <TouchableOpacity style = {styles.contentButton}
+                                      onPress={ () => this.onClickListener('login') }>
+                        <Text style = {styles.logInText}>Log In</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style = {styles.links}>
+                    <TouchableOpacity style = {styles.socialLoginLink}></TouchableOpacity>
+                    <TouchableOpacity style = {styles.socialLoginLink}></TouchableOpacity>
+                    <TouchableOpacity style = {styles.socialLoginLink}></TouchableOpacity>
+                </View>
             </View>
-
-            <View style = {styles.links}>
-                <TouchableOpacity style = {styles.socialLoginLink1}></TouchableOpacity>
-                <TouchableOpacity style = {styles.socialLoginLink2}></TouchableOpacity>
-                <TouchableOpacity style = {styles.socialLoginLink3}></TouchableOpacity>
-            </View>
-        </View>
-    );
+        );
+    }
 }
 
 const handleOnPress = () => { console.log(1) };
-
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-    container: {
+    content: {
+        backgroundColor: '#FFFFFF',
         flex: 1,
+        // marginBottom: height / 20,
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#FFF',
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight
-                                              : 0
+        justifyContent: 'center'
     },
-    
-    header: {
-        backgroundColor: '#FFF',
+
+    input: {
+        width: width / 1.5,
+        height: height / 15,
+        marginLeft: width / 18,
+        marginRight: width / 18,
+        borderBottomColor: '#FFFFFF',
         flex: 1,
-        paddingHorizontal: width,
+    },
+
+    header: {
+        backgroundColor: '#FFFFFF',
+        flex: 1,
         top: height / 9
     },
 
-    header_button: {
+    headerButton: {
         borderWidth: 1,
         borderColor: '#FBC9FF',
         alignItems: 'center',
-        width: 100,
-        height: 100,
+        width: height / 7,
+        height: height / 7,
         backgroundColor: '#FBC9FF',
-        borderRadius: 50,
-    },
-    
-    content: {
-        backgroundColor: '#FFF',
-        flex: 2,
-        top: height / 6,
-        alignItems: 'center',
-        paddingHorizontal: width,
+        borderRadius: height,
     },
 
-    contentButton1: {
-        borderWidth: 1,
-        width: 220,
-        height: 50,
-        borderRadius: 30,
-        backgroundColor: '#FBC9FF',
-        borderColor: '#FBC9FF',
-        top: height / 6,
-    },
-  
-    contentButton2: {
-        top: 30,
-        width: 220,
-        height: 50,
-        borderRadius: 30,
-        backgroundColor: '#FBC9FF',
-        borderColor: '#FBC9FF',
-    },
-    
-    contentButton3: {
-        top: 60,
-        width: 120,
-        height: 50,
-        borderRadius: 30,
+    contentButton: {
+        zIndex: 7,
+        top: height / 60,
+        width: width / 3,
+        height: height / 15,
+        borderRadius: height,
         backgroundColor: "#FBC9FF",
         borderColor: '#FBC9FF',
         
@@ -102,50 +112,40 @@ const styles = StyleSheet.create({
     },
 
     links: {
-        zIndex: 1,
-        flex: 3,
+        flexDirection: 'row',
+        flex: 1,
         alignItems: 'center',
-        top: height / 4,
-        paddingHorizontal: width,
+        justifyContent: 'center',
+        top: height / 300,
         backgroundColor: '#FFF',
     },
 
-    socialLoginLink1: {
+    socialLoginLink: {
         zIndex: 1,
         borderWidth: 1,
         borderColor: '#FBC9FF',
-        width: 70,
-        height: 70,
+        width: height / 10,
+        height: height / 10,
         backgroundColor: '#FBC9FF',
-        borderRadius: 50,
+        borderRadius: height,
+        marginLeft: 10,
+        marginRight: 10
     },
-
-    socialLoginLink2: {
-        zIndex: 1,
-        borderWidth: 1,
-        borderColor: '#FBC9FF',
-        width: 70,
-        height: 70,
-        backgroundColor: '#FBC9FF',
-        borderRadius: 50,
-        left: 130,
-        bottom: 70
-    },
-
-    socialLoginLink3: {
-        zIndex: 1,
-        borderWidth: 1,
-        borderColor: '#FBC9FF',
-        width: 70,
-        height: 70,
-        backgroundColor: '#FBC9FF',
-        borderRadius: 50,
-        left: -130,
-        bottom: 140
-    }, 
 
     logInText: {
 
+    },
+
+    inputContainer: {
+        borderBottomColor: '#F5FCFF',
+        backgroundColor: '#FBC9FF',
+        borderRadius: height,
+        borderBottomWidth: 1,
+        width: width / 1.5,
+        height: height / 15,
+        marginBottom: 20,
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });
 
