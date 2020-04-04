@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Platform, StatusBar } from 'react-native';
-import {StartMenu} from './components/startMenu'
+import { StartMenu } from './components/startMenu'
 
 export default function App() {
   return (

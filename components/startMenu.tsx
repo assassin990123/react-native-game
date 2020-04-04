@@ -1,5 +1,5 @@
 import React from "react"
-import { Dimensions ,StyleSheet, Text, View,TouchableOpacity, Platform,StatusBar } from 'react-native';
+import { Dimensions ,StyleSheet, TextInput, Text, View, TouchableOpacity, Platform, StatusBar } from 'react-native';
 
 export const StartMenu = () => {
     return (
@@ -9,25 +9,31 @@ export const StartMenu = () => {
             </View>
 
             <View style = {styles.content}>
-                <TouchableOpacity style = {styles.contentButton1}></TouchableOpacity>
-                <TouchableOpacity style = {styles.contentButton2}></TouchableOpacity>
-                <TouchableOpacity style = {styles.contentButton3}></TouchableOpacity>
+                <TouchableOpacity style = {styles.contentButton1}>
+                    <Text style = {styles.logInText}>Username</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.contentButton2}>
+                    <Text style = {styles.logInText}>Passwor</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style = {styles.contentButton3}>
+                    <Text style = {styles.logInText}>Log In</Text>
+                </TouchableOpacity>
             </View>
 
             <View style = {styles.links}>
-                <TouchableOpacity style = {styles.linksButton1}></TouchableOpacity>
-                <TouchableOpacity style = {styles.linksButton2}></TouchableOpacity>
-                <TouchableOpacity style = {styles.linksButton3}></TouchableOpacity>
+                <TouchableOpacity style = {styles.socialLoginLink1}></TouchableOpacity>
+                <TouchableOpacity style = {styles.socialLoginLink2}></TouchableOpacity>
+                <TouchableOpacity style = {styles.socialLoginLink3}></TouchableOpacity>
             </View>
-
         </View>
     );
 }
 
 const handleOnPress = () => { console.log(1) };
 
-const screenHeight = Math.round(Dimensions.get('window').height);
-const screenWidth = Math.round(Dimensions.get('window').width);
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
@@ -42,8 +48,8 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: '#FFF',
         flex: 1,
-        paddingHorizontal: screenWidth,
-        top: screenHeight / 9
+        paddingHorizontal: width,
+        top: height / 9
     },
 
     header_button: {
@@ -59,9 +65,9 @@ const styles = StyleSheet.create({
     content: {
         backgroundColor: '#FFF',
         flex: 2,
-        top: screenHeight / 6,
+        top: height / 6,
         alignItems: 'center',
-        paddingHorizontal: screenWidth,
+        paddingHorizontal: width,
     },
 
     contentButton1: {
@@ -71,6 +77,7 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         backgroundColor: '#FBC9FF',
         borderColor: '#FBC9FF',
+        top: height / 6,
     },
   
     contentButton2: {
@@ -90,19 +97,20 @@ const styles = StyleSheet.create({
         backgroundColor: "#FBC9FF",
         borderColor: '#FBC9FF',
         
-      
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     links: {
         zIndex: 1,
         flex: 3,
         alignItems: 'center',
-        top: screenHeight / 4,
-        paddingHorizontal: screenWidth,
+        top: height / 4,
+        paddingHorizontal: width,
         backgroundColor: '#FFF',
     },
 
-    linksButton1: {
+    socialLoginLink1: {
         zIndex: 1,
         borderWidth: 1,
         borderColor: '#FBC9FF',
@@ -112,7 +120,7 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
 
-    linksButton2: {
+    socialLoginLink2: {
         zIndex: 1,
         borderWidth: 1,
         borderColor: '#FBC9FF',
@@ -124,16 +132,20 @@ const styles = StyleSheet.create({
         bottom: 70
     },
 
-    linksButton3: {
+    socialLoginLink3: {
         zIndex: 1,
         borderWidth: 1,
         borderColor: '#FBC9FF',
         width: 70,
         height: 70,
         backgroundColor: '#FBC9FF',
-        borderRadius:5 0,
+        borderRadius: 50,
         left: -130,
         bottom: 140
+    }, 
+
+    logInText: {
+
     }
 });
 
