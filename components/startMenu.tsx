@@ -65,10 +65,14 @@ export default class StartMenu extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
+const colorSpectrum = {
+    white: '#ffffff',
+    pink:  '#FBC9FF'
+}
 
 const styles = StyleSheet.create({
     content: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colorSpectrum.white,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
@@ -79,25 +83,25 @@ const styles = StyleSheet.create({
         height: height / 15,
         marginLeft: width / 18,
         marginRight: width / 18,
-        borderBottomColor: '#FFFFFF',
+        borderBottomColor: colorSpectrum.white,
         flex: 1,
 
         fontSize: height / 50
     },
 
     header: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colorSpectrum.white,
         flex: 1,
         top: height / 9
     },
 
     headerButton: {
         borderWidth: 1,
-        borderColor: '#FBC9FF',
+        borderColor: colorSpectrum.pink,
         alignItems: 'center',
         width: height / 7,
         height: height / 7,
-        backgroundColor: '#FBC9FF',
+        backgroundColor: colorSpectrum.pink,
         borderRadius: height,
     },
 
@@ -107,8 +111,8 @@ const styles = StyleSheet.create({
         width: width / 3,
         height: height / 15,
         borderRadius: height,
-        backgroundColor: "#FBC9FF",
-        borderColor: '#FBC9FF',
+        backgroundColor: colorSpectrum.pink,
+        borderColor: colorSpectrum.pink,
         
         justifyContent: 'center',
         alignItems: 'center'
@@ -120,16 +124,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         top: height / 300,
-        backgroundColor: '#FFF',
+        backgroundColor: colorSpectrum.white,
     },
 
     socialLoginLink: {
         zIndex: 1,
         borderWidth: 1,
-        borderColor: '#FBC9FF',
+        borderColor: colorSpectrum.pink,
         width: height / 10,
         height: height / 10,
-        backgroundColor: '#FBC9FF',
+        backgroundColor: colorSpectrum.pink,
         borderRadius: height,
         marginLeft: 10,
         marginRight: 10
@@ -140,8 +144,8 @@ const styles = StyleSheet.create({
     },
 
     inputContainer: {
-        borderBottomColor: '#F5FCFF',
-        backgroundColor: '#FBC9FF',
+        borderBottomColor: colorSpectrum.pink,
+        backgroundColor: colorSpectrum.pink,
         borderRadius: height,
         borderBottomWidth: 1,
         width: width / 1.5,
