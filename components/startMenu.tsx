@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { Dimensions ,StyleSheet, TextInput, Text, View, TouchableOpacity, Platform, StatusBar } from 'react-native';
+import { Dimensions ,StyleSheet, TextInput, Text, View, TouchableOpacity } from 'react-native';
 
 
 export default class StartMenu extends Component {
@@ -12,7 +12,7 @@ export default class StartMenu extends Component {
         }
     }
 
-    onClickListener = (viewId: String) => {
+    onClickHandler = (viewId: String) => {
         alert('Button pressed ' + viewId);
     }
 
@@ -20,7 +20,7 @@ export default class StartMenu extends Component {
         return (
             <View style = {styles.content}>
                 <View style = {styles.header}> 
-                    <TouchableOpacity onPress = {handleOnPress} style = {styles.headerButton}/>
+                    <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } style = {styles.headerButton}/>
                 </View>
     
                 <View style = {styles.content}>
@@ -30,8 +30,7 @@ export default class StartMenu extends Component {
                             keyboardType          = "default"
                             underlineColorAndroid = 'transparent'
 
-                            onChangeText = { (username) => this.setState({username}) }
-                        />
+                            onChangeText = { (username) => this.setState({username}) } />
                     </View>
 
                     <View style = {styles.inputContainer}>
@@ -41,34 +40,36 @@ export default class StartMenu extends Component {
                             secureTextEntry       = {true}
                             underlineColorAndroid = 'transparent'
 
-                            onChangeText = { (password) => this.setState({password}) }
-                        />
+                            onChangeText = { (password) => this.setState({password}) } />
                     </View>
 
                     <TouchableOpacity style = {styles.contentButton}
-                                      onPress={ () => this.onClickListener('login') }>
+                                      onPress={ () => this.onClickHandler('login') }>
                         <Text style = {styles.logInText}>Log In</Text>
                     </TouchableOpacity>
                 </View>
 
                 <View style = {styles.links}>
-                    <TouchableOpacity style = {styles.socialLoginLink}></TouchableOpacity>
-                    <TouchableOpacity style = {styles.socialLoginLink}></TouchableOpacity>
-                    <TouchableOpacity style = {styles.socialLoginLink}></TouchableOpacity>
+                    <TouchableOpacity style   = {styles.socialLoginLink}
+                                      onPress = { () => this.onClickHandler('login') }/>
+                   
+                    <TouchableOpacity style   = {styles.socialLoginLink}
+                                      onPress = { () => this.onClickHandler('login') }/>
+
+                    <TouchableOpacity style   = {styles.socialLoginLink}
+                                      onPress = { () => this.onClickHandler('login') } />
                 </View>
             </View>
         );
     }
 }
 
-const handleOnPress = () => { console.log(1) };
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     content: {
         backgroundColor: '#FFFFFF',
         flex: 1,
-        // marginBottom: height / 20,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -80,6 +81,8 @@ const styles = StyleSheet.create({
         marginRight: width / 18,
         borderBottomColor: '#FFFFFF',
         flex: 1,
+
+        fontSize: height / 50
     },
 
     header: {
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
     },
 
     logInText: {
-
+        fontSize: height / 50
     },
 
     inputContainer: {
