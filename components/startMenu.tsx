@@ -35,25 +35,25 @@ export default class StartMenu extends Component {
 
                     <View style = {styles.inputContainer}>
                         <TextInput style          = {styles.input}
-                            placeholder           = "Username"
-                            keyboardType          = "default"
-                            underlineColorAndroid = 'transparent'
+                                   placeholder           = "Username"
+                                   keyboardType          = "default"
+                                   underlineColorAndroid = 'transparent'
 
-                            onChangeText = { (username) => this.setState({username}) } />
+                                   onChangeText = { (username) => this.setState({username}) } />
                     </View>
 
                     <View style = {styles.inputContainer}>
-                        <TextInput style          = {styles.input}
-                            placeholder           = "Password"
-                            keyboardType          = "default"
-                            secureTextEntry       = {true}
-                            underlineColorAndroid = 'transparent'
+                        <TextInput style                 = {styles.input}
+                                   placeholder           = "Password"
+                                   keyboardType          = "default"
+                                   secureTextEntry       = {true}
+                                   underlineColorAndroid = 'transparent'
 
-                            onChangeText = { (password) => this.setState({password}) } />
+                                   onChangeText = { (password) => this.setState({password}) } />
                     </View>
 
-                    <TouchableOpacity style = {styles.contentButton}
-                                      onPress={ () => this.onClickHandler('login') }>
+                    <TouchableOpacity style   = {styles.contentButton}
+                                      onPress = { () => this.onClickHandler('login') }>
                         <Text style = {styles.logInText}>Log In</Text>
                     </TouchableOpacity>
                 </View>
