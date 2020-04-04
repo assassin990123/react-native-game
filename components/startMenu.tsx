@@ -1,6 +1,11 @@
 import React, { Component } from "react"
 import { Dimensions ,StyleSheet, TextInput, Text, View, TouchableOpacity } from 'react-native';
 
+/*
+*
+    @brief: Authentication component.
+*
+*/
 
 export default class StartMenu extends Component {
     constructor(props: any) {
@@ -20,10 +25,14 @@ export default class StartMenu extends Component {
         return (
             <View style = {styles.content}>
                 <View style = {styles.header}> 
+                    { /* TODO: There should be logo. */ }
                     <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } style = {styles.headerButton}/>
                 </View>
-    
+
                 <View style = {styles.content}>
+
+                    { /* Login panel. */ }
+
                     <View style = {styles.inputContainer}>
                         <TextInput style          = {styles.input}
                             placeholder           = "Username"
@@ -50,6 +59,9 @@ export default class StartMenu extends Component {
                 </View>
 
                 <View style = {styles.links}>
+
+                    { /* Login usin' soical media. */ }
+
                     <TouchableOpacity style   = {styles.socialLoginLink}
                                       onPress = { () => this.onClickHandler('login') }/>
                    
