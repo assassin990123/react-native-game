@@ -4,10 +4,6 @@ import {StartMenu} from './components/start_menu'
 
 export default function App() {
   return (
-  
     <StartMenu/>
-  )
-  }
-
-
-
+  );
+}
