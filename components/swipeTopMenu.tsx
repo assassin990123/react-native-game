@@ -3,8 +3,14 @@ import {View,Text,StyleSheet,Animated,TouchableNativeFeedback,Image} from 'react
 import {AntDesign,Entypo} from "@expo/vector-icons"
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
+/*
+    * Поправь код нейминг, а именно pin1 и тд. 
+      Тк сейчас не понятно какой пин за что отвечает
+*/
+
 export default class SwipeTopMenu extends Component {
     animation = new Animated.Value(0)
+    private open: boolean = true // idk нужно ли это или нет, но старнно что этого нет, тк ниже есть проверки на откртость меню
 
     toggleMenu = () => 
     {
@@ -12,85 +18,84 @@ export default class SwipeTopMenu extends Component {
         Animated.spring(this.animation,
             {toValue,
         friction:5}).start()
-      this.open=!this.open  
+
+        // FIXME (glazunov): for what?
+          this.open=!this.open 
     };
     
+    private pinStyleConsrtuctor = (newOutputRange: [number, number]) => {
+        return([ { scale: this.animation },
+                 { translateY: this.animation.interpolate({inputRange:[0,1],outputRange:newOutputRange}) } ])       
+    }
+
     render()
     {
-    const pinStyle=
+    const pinStyle = { transform : this.pinStyleConsrtuctor([0, -90])}
+    //     transform:
+    // [
+    //     {scale:this.animation},
+    //     {
+    //         translateY:this.animation.interpolate
+    //         (
+    //             {inputRange:[0,1],outputRange:[0,-90]}
+    //         )
+    //     }
+    // ]
+    //}
+    const pinStyle1 = { transform:  this.pinStyleConsrtuctor([0, -180])}
+    // [
+    //     {scale:this.animation},
+    //     {
+    //         translateY:this.animation.interpolate
+    //         (
+    //             {inputRange:[0,1],outputRange:[0,-180]}
+    //         )
+    //     }
+    // ]
+    // }
+    const pinStyle2 = { transform:  this.pinStyleConsrtuctor([0, -270])}
+    // [
+    //     {scale:this.animation},
+    //     {
+    //         translateY:this.animation.interpolate
+    //         (
+    //             {inputRange:[0,1],outputRange:[0,-270]}
+    //         )
+    //     }
+    // ]
+    // }
+    const pinStyle3 = { transform:  this.pinStyleConsrtuctor([0, -360])}
+    // [
+    //     {scale:this.animation},
+    //     {
+    //         translateY:this.animation.interpolate
+    //         (
+    //             {inputRange:[0,1],outputRange:[0,-360]}
+    //         )
+    //     }
+    // ]
+    // }
+    const pinStyle4 = { transform:  this.pinStyleConsrtuctor([0, -450])}
+    // [
+    //     {scale:this.animation},
+    //     {
+    //         translateY:this.animation.interpolate
+    //         (
+    //             {inputRange:[0,1],outputRange:[0,-450]}
+    //         )
+    //     }
+    // ]
+    // }
+
+    const rotation =
     {
-        transform:
-    [
-        {scale:this.animation},
-        {
-            translateY:this.animation.interpolate
-            (
-                {inputRange:[0,1],outputRange:[0,-90]}
-            )
-        }
-    ]
-    }
-    const pinStyle1=
-    {
-        transform:
-    [
-        {scale:this.animation},
-        {
-            translateY:this.animation.interpolate
-            (
-                {inputRange:[0,1],outputRange:[0,-180]}
-            )
-        }
-    ]
-    }
-    const pinStyle2=
-    {
-        transform:
-    [
-        {scale:this.animation},
-        {
-            translateY:this.animation.interpolate
-            (
-                {inputRange:[0,1],outputRange:[0,-270]}
-            )
-        }
-    ]
-    }
-    const pinStyle3=
-    {
-        transform:
-    [
-        {scale:this.animation},
-        {
-            translateY:this.animation.interpolate
-            (
-                {inputRange:[0,1],outputRange:[0,-360]}
-            )
-        }
-    ]
-    }
-    const pinStyle4=
-    {
-        transform:
-    [
-        {scale:this.animation},
-        {
-            translateY:this.animation.interpolate
-            (
-                {inputRange:[0,1],outputRange:[0,-450]}
-            )
-        }
-    ]
-    }
-    const rotation=
-     {
      transform:[{rotate:this.animation.interpolate(
                     { inputRange:[0,1],outputRange:["0deg","180deg"]}  )         
                          
                 }
                  
              ]  
-     }
+    }
 
             return(
                 <View style={styles.container}>
@@ -135,34 +140,34 @@ export default class SwipeTopMenu extends Component {
 const styles = StyleSheet.create
 (
     {
-        container:
-        {
-            left:150,
-            position:'absolute',
-            alignItems:'center',
-            bottom:110,
+        container: {
+            left:        150,
+            position:   'absolute',
+            alignItems: 'center',
+            bottom:      110,
         },
-        button:{
-           position:"absolute",
-            width:100,
-            height:100,
-            borderRadius:100/2,
-            alignItems:"center",
-            justifyContent:'center',
-            shadowRadius:10,
-            shadowColor:"#F02A4B",
-            shadowOpacity:0.3,
+
+        button: {
+            position:        'absolute',
+            width:           100,
+            height:          100,
+            borderRadius:    100/2,
+            alignItems:     'center',
+            justifyContent: 'center',
+            shadowRadius:    10,
+            shadowColor:    '#F02A4B',
+            shadowOpacity:   0.3,
         },
-        menu:
-        {
+        
+        menu: {
             backgroundColor:"#EE8AF0",
         },
-        secondary:
-        {
-            width:80,
-            height:80,
-            borderRadius:80/2,
-            backgroundColor:"#EE8AF0",
+        
+        secondary: {
+            width:           80,
+            height:          80,
+            borderRadius:    80/2,
+            backgroundColor: "#EE8AF0",
         }
     }
 )
