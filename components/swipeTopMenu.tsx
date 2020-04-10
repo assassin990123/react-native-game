@@ -23,14 +23,14 @@ export default class SwipeTopMenu extends Component {
           this.open=!this.open 
     };
     
-    private pinStyleConsrtuctor = (newOutputRange: [number, number]) => {
+    private _pinStyleConsrtuctor = (newInputRange: [number, number], newOutputRange: [number, number]) => {
         return([ { scale: this.animation },
-                 { translateY: this.animation.interpolate({inputRange:[0,1],outputRange:newOutputRange}) } ])       
+                 { translateY: this.animation.interpolate({inputRange:newInputRange, outputRange:newOutputRange}) } ])       
     }
 
     render()
     {
-    const pinStyle = { transform : this.pinStyleConsrtuctor([0, -90])}
+    const pinStyle = { transform : this._pinStyleConsrtuctor([0, 1], [0, -90])}
     //     transform:
     // [
     //     {scale:this.animation},
@@ -42,7 +42,7 @@ export default class SwipeTopMenu extends Component {
     //     }
     // ]
     //}
-    const pinStyle1 = { transform:  this.pinStyleConsrtuctor([0, -180])}
+    const pinStyle1 = { transform:  this._pinStyleConsrtuctor([0, 1], [0, -180])}
     // [
     //     {scale:this.animation},
     //     {
@@ -53,7 +53,7 @@ export default class SwipeTopMenu extends Component {
     //     }
     // ]
     // }
-    const pinStyle2 = { transform:  this.pinStyleConsrtuctor([0, -270])}
+    const pinStyle2 = { transform:  this._pinStyleConsrtuctor([0, 1], [0, -270])}
     // [
     //     {scale:this.animation},
     //     {
@@ -64,7 +64,7 @@ export default class SwipeTopMenu extends Component {
     //     }
     // ]
     // }
-    const pinStyle3 = { transform:  this.pinStyleConsrtuctor([0, -360])}
+    const pinStyle3 = { transform:  this._pinStyleConsrtuctor([0, 1], [0, -360])}
     // [
     //     {scale:this.animation},
     //     {
@@ -75,7 +75,7 @@ export default class SwipeTopMenu extends Component {
     //     }
     // ]
     // }
-    const pinStyle4 = { transform:  this.pinStyleConsrtuctor([0, -450])}
+    const pinStyle4 = { transform:  this._pinStyleConsrtuctor([0, 1], [0, -450])}
     // [
     //     {scale:this.animation},
     //     {
