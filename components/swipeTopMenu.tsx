@@ -31,61 +31,11 @@ export default class SwipeTopMenu extends Component {
     render()
     {
     const pinStyle = { transform : this._pinStyleConsrtuctor([0, 1], [0, -90])}
-    //     transform:
-    // [
-    //     {scale:this.animation},
-    //     {
-    //         translateY:this.animation.interpolate
-    //         (
-    //             {inputRange:[0,1],outputRange:[0,-90]}
-    //         )
-    //     }
-    // ]
-    //}
     const pinStyle1 = { transform:  this._pinStyleConsrtuctor([0, 1], [0, -180])}
-    // [
-    //     {scale:this.animation},
-    //     {
-    //         translateY:this.animation.interpolate
-    //         (
-    //             {inputRange:[0,1],outputRange:[0,-180]}
-    //         )
-    //     }
-    // ]
-    // }
     const pinStyle2 = { transform:  this._pinStyleConsrtuctor([0, 1], [0, -270])}
-    // [
-    //     {scale:this.animation},
-    //     {
-    //         translateY:this.animation.interpolate
-    //         (
-    //             {inputRange:[0,1],outputRange:[0,-270]}
-    //         )
-    //     }
-    // ]
-    // }
     const pinStyle3 = { transform:  this._pinStyleConsrtuctor([0, 1], [0, -360])}
-    // [
-    //     {scale:this.animation},
-    //     {
-    //         translateY:this.animation.interpolate
-    //         (
-    //             {inputRange:[0,1],outputRange:[0,-360]}
-    //         )
-    //     }
-    // ]
-    // }
     const pinStyle4 = { transform:  this._pinStyleConsrtuctor([0, 1], [0, -450])}
-    // [
-    //     {scale:this.animation},
-    //     {
-    //         translateY:this.animation.interpolate
-    //         (
-    //             {inputRange:[0,1],outputRange:[0,-450]}
-    //         )
-    //     }
-    // ]
-    // }
+
 
     const rotation =
     {
@@ -155,12 +105,12 @@ const styles = StyleSheet.create
             alignItems:     'center',
             justifyContent: 'center',
             shadowRadius:    10,
-            shadowColor:    '#F02A4B',
+            shadowColor:    '#FFF',
             shadowOpacity:   0.3,
         },
         
         menu: {
-            backgroundColor:"#EE8AF0",
+            backgroundColor:"#FFF",
         },
         
         secondary: {
