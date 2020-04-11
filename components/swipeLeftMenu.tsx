@@ -87,7 +87,7 @@ const styles = StyleSheet.create
         },
         
         menu: {
-            backgroundColor:"#FFF",
+            
         },
         
         secondary: {
