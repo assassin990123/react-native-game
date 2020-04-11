@@ -4,10 +4,7 @@ import StartMenu from './components/startMenu';
 import SwipeTopMenu from './components/swipeTopMenu';
 
 export default function App() {
-  return (
- 
-     <SwipeTopMenu />
-     
-    
+  return ( 
+    < SwipeTopMenu />
   );
 }
