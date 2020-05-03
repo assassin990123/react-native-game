@@ -429,6 +429,7 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+<<<<<<< HEAD
 
 # Expo
 .expo
@@ -443,3 +444,6 @@ web-build
 .env.development.local
 .env.test.local
 .env.production.local
+=======
+.expo/
+>>>>>>> 1faf58e7b84dd7504fbe80ab2119ebc81888a27c

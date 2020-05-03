@@ -1,12 +1,22 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "jsx": "react-native",
-    "lib": ["dom", "esnext"],
-    "moduleResolution": "node",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "strict": true
+      "allowSyntheticDefaultImports": true
+    , "jsx": "react-native"
+    , "lib": ["dom", "esnext"]
+    , "moduleResolution": "node"
+    , "noEmit": true
+    , "skipLibCheck": true
+    , "resolveJsonModule": true
+    , "strict": true
+    , "allowJs": false 
+    , "checkJs": false 
+    , "noUnusedLocals": true 
+    , "noUnusedParameters": true 
+    , "watch": true
+    , "charset": "utf8"
+    , "noStrictGenericChecks": false
+    , "skipDefaultLibCheck": false
+    , "preserveConstEnums": false
+    , "allowUnreachableCode": false
   }
 }
