@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         flexDirection: 'row',
         alignItems: 'center'
+        // govno 
     }
 });
 
