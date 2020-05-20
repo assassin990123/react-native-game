@@ -23,19 +23,22 @@ export default class StartMenu extends Component {
 
     render() {
         return (
+
             <View style = {styles.content}>
                 <View style = {styles.header}> 
                     { /* TODO: There should be logo. */ }
-                    <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } style = {styles.headerButton}/>
+                    <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } 
+                                      style = {styles.headerButton}/>
+                    <Text style = {styles.logoText}>PEDO</Text> 
                 </View>
 
+               
+                
                 <View style = {styles.content}>
-
                     { /* Login panel. */ }
-
                     <View style = {styles.inputContainer}>
                         <TextInput style          = {styles.input}
-                                   placeholder           = "Username"
+                                   placeholder           = "Номер телефона"
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
@@ -44,7 +47,7 @@ export default class StartMenu extends Component {
 
                     <View style = {styles.inputContainer}>
                         <TextInput style                 = {styles.input}
-                                   placeholder           = "Password"
+                                   placeholder           = "Пароль"
                                    keyboardType          = "default"
                                    secureTextEntry       = {true}
                                    underlineColorAndroid = 'transparent'
@@ -52,15 +55,29 @@ export default class StartMenu extends Component {
                                    onChangeText = { (password) => this.setState({password}) } />
                     </View>
 
-                    <TouchableOpacity style   = {styles.contentButton}
+                    <TouchableOpacity style   = {styles.logButton}
                                       onPress = { () => this.onClickHandler('login') }>
-                        <Text style = {styles.logInText}>Log In</Text>
+                        <Text style = {styles.buttonsText}>Войти</Text>
+                    </TouchableOpacity>
+                    
+                    <Text style = {styles.agitText}>У вас еще нету аккаунта в нашей потрясающей аниме игре?????</Text>
+
+                    <TouchableOpacity style   = {styles.regButton}
+                                      onPress = { () => this.onClickHandler('registration') }>
+                        <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
                     </TouchableOpacity>
                 </View>
 
-                <View style = {styles.links}>
+                <View style = {styles.donation}>
+                    <TouchableOpacity style   = {styles.donatButton}
+                                      onPress = { () => this.onClickHandler('registration') }>
+                        <Text style = {styles.donatButtonsText}>Поддержать нас!</Text>
+                    </TouchableOpacity>
+                </View>
 
-                    { /* Login usin' soical media. */ }
+              { /* <View style = {styles.links}>
+
+                   // { /* Login usin' soical media.  }
 
                     <TouchableOpacity style   = {styles.socialLoginLink}
                                       onPress = { () => this.onClickHandler('login') }/>
@@ -70,7 +87,7 @@ export default class StartMenu extends Component {
 
                     <TouchableOpacity style   = {styles.socialLoginLink}
                                       onPress = { () => this.onClickHandler('login') } />
-                </View>
+        </View>}*/}
             </View>
         );
     }
@@ -79,15 +96,29 @@ export default class StartMenu extends Component {
 const { width, height } = Dimensions.get('window');
 const colorSpectrum = {
     white: '#ffffff',
-    pink:  '#FBC9FF'
+    pink:  '#FBC9FF',
+    lightPink:  '#F57CFF',
+    darkPink: '#C19AC5',
+    alternativPink: '#B72FA9',
+    black: '#000000',
+    orange:'#FF7A00',
+    red:'#C34A08'
 }
 
 const styles = StyleSheet.create({
     content: {
         backgroundColor: colorSpectrum.white,
-        flex: 1,
+        flex: 2,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-start'
+    },
+
+    logoText: {
+        fontWeight:'bold',
+        fontSize: 50,
+        color:colorSpectrum.black,
+        flex: 1,
+        bottom: height/15
     },
 
     input: {
@@ -95,7 +126,7 @@ const styles = StyleSheet.create({
         height: height / 15,
         marginLeft: width / 18,
         marginRight: width / 18,
-        borderBottomColor: colorSpectrum.white,
+        borderBottomColor: colorSpectrum.pink,
         flex: 1,
 
         fontSize: height / 50
@@ -104,38 +135,106 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: colorSpectrum.white,
         flex: 1,
-        top: height / 9
+        top: height / 9,
+        alignItems: 'center',
+        justifyContent: 'flex-start'
     },
 
     headerButton: {
         borderWidth: 1,
         borderColor: colorSpectrum.pink,
+        borderEndWidth: 30,
+        borderBottomWidth: 30,
+        borderLeftWidth: 30,
+        borderTopWidth: 30,
+        shadowColor: colorSpectrum.black,
+        shadowOpacity: 200,
         alignItems: 'center',
         width: height / 7,
         height: height / 7,
-        backgroundColor: colorSpectrum.pink,
-        borderRadius: height,
+        backgroundColor: colorSpectrum.white,
+        borderRadius: height
     },
 
-    contentButton: {
+    logButton: {
         zIndex: 7,
-        top: height / 60,
-        width: width / 3,
-        height: height / 15,
-        borderRadius: height,
-        backgroundColor: colorSpectrum.pink,
-        borderColor: colorSpectrum.pink,
-        
+       // top: height / 60,
+        backgroundColor: colorSpectrum.lightPink,
+        borderRadius: 10,
+        borderColor: colorSpectrum.lightPink,
+        borderWidth: 1,
+        width: width / 1.2,
+        height: height / 14,
+        //marginBottom: 10,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
     },
 
-    links: {
+    regButton: {
+        zIndex: 7,
+       // top: height / 60,
+        backgroundColor: colorSpectrum.alternativPink,
+        borderRadius: 10,
+        borderColor: colorSpectrum.alternativPink,
+        borderWidth: 1,
+        width: width / 1.2,
+        height: height / 14,
+        //marginBottom: 10,
         flexDirection: 'row',
-        flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
-        top: height / 300,
+        alignItems: 'center'
+    },
+
+    donatButton:{
+        zIndex: 7,
+    // top: height / 60,
+        backgroundColor: colorSpectrum.white,
+        borderRadius: 10,
+        borderColor: colorSpectrum.orange,
+        borderWidth: 1,
+        width: width / 1.2,
+        height: height / 14,
+        //marginBottom: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    
+    donatButtonsText: {
+        fontWeight:'normal',
+        fontSize: 15,
+        color:colorSpectrum.red
+    },
+
+    buttonsText: {
+        fontWeight:'bold',
+        fontSize: 20,
+        color:colorSpectrum.white,
+        //fontFamily: 
+    },
+
+    agitText:{
+        fontWeight:'normal',
+        fontSize: 14,
+        color:colorSpectrum.alternativPink,
+        width: width / 1.2,
+        height: height / 14,
+        marginBottom: 10,
+        marginTop: 10,
+       // flexDirection: 'row',
+        //justifyContent: 'center',
+        //alignItems: 'center',
+        textAlign: 'center',
+        textAlignVertical:'center'
+    },
+
+    donation: {
+        flexDirection: 'row',
+        flex: 0.4,
+        //alignItems: 'center',
+        //justifyContent: 'center',
+        //top: height / 300,
         backgroundColor: colorSpectrum.white,
     },
 
@@ -156,15 +255,15 @@ const styles = StyleSheet.create({
     },
 
     inputContainer: {
-        borderBottomColor: colorSpectrum.pink,
-        backgroundColor: colorSpectrum.pink,
-        borderRadius: height,
-        borderBottomWidth: 1,
-        width: width / 1.5,
-        height: height / 15,
-        marginBottom: 20,
+        backgroundColor: colorSpectrum.white,
+        borderRadius: 10,
+        borderColor: colorSpectrum.darkPink,
+        borderWidth: 1,
+        width: width / 1.2,
+        height: height / 14,
+        marginBottom: 10,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'stretch'
          
     }
 });
