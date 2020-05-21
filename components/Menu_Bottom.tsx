@@ -1,86 +1,79 @@
 import React, { Component } from "react";
-import { Dimensions ,StyleSheet, Image, View, TouchableNativeFeedback  } from 'react-native';
+import { Dimensions ,StyleSheet, Image, View, TouchableOpacity } from 'react-native';
 
+/*
 
+    @brief: 
 
-export default class Menu_Bottom extends Component {
-    constructor(props:any){
+*/
+
+export default class MenuBottom extends Component {
+    constructor(props:any) {
         super(props)
-        this.state ={
-          button: true
-        }
         this.handleClick = this.handleClick.bind(this);
     }
-    handleClick=()=>{
+
+    state = { button: true };
+
+    handleClick = (): void => {
+        console.log('IDK WTF');
         this.setState({
-          button:!this.state.button
-        })
-      
-      }
-   
-    render() {
+            button: !this.state.button
+        });
+    };
+
+    render(): JSX.Element {
         return (
-        <View style={styles.BottomMenu}>
-             <View style={styles.Menu}>
-           <TouchableNativeFeedback onPress={this.handleClick}>
-                        <View style={this.state.button ? styles.Home_true:styles.Home_false}>
-                    <Image  source={require('../assets/menu/Home.png')} style={this.state.button ? styles.images_Home_true:styles.images_Home_false} />
-                       </View>
-           </TouchableNativeFeedback >
+            <View style = {styles.BottomMenu} >
+                 <View style = {styles.Menu} >
+                    <TouchableOpacity onPress = {this.handleClick} style={this.state.button ? styles.Home_true:styles.Home_false}>
+                        <Image source={require('../assets/menu/Home.png')} style={this.state.button ? styles.images_Home_true:styles.images_Home_false} />
+                    </TouchableOpacity >
 
-           
-           <TouchableNativeFeedback onPress={this.handleClick}>
-                        <View style={this.state.button ? styles.Vat_true:styles.Vat_false}>
-                     <Image  source={require('../assets/menu/Vat.png')} style={this.state.button ? styles.images_Vat_true:styles.images_Vat_false}/>
-                        </View>
-            </TouchableNativeFeedback >
-           
-           <TouchableNativeFeedback onPress={this.handleClick}>
-                         <View style={this.state.button ? styles.Cat_true:styles.Cat_false}> 
-                    <Image  source={require('../assets/menu/Cat.png')}  style={this.state.button ? styles.images_Cat_true:styles.images_Cat_false} />
-                         </View>
-           </TouchableNativeFeedback >
+                    <TouchableOpacity onPress={this.handleClick} style={this.state.button ? styles.Vat_true:styles.Vat_false}>
+                        <Image  source={require('../assets/menu/Vat.png')} style={this.state.button ? styles.images_Vat_true:styles.images_Vat_false}/>
+                    </TouchableOpacity >
+                    
+                    <TouchableOpacity onPress={this.handleClick} style={this.state.button ? styles.Cat_true:styles.Cat_false}>
+                        <Image  source={require('../assets/menu/Cat.png')}  style={this.state.button ? styles.images_Cat_true:styles.images_Cat_false} />
+                    </TouchableOpacity >
 
-           <TouchableNativeFeedback onPress={this.handleClick}>
-                        <View style={this.state.button ? styles.Hat_true:styles.Hat_false}>
-                    <Image  source={require('../assets/menu/Hat.png')}style={this.state.button ? styles.images_Hat_true:styles.images_Hat_false}  />
-                         </View>
-           </TouchableNativeFeedback >
+                    <TouchableOpacity onPress={this.handleClick} style={this.state.button ? styles.Cat_true:styles.Cat_false}>
+                        <Image  source={require('../assets/menu/Hat.png')}style={this.state.button ? styles.images_Hat_true:styles.images_Hat_false}  />
+                    </TouchableOpacity >
 
-           <TouchableNativeFeedback onPress={this.handleClick}>
-                        <View style={this.state.button ? styles.Dirt_true:styles.Dirt_false}>
-                    <Image  source={require('../assets/menu/Dirt.png') }   style={this.state.button ? styles.images_Dirt_true:styles.images_Dirt_false}/>
-                         </View>
-           </TouchableNativeFeedback >
-           
-           </View>
-        </View> 
+                    <TouchableOpacity onPress={this.handleClick} style={this.state.button ? styles.Dirt_true:styles.Dirt_false}>
+                        <Image  source={require('../assets/menu/Dirt.png') }   style={this.state.button ? styles.images_Dirt_true:styles.images_Dirt_false}/>
+                    </TouchableOpacity >
+                </View>
+            </View>
         );
     }
 }
 
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 
 const styles = StyleSheet.create({
  
     BottomMenu:
     {
-        flex:3,
-        backgroundColor:"#EE8AF0",
-        top:height/1.15,
-        borderRadius:10,
-        
-        
-        
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        width: '100%', 
+        height: 77, 
+        backgroundColor: '#EE8AF0', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        position: 'absolute',
+        top: height - 77
     },
     Menu:
     {
+        alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap', 
-        
-    
-      
     },
     images_Dirt_true:
     {
@@ -134,6 +127,29 @@ const styles = StyleSheet.create({
         tintColor:"#BD00FF",
         
     },
+
+    defaultButton: {
+        justifyContent: 'center',
+        alignItems:"center",
+        width:59,
+        height:59,
+        borderRadius:200,
+        marginLeft:15,
+        marginTop:11,
+        backgroundColor:"#EE8AF0"
+    },
+
+    pressedButton: {
+        justifyContent: 'center',
+        alignItems:"center",
+        width:59,
+        height:59,
+        borderRadius:200,
+        marginLeft:15,
+        marginTop:11,
+        backgroundColor:"rgba(251, 201, 255, 0.85)"
+    },
+
     Vat_true:
     {
         justifyContent: 'center',
