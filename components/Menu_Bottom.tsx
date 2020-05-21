@@ -43,7 +43,7 @@ export default class MenuBottom extends Component {
                     </TouchableOpacity >
 
                     <TouchableOpacity onPress={this.handleClick} style={this.state.button ? styles.defaultButton:styles.pressedButton}>
-                        <Image  source={require('../assets/menu/Dirt.png') } style={this.state.button ? styles.imageDefaultColor:styles.imagePressedColor}/>
+                        <Image  source={require('../assets/menu/Dirt.png') } style={this.state.button ? styles.imageDefaultColor:styles.imagePressedColor} />
                     </TouchableOpacity >
                 </View>
             </View>
@@ -75,32 +75,34 @@ const styles = StyleSheet.create({
     },
 
     imageDefaultColor: {
-        tintColor:"#575DF3"
+        tintColor: '#575DF3'
     },
 
     imagePressedColor: {
-        tintColor:"#BD00FF"
+        tintColor: '#BD00FF'
     },
 
     defaultButton: {
         justifyContent: 'center',
-        alignItems:"center",
-        width:59,
-        height:59,
-        borderRadius:200,
-        marginLeft:15,
-        marginTop:11,
-        backgroundColor:"#EE8AF0"
+        alignItems: 'center',
+        width: 59,
+        height: 59,
+        borderRadius: 200,
+        marginLeft: 8,
+        marginRight: 8,
+        marginTop: 15,
+        backgroundColor: '#EE8AF0'
     },
 
     pressedButton: {
         justifyContent: 'center',
-        alignItems:"center",
-        width:59,
-        height:59,
-        borderRadius:200,
-        marginLeft:15,
-        marginTop:11,
-        backgroundColor:"rgba(251, 201, 255, 0.85)"
+        alignItems: 'center',
+        width: 59,
+        height: 59,
+        borderRadius: 200,
+        marginLeft: 8,
+        marginRight: 8,
+        marginTop: 15,
+        backgroundColor: 'rgba(251, 201, 255, 0.85)'
     },
 });
