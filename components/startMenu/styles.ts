@@ -16,9 +16,11 @@ const colorSpectrum = {
 export const styles = StyleSheet.create({
     content: {
         backgroundColor: colorSpectrum.white,
-        flex: 2,
+        //flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start'
+        justifyContent: 'center',
+       // flexDirection: 'column',
+        
     },
 
     logoText: {
@@ -35,7 +37,7 @@ export const styles = StyleSheet.create({
         marginLeft: width / 18,
         marginRight: width / 18,
         borderBottomColor: colorSpectrum.pink,
-        flex: 1,
+        //flex: 1,
 
         fontSize: height / 50
     },
@@ -46,6 +48,14 @@ export const styles = StyleSheet.create({
         top: height / 9,
         alignItems: 'center',
         justifyContent: 'flex-start'
+    },
+
+    middle: {
+        backgroundColor: colorSpectrum.white,
+        flex: 2,
+        //top: height / 9,
+      //  alignItems: 'center',
+        justifyContent: 'center'
     },
 
     headerButton: {
@@ -74,10 +84,11 @@ export const styles = StyleSheet.create({
         width: width / 1.2,
         height: height / 14,
         //marginBottom: 10,
-        flexDirection: 'row',
+       // flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        fontFamily: 'Montserrat-Regular'
+        fontFamily: 'Montserrat-Regular',
+        bottom: height/8
     },
 
     regButton: {
@@ -89,6 +100,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         width: width / 1.2,
         height: height / 14,
+        bottom: height/8,
         //marginBottom: 10,
         flexDirection: 'row',
         justifyContent: 'center',
@@ -131,6 +143,7 @@ export const styles = StyleSheet.create({
         height: height / 14,
         marginBottom: 10,
         marginTop: 10,
+        bottom: height/8,
        // flexDirection: 'row',
         //justifyContent: 'center',
         //alignItems: 'center',
@@ -140,7 +153,7 @@ export const styles = StyleSheet.create({
 
     donation: {
         flexDirection: 'row',
-        flex: 0.4,
+        flex: 0.3,
         //alignItems: 'center',
         //justifyContent: 'center',
         //top: height / 300,
@@ -171,8 +184,9 @@ export const styles = StyleSheet.create({
         width: width / 1.2,
         height: height / 14,
         marginBottom: 10,
-        flexDirection: 'row',
-        alignItems: 'stretch'
+        //bottom: height/7
+        //flexDirection: 'row',
+        //alignItems: 'stretch'
          
     }
 });

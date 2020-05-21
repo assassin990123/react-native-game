@@ -11,13 +11,17 @@ import { styles } from './styles';
 *
 */
 
-export default class StartMenu extends Component {
+export default class RegistrationMenu extends Component {
     constructor(props: any) {
         super(props);
         
         this.state = {
+          phone: String,
           username: String,
           password: String,
+          repPassword: String,
+          smsKode: String,
+
         }
 
         this.state = {
@@ -47,11 +51,9 @@ export default class StartMenu extends Component {
         <KeyboardAvoidingView
             behavior={'padding'}
             style={styles.content}
-          >
-
-
+        >
             <View style = {styles.content}>
-                           
+                
                 <View style = {styles.header}> 
                     { /* TODO: There should be logo. */ }
                     <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } 
@@ -59,6 +61,7 @@ export default class StartMenu extends Component {
                     <Text style = {styles.logoText}>PEDO</Text> 
                 </View>
 
+               
                 <View style = {styles.content}>
                     { /* Login panel. */ }
                     <View style = {styles.inputContainer}>
@@ -67,11 +70,20 @@ export default class StartMenu extends Component {
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (username) => this.setState({username}) } />
+                                   onChangeText = { (phone) => this.setState({phone}) } />
                     </View>
 
                     <View style = {styles.inputContainer}>
                         <TextInput style                 = {styles.input}
+                                   placeholder           = "Имя пользователя"
+                                   keyboardType          = "default"
+                                   underlineColorAndroid = 'transparent'
+
+                                   onChangeText = { (username) => this.setState({username}) } />
+                    </View>
+        
+                    <View style = {styles.inputContainer}>
+                        <TextInput style          = {styles.input}
                                    placeholder           = "Пароль"
                                    keyboardType          = "default"
                                    secureTextEntry       = {true}
@@ -80,42 +92,35 @@ export default class StartMenu extends Component {
                                    onChangeText = { (password) => this.setState({password}) } />
                     </View>
 
-                    <TouchableOpacity style   = {styles.logButton}
-                                      onPress = { () => this.onClickHandler('login') }>
-                        <Text style = {styles.buttonsText}>Войти</Text>
-                    </TouchableOpacity>
-                    
-                    <Text style = {styles.agitText}>У вас еще нету аккаунта в нашей потрясающей аниме игре?????</Text>
+                    <View style = {styles.inputContainer}>
+                        <TextInput style                 = {styles.input}
+                                   placeholder           = "Повторите пароль"
+                                   keyboardType          = "default"
+                                   secureTextEntry       = {true}
+                                   underlineColorAndroid = 'transparent'
 
-                    <TouchableOpacity style   = {styles.regButton}
-                                      onPress = { () => this.onClickHandler('registration') }>
-                        <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
-                    </TouchableOpacity>
+                                   onChangeText = { (repPassword) => this.setState({repPassword}) } />
+                    </View>
+
+                    <View style = {styles.inputContainer}>
+                        <TextInput style                 = {styles.input}
+                                   placeholder           = "Код подтверждения из СМС"
+                                   keyboardType          = "default"
+                                   underlineColorAndroid = 'transparent'
+
+                                   onChangeText = { (smsKode) => this.setState({smsKode}) } />
+                    </View>
                 </View>
 
-                <View style = {styles.donation}>
-                    <TouchableOpacity style   = {styles.donatButton}
-                                      onPress = { () => this.onClickHandler('patrion') }>
-                        <Text style = {styles.donatButtonsText}>Поддержать нас!</Text>
+                    <TouchableOpacity style   = {styles.continueButton}
+                                      onPress = { () => this.onClickHandler('continue') }>
+                        <Text style = {styles.buttonsText}>Продолжить</Text>
                     </TouchableOpacity>
-                </View>
 
-              { /* <View style = {styles.links}>
 
-                   // { /* Login usin' soical media.  }
 
-                    <TouchableOpacity style   = {styles.socialLoginLink}
-                                      onPress = { () => this.onClickHandler('login') }/>
-                   
-                    <TouchableOpacity style   = {styles.socialLoginLink}
-                                      onPress = { () => this.onClickHandler('login') }/>
-
-                    <TouchableOpacity style   = {styles.socialLoginLink}
-                                      onPress = { () => this.onClickHandler('login') } />
-        </View>}*/}
             </View>
-        </KeyboardAvoidingView>
-        );
+       </KeyboardAvoidingView>
+      );
     }
 }
-
