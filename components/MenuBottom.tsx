@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions ,StyleSheet, Image, View, TouchableOpacity, TouchableOpacityBase } from 'react-native';
+import { Dimensions ,StyleSheet, Image, View, TouchableOpacity } from 'react-native';
 
 /*
 *
@@ -16,58 +16,39 @@ export default class MenuBottom extends Component {
     state = { button: true };
 
     handleClick = (icon: any): void => {
-        console.log(this.icons)
-
-        this.icons.cat.pressed  = false;
-        this.icons.vat.pressed  = false;
-        this.icons.hat.pressed  = false;
-        this.icons.home.pressed = false;
-        this.icons.dirt.pressed = false;
+        
+        this._icons.cat.pressed  = false;
+        this._icons.vat.pressed  = false;
+        this._icons.hat.pressed  = false;
+        this._icons.home.pressed = false;
+        this._icons.dirt.pressed = false;
 
         icon.pressed = true;
 
         this.forceUpdate();
     };
 
-    icons = { home : { link: require('../assets/menu/Home.png'), pressed: true },
+    _icons = { home : { link: require('../assets/menu/Home.png'), pressed: true },
               vat  : { link: require('../assets/menu/Vat.png'),  pressed: false },
               cat  : { link: require('../assets/menu/Cat.png'),  pressed: false },
               hat  : { link: require('../assets/menu/Hat.png'),  pressed: false },
               dirt : { link: require('../assets/menu/Dirt.png'), pressed: false } };
 
     render(): JSX.Element {
+        let iconsArray: JSX.Element[] = [];
+
+        for (let [, value] of Object.entries(this._icons)) {
+            iconsArray.push(<TouchableOpacity onPress={() => {this.handleClick(value)}} 
+                                          style={value.pressed ? styles.pressedButton:styles.defaultButton}>
+                            <Image  source={value.link} 
+                                    style={value.pressed ? styles.imageDefaultColor:styles.imagePressedColor} />
+                        </TouchableOpacity>);
+        }
+
         return (
             <View style = {styles.BottomMenu} >
                  <View style = {styles.Menu} >
-                    <TouchableOpacity onPress = {() => {this.handleClick(this.icons.home)}} 
-                                      style={this.icons.home.pressed ? styles.pressedButton:styles.defaultButton}>
-                        <Image  source={this.icons.home.link} 
-                                style={this.icons.home.pressed ? styles.imageDefaultColor:styles.imagePressedColor} />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => {this.handleClick(this.icons.vat)}} 
-                                      style={this.icons.vat.pressed ? styles.pressedButton:styles.defaultButton}>
-                        <Image  source={this.icons.vat.link} 
-                                style={this.icons.vat.pressed ? styles.imageDefaultColor:styles.imagePressedColor}/>
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity onPress={() => {this.handleClick(this.icons.cat)}} 
-                                      style={this.icons.cat.pressed ? styles.pressedButton:styles.defaultButton}>
-                        <Image  source={this.icons.cat.link} 
-                                style={this.icons.cat.pressed ? styles.imageDefaultColor:styles.imagePressedColor} />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => {this.handleClick(this.icons.hat)}} 
-                                      style={this.icons.hat.pressed ? styles.pressedButton:styles.defaultButton}>
-                        <Image  source={this.icons.hat.link} 
-                                style={this.icons.hat.pressed ? styles.imageDefaultColor:styles.imagePressedColor} />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => {this.handleClick(this.icons.dirt)}} 
-                                      style={this.icons.dirt.pressed ? styles.pressedButton:styles.defaultButton}>
-                        <Image  source={this.icons.dirt.link} 
-                                style={this.icons.dirt.pressed ? styles.imageDefaultColor:styles.imagePressedColor} />
-                    </TouchableOpacity>
+                    { iconsArray }
                 </View>
             </View>
         );
