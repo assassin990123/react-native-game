@@ -111,11 +111,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '15%',
-        height: '85%',
+        height: '90%',
         borderRadius: 200,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 15,
+        marginLeft: '2%',
+        marginRight: '2%',
+        marginTop: '1%',
         backgroundColor: '#EE8AF0'
     },
 
@@ -123,11 +123,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '15%',
-        height: '85%',
+        height: '90%',
         borderRadius: 100,
-        marginLeft: 10,
-        marginRight: 10,
-        marginTop: 15,
+        marginLeft: '2%',
+        marginRight: '2%',
+        marginTop: '1%',
         backgroundColor: 'rgba(251, 201, 255, 0.85)'
     },
 });
