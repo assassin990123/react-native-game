@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions ,StyleSheet, Image, View, TouchableOpacity, Alert } from 'react-native';
+import { Dimensions ,StyleSheet, Image, View, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
 /*
 *
@@ -17,13 +17,31 @@ export default class MenuBottom extends Component {
 
     _handlers: any[] = [];
 
-    handleClick = (icon: any): void => {
-        for (let [, value] of Object.entries(this._icons)) {
+    findIndex = (name: string): number => {
+        let i: number = 0;
+        for (let [key, ] of Object.entries(this._icons)) {
+            if (key === name) {
+                return parseInt(i.toString());
+            }
+            
+            i += 1;
+        }
+
+        return -1;
+    }
+
+    handleClick = (icon: string): void => {
+        for (let [key, value] of Object.entries(this._icons)) {
             value.pressed = false;
+            
+            if (key === icon) {
+                value.pressed = true;
+            }
         }
         
-        // TODO(andrew): find icon index + call _hanlder[index](...);
-
+        this._handlers[this.findIndex(icon)]();
+        
+        
         this.forceUpdate();
     };
 
@@ -44,7 +62,7 @@ export default class MenuBottom extends Component {
                             </TouchableOpacity>);
             
             this._handlers.push(() => {
-                Alert.alert('Hanlder of icon');
+                console.log('okkkkkkkkkkkkk');
             });
         }
 
