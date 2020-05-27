@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
     defaultButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 59,
-        height: 59,
+        width: '15%',
+        height: '85%',
         borderRadius: 200,
         marginLeft: 10,
         marginRight: 10,
@@ -122,9 +122,9 @@ const styles = StyleSheet.create({
     pressedButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 59,
-        height: 59,
-        borderRadius: 200,
+        width: '15%',
+        height: '85%',
+        borderRadius: 100,
         marginLeft: 10,
         marginRight: 10,
         marginTop: 15,
