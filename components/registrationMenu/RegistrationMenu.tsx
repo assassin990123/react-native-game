@@ -61,8 +61,6 @@ export default class RegistrationMenu extends Component {
                     <Text style = {styles.logoText}>PEDO</Text> 
                 </View>
 
-               
-                <View style = {styles.content}>
                     { /* Login panel. */ }
                     <View style = {styles.inputContainer}>
                         <TextInput style          = {styles.input}
@@ -110,15 +108,11 @@ export default class RegistrationMenu extends Component {
 
                                    onChangeText = { (smsKode) => this.setState({smsKode}) } />
                     </View>
-                </View>
-
+            
                     <TouchableOpacity style   = {styles.continueButton}
                                       onPress = { () => this.onClickHandler('continue') }>
                         <Text style = {styles.buttonsText}>Продолжить</Text>
                     </TouchableOpacity>
-
-
-
             </View>
        </KeyboardAvoidingView>
       );

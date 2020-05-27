@@ -16,18 +16,18 @@ const colorSpectrum = {
 export const styles = StyleSheet.create({
     content: {
         backgroundColor: colorSpectrum.white,
-        //flex: 1,
+        flex: 0,
         alignItems: 'center',
         justifyContent: 'center',
        // flexDirection: 'column',
-        
+       // top:10
     },
 
     logoText: {
         fontWeight:'bold',
         fontSize: 50,
         color:colorSpectrum.black,
-        flex: 1,
+       // flex: 1,
         bottom: height/15
     },
 
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
         marginLeft: width / 18,
         marginRight: width / 18,
         borderBottomColor: colorSpectrum.pink,
-        //flex: 1,
+       // flex: 2,
 
         fontSize: height / 50
     },
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
 
     middle: {
         backgroundColor: colorSpectrum.white,
-        flex: 2,
+        //flex: 2,
         //top: height / 9,
       //  alignItems: 'center',
         justifyContent: 'center'
@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
     },
 
     logButton: {
-        zIndex: 7,
+        //zIndex: 7,
        // top: height / 60,
         backgroundColor: colorSpectrum.lightPink,
         borderRadius: 10,
@@ -184,7 +184,7 @@ export const styles = StyleSheet.create({
         width: width / 1.2,
         height: height / 14,
         marginBottom: 10,
-        //bottom: height/7
+        bottom: height/7
         //flexDirection: 'row',
         //alignItems: 'stretch'
          

@@ -59,7 +59,7 @@ export default class StartMenu extends Component {
                     <Text style = {styles.logoText}>PEDO</Text> 
                 </View>
 
-                <View style = {styles.content}>
+              
                     { /* Login panel. */ }
                     <View style = {styles.inputContainer}>
                         <TextInput style          = {styles.input}
@@ -79,7 +79,7 @@ export default class StartMenu extends Component {
 
                                    onChangeText = { (password) => this.setState({password}) } />
                     </View>
-
+                
                     <TouchableOpacity style   = {styles.logButton}
                                       onPress = { () => this.onClickHandler('login') }>
                         <Text style = {styles.buttonsText}>Войти</Text>
@@ -91,8 +91,7 @@ export default class StartMenu extends Component {
                                       onPress = { () => this.onClickHandler('registration') }>
                         <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
                     </TouchableOpacity>
-                </View>
-
+                    
                 <View style = {styles.donation}>
                     <TouchableOpacity style   = {styles.donatButton}
                                       onPress = { () => this.onClickHandler('patrion') }>

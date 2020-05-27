@@ -15,10 +15,10 @@ const colorSpectrum = {
 export const styles = StyleSheet.create({
     content: {
         backgroundColor: colorSpectrum.white,
-        flex: 2,
+        flex: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        top: height/7
+      //  top: height/7
     },
 
     header: {
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
     
     continueButton: {
         zIndex: 7,
-        top: height / 1.7,
+       // top: height / 1.7,
         backgroundColor: colorSpectrum.alternativPink,
         borderRadius: 10,
         borderColor: colorSpectrum.alternativPink,
@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
         fontSize: 50,
         color:colorSpectrum.black,
         //flex: 1,
-        bottom: height/15
+       // bottom: height/15
     },
 
     input: {
@@ -88,7 +88,7 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
         flexDirection: 'row',
        // alignItems: 'stretch' 
-       top: height/5  
+      // top: height/5  
     },
 
     buttonsText: {
