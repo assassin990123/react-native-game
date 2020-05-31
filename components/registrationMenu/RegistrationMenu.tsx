@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image} from 'react-native';
 
 import * as Font from 'expo-font';
 
@@ -29,7 +29,7 @@ export default class RegistrationMenu extends Component {
         };
     }
 
-     componentDidMount = async() => {
+    componentDidMount = async() => {
         await Font.loadAsync({
             'Montserrat-Regular':require('../../assets/fonts/Montserrat-Regular.ttf'),
             'Montserrat-Black':require('../../assets/fonts/Montserrat-Black.ttf'),
@@ -41,6 +41,7 @@ export default class RegistrationMenu extends Component {
 
         this.setState( { fontLoaded: true } );
     }
+
 
     onClickHandler = (viewId: String) => {
         alert('Button pressed ' + viewId);
@@ -54,6 +55,13 @@ export default class RegistrationMenu extends Component {
         >
             <View style = {styles.content}>
                 
+                    
+                    <TouchableOpacity style   = {styles.backButton}
+                                      onPress = { () => {} }>
+                          <Image source={require("../../assets/arrow.png")}/>
+                       {/*   <Text style = {styles.logoText}>PEDO</Text>*/}
+                    </TouchableOpacity>
+
                 <View style = {styles.header}> 
                     { /* TODO: There should be logo. */ }
                     <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } 
@@ -99,8 +107,13 @@ export default class RegistrationMenu extends Component {
 
                                    onChangeText = { (repPassword) => this.setState({repPassword}) } />
                     </View>
+            
+                    <TouchableOpacity style   = {styles.sendButton}
+                                      onPress = { () => this.onClickHandler('continue') }>
+                        <Text style = {styles.buttonsText}>Отправить код</Text>
+                    </TouchableOpacity>
 
-                    <View style = {styles.inputContainer}>
+                    <View style = {styles.inputSmsContainer}>
                         <TextInput style                 = {styles.input}
                                    placeholder           = "Код подтверждения из СМС"
                                    keyboardType          = "default"
@@ -108,13 +121,13 @@ export default class RegistrationMenu extends Component {
 
                                    onChangeText = { (smsKode) => this.setState({smsKode}) } />
                     </View>
-            
+
                     <TouchableOpacity style   = {styles.continueButton}
                                       onPress = { () => this.onClickHandler('continue') }>
                         <Text style = {styles.buttonsText}>Продолжить</Text>
                     </TouchableOpacity>
             </View>
        </KeyboardAvoidingView>
-      );
+         );
     }
 }

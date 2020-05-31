@@ -3,6 +3,7 @@ import React from 'react';
 import RegistrationMenu from './components/registrationMenu/RegistrationMenu';
 import { View } from 'react-native';
 
+
 export default function App() {
   return (
     <View>

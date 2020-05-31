@@ -25,6 +25,7 @@ export default class StartMenu extends Component {
         };
     }
 
+
      componentDidMount = async() => {
         await Font.loadAsync({
             'Montserrat-Regular':require('../../assets/fonts/Montserrat-Regular.ttf'),
