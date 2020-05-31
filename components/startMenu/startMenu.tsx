@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+//import { useNavigation } from '@react-navigation/native';
+//import { createStackNavigator } from '@react-navigation/stack';
+//import RegistrationMenu from './components/registrationMenu/RegistrationMenu';
+
 
 import * as Font from 'expo-font';
 
 import { styles } from './styles';
+
+//const navigation=useNavigation();
 
 /*
 *
@@ -89,7 +95,7 @@ export default class StartMenu extends Component {
                     <Text style = {styles.agitText}>У вас еще нету аккаунта в нашей потрясающей аниме игре?????</Text>
 
                     <TouchableOpacity style   = {styles.regButton}
-                                      onPress = { () => this.onClickHandler('registration') }>
+                                      onPress = { () => this.onClickHandler('patrion')}>
                         <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
                     </TouchableOpacity>
                     
