@@ -51,12 +51,24 @@ export default class FirestoreAPI {
         return res;
     }
     
-    
+    getUserFields = () => {}; // mby useless.
+
+    setUserData = async (userName: string, prop: string | string[], propValue: any | any[]): Promise<boolean> => { 
+        return true;
+    }; 
+
+    addUserField = async (userName: string, props: string | string[], propBalue: any | any[]): Promise<boolean> => {
+        return true;
+    };
+
+    createUser = async (userName: string): Promise<boolean> => {
+        // TODO: md5.
+        return true;
+    }
 
     _firestore: firebase.firestore.Firestore;
 
     state = {
         isConnected: false
     };
-
 }
