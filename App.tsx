@@ -1,37 +1,21 @@
 import React, { Component } from "react";
 import StartMenu from './components/startMenu';
 
-import { firebaseConfig } from './api/ApiKeys';
-
-import * as firebase from 'firebase';
+import FirestoreAPI from './api/FirestoreAPI';
 
 export default class App extends Component {
-  constructor(props: any) {
-    super(props);
- }
+    constructor(props: any) {
+        super(props);
+    }
 
-  componentDidMount() {
-    if (! firebase.apps.length) { firebase.initializeApp(firebaseConfig); } 
-    else { console.log('wtf'); }
-    
-    let dbh = firebase.firestore(); 
+    componentDidMount() {
+        const firestore = new FirestoreAPI();
+        let res = firestore.getUsers().then( (value) => { console.log(value); });
+    }
 
-    console.log(firebase);
-    
-    dbh.collection('users_props').get()
-    .then((snapshot: any) => {
-      snapshot.forEach((doc: any) => {
-        console.log(doc.id, '=>', doc.data());
-      });
-    })
-    .catch((err: any) => {
-      console.log('Error getting documents', err);
-    });
-  }
-
-  render () {
-    return (
-      <StartMenu/>
-  );
-  }
+    render () {
+        return (
+          <StartMenu/>
+      );
+    }
 }
