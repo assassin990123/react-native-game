@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-import { firebaseConfig } from './ApiKeys';
+import { firebaseConfig } from './AFG_API_KEYS/ApiKeys';
 
 /*
 *
