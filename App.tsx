@@ -11,6 +11,8 @@ export default class App extends Component {
     componentDidMount() {
         const firestore = new FirestoreAPI();
         let res = firestore.getUsers().then( (value) => { console.log(value); });
+        firestore.setUserFields('asdfghjkl', {tes: "qwertyu", test: 'adsdasd'}).then( value => {console.log(value)} )
+        firestore.getUserFields('idkasdasdasd')
     }
 
     render () {
