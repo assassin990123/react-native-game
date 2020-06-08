@@ -42,7 +42,7 @@ export default class FirestoreAPI {
             this._firestore = firebase.firestore(); 
         } 
     }
-
+    
     public isConnected = (): boolean => { return this.state.isConnected; }
 
     private getUsers = async (): Promise<UserData[]> => {
@@ -64,7 +64,7 @@ export default class FirestoreAPI {
                 });
             })
             .catch((err: any) => { 
-                console.error('[fireStoreAPT] -> Error getting documents. Error: ' + err);
+                console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
                 return [];
             });
         
@@ -89,16 +89,16 @@ export default class FirestoreAPI {
                          eysColor:  snapData.eysColor,
                          skinColor: snapData.skinColor }
             } else {
-                console.warn('[fireStoreAPT] -> Document no exists')
+                console.warn('[fireStoreAPT] -> Warn: Document no exists')
                 return undefined;
             }
         }).catch((err) => {
-            console.error('[fireStoreAPT] -> Error getting document:', err);
+            console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
             return undefined;
         });
     }; 
 
-    public setUserFields = async (userName: string, newProps: Object): Promise<boolean> => {
+    public setUserFields = async (userName: string, newProps: Object): Promise<boolean | undefined> => {
         if ( !this.state.isConnected ) {
             return false;
         }
@@ -112,6 +112,10 @@ export default class FirestoreAPI {
             else {
                 return false;
             }
+        })
+        .catch((err: any) => {
+            console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
+            return undefined;
         });
         
         if (!isUserExist) {
@@ -148,7 +152,7 @@ export default class FirestoreAPI {
             }
         })
         .catch((err: any) => {
-            console.error('[fireStoreAPT] -> Error create document:', err)
+            console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
             return false;
         });
     }
