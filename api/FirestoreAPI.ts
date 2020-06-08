@@ -27,22 +27,25 @@ export default class FirestoreAPI {
         isConnected: false
     };
 
+    private _defaultUserProps: User = {
+        hairColor: 'black',
+        eysColor:  'pink',
+        skinColor: 'white'
+    };
+
+
     constructor() {
         if ( !firebase.apps.length ) { 
             firebase.initializeApp(firebaseConfig); 
             this.state.isConnected = true; 
+
+            this._firestore = firebase.firestore(); 
         } 
-        else { 
-            // TODO(glazynov): do it somehow ok .......
-            return;
-        }
-        
-        this._firestore = firebase.firestore(); 
     }
 
     public isConnected = (): boolean => { return this.state.isConnected; }
 
-    /*private*/ getUsers = async (): Promise<UserData[]> => {
+    private getUsers = async (): Promise<UserData[]> => {
         if ( !this.state.isConnected ) {
             return [];
         }
@@ -51,7 +54,7 @@ export default class FirestoreAPI {
 
         await this._firestore.collection(this._defaultCollectionName).get()
             .then(
-                (snapshot: any) => {
+                (snapshot: firebase.firestore.QuerySnapshot) => {
                     snapshot.forEach((doc: any) => {
                         const docData = doc.data();  // Save data.
 
@@ -89,7 +92,7 @@ export default class FirestoreAPI {
                 console.warn('[fireStoreAPT] -> Document no exists')
                 return undefined;
             }
-        }).catch(function(err) {
+        }).catch((err) => {
             console.error('[fireStoreAPT] -> Error getting document:', err);
             return undefined;
         });
@@ -137,18 +140,16 @@ export default class FirestoreAPI {
                 return false;
             }
             else {
-                const defaultUserProps: User = {
-                    hairColor: 'black',
-                    eysColor:  'pink',
-                    skinColor: 'white'
-                };
-
-                for (let [key, value] of Object.entries(defaultUserProps)) {
+                for (let [key, value] of Object.entries(this._defaultUserProps)) {
                     userPropsRef.set( { [key]: value }, {merge: true} );
                 }
 
                 return true;
             }
+        })
+        .catch((err: any) => {
+            console.error('[fireStoreAPT] -> Error create document:', err)
+            return false;
         });
     }
 }
