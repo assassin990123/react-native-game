@@ -56,11 +56,11 @@ export default class RegistrationMenu extends Component {
             <View style = {styles.content}>
                 
                     
-                    <TouchableOpacity style   = {styles.backButton}
-                                      onPress = { () => {} }>
-                          <Image source={require("../../assets/arrow.png")}/>
-                       {/*   <Text style = {styles.logoText}>PEDO</Text>*/}
-                    </TouchableOpacity>
+                <TouchableOpacity style   = {styles.backButton}
+                                    onPress = { () => {} }>
+                        <Image source={require("../../assets/arrow.png")}/>
+                    {/*   <Text style = {styles.logoText}>PEDO</Text>*/}
+                </TouchableOpacity>
 
                 <View style = {styles.header}> 
                     { /* TODO: There should be logo. */ }

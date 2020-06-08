@@ -3,6 +3,7 @@ import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView } from 'r
 //import { useNavigation } from '@react-navigation/native';
 //import { createStackNavigator } from '@react-navigation/stack';
 //import RegistrationMenu from './components/registrationMenu/RegistrationMenu';
+//import {Actions} from 'react-native-router-flux';
 
 
 import * as Font from 'expo-font';
@@ -105,20 +106,6 @@ export default class StartMenu extends Component {
                         <Text style = {styles.donatButtonsText}>Поддержать нас!</Text>
                     </TouchableOpacity>
                 </View>
-
-              { /* <View style = {styles.links}>
-
-                   // { /* Login usin' soical media.  }
-
-                    <TouchableOpacity style   = {styles.socialLoginLink}
-                                      onPress = { () => this.onClickHandler('login') }/>
-                   
-                    <TouchableOpacity style   = {styles.socialLoginLink}
-                                      onPress = { () => this.onClickHandler('login') }/>
-
-                    <TouchableOpacity style   = {styles.socialLoginLink}
-                                      onPress = { () => this.onClickHandler('login') } />
-        </View>}*/}
             </View>
         </KeyboardAvoidingView>
         );
