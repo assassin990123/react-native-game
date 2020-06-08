@@ -20,6 +20,13 @@ type UserData = {
 };
 
 export default class FirestoreAPI {
+    private _firestore: firebase.firestore.Firestore;
+    private _defaultCollectionName: string = 'users_props';
+
+    private state = {
+        isConnected: false
+    };
+
     constructor() {
         if ( !firebase.apps.length ) { 
             firebase.initializeApp(firebaseConfig); 
@@ -33,16 +40,16 @@ export default class FirestoreAPI {
         this._firestore = firebase.firestore(); 
     }
 
+    public isConnected = (): boolean => { return this.state.isConnected; }
+
     /*private*/ getUsers = async (): Promise<UserData[]> => {
         if ( !this.state.isConnected ) {
             return [];
         }
-        
-        const collectionName: string = 'users_props';
 
         let res: UserData[] = [];
 
-        await this._firestore.collection(collectionName).get()
+        await this._firestore.collection(this._defaultCollectionName).get()
             .then(
                 (snapshot: any) => {
                     snapshot.forEach((doc: any) => {
@@ -58,16 +65,17 @@ export default class FirestoreAPI {
                 return [];
             });
         
+        console.log(res);
         return res;
     }
     
-    getUserFields = async (userName: String): Promise<User | undefined> => {
+    public getUserFields = async (userName: String): Promise<User | undefined> => {
         if ( !this.state.isConnected ) {
             return undefined;
         }
 
-        let userDocRef = this._firestore.collection('users_props').doc(userName.toString());
-        await userDocRef.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
+        let userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(userName.toString());
+        return await userPropsRef.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
             if (snapshot.exists) {
                 const snapData = snapshot.data();
 
@@ -83,18 +91,29 @@ export default class FirestoreAPI {
             }
         }).catch(function(err) {
             console.error('[fireStoreAPT] -> Error getting document:', err);
+            return undefined;
         });
-
     }; 
 
-    setUserFields = async (userName: string, newProps: Object): Promise<boolean> => {
-        // @info : if user doent exists it will be created.
-
+    public setUserFields = async (userName: string, newProps: Object): Promise<boolean> => {
         if ( !this.state.isConnected ) {
             return false;
         }
 
-        let userPropsRef = this._firestore.collection('users_props').doc(userName);
+        let userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(userName);
+        
+        const isUserExist = await userPropsRef.get().then((snapshot) => {
+            if (snapshot.exists) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        });
+        
+        if (!isUserExist) {
+            return false;
+        }
 
         for (let [key, value] of Object.entries(newProps)) {
             userPropsRef.set( { [key]: value }, {merge: true} );
@@ -103,15 +122,33 @@ export default class FirestoreAPI {
         return true;
     };
 
-    createUser = async (userName: string): Promise<boolean> => {
+    public createUser = async (userName: string): Promise<boolean> => {
         // TODO: md5.
         // TODO: check user created or no.
-        return true;
+
+        if ( !this.state.isConnected ) {
+            return false;
+        }
+
+        const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(userName);
+        
+        return await userPropsRef.get().then((snapshot) => {
+            if (snapshot.exists) {
+                return false;
+            }
+            else {
+                const defaultUserProps: User = {
+                    hairColor: 'black',
+                    eysColor:  'pink',
+                    skinColor: 'white'
+                };
+
+                for (let [key, value] of Object.entries(defaultUserProps)) {
+                    userPropsRef.set( { [key]: value }, {merge: true} );
+                }
+
+                return true;
+            }
+        });
     }
-
-    private _firestore: firebase.firestore.Firestore;
-
-    private state = {
-        isConnected: false
-    };
 }
