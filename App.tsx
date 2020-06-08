@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import StartMenu from './components/startMenu';
 
 import FirestoreAPI from './api/FirestoreAPI';
+import { View } from "react-native";
 
 export default class App extends Component {
     constructor(props: any) {
@@ -23,7 +23,7 @@ export default class App extends Component {
 
     render () {
         return (
-            <StartMenu/>
+            <View/>
       );
     }
 }
