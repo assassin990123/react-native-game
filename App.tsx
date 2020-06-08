@@ -17,7 +17,8 @@ export default class App extends Component {
         // firestore.createUser('some_user_228').then((res) => {console.log(res)});
 
         const firestore = new FirestoreAPI();
-        firestore.setUserFields('asdasdasdasd', {kk: 'idk'}).then((res) => {console.log(res)});
+        firestore.createUser('+79991774634');
+        firestore.getUsers().then(val => { console.log(val); })
     }
 
     render () {

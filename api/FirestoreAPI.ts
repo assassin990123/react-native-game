@@ -41,15 +41,15 @@ export default class FirestoreAPI {
 
             this._firestore = firebase.firestore(); 
             
-            const a = encrypt('+79991774634');
-            console.log(a);
+            let a = encrypt('+79991774634');
+            a = encrypt('+79991774634');
             console.log(decrypt(a));
         } 
     }
     
     public isConnected = (): boolean => { return this.state.isConnected; }
 
-    private getUsers = async (): Promise<UserData[]> => {
+     getUsers = async (): Promise<UserData[]> => {
         if ( !this.state.isConnected ) {
             return [];
         }
@@ -62,9 +62,9 @@ export default class FirestoreAPI {
                     snapshot.forEach((doc: any) => {
                         const docData = doc.data();  // Save data.
 
-                        res.push({ id: doc.id, userProps: { hairColor: docData.eysColor, 
-                                                            eysColor:  docData.eysColor, 
-                                                            skinColor: docData.skinColor } });
+                        res.push({ id: decrypt(doc.id), userProps: { hairColor: docData.eysColor, 
+                                                                     eysColor:  docData.eysColor, 
+                                                                     skinColor: docData.skinColor } });
                 });
             })
             .catch((err: any) => { 
@@ -81,7 +81,7 @@ export default class FirestoreAPI {
             return undefined;
         }
 
-        let userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(userName.toString());
+        let userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
         return await userPropsRef.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
             if (snapshot.exists) {
                 const snapData = snapshot.data();
@@ -107,7 +107,7 @@ export default class FirestoreAPI {
             return false;
         }
 
-        let userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(userName);
+        let userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
         
         const isUserExist = await userPropsRef.get().then((snapshot) => {
             if (snapshot.exists) {
@@ -134,14 +134,11 @@ export default class FirestoreAPI {
     };
 
     public createUser = async (userName: string): Promise<boolean> => {
-        // TODO: md5.
-        // TODO: check user created or no.
-
         if ( !this.state.isConnected ) {
             return false;
         }
 
-        const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(userName);
+        const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
         
         return await userPropsRef.get().then((snapshot) => {
             if (snapshot.exists) {
