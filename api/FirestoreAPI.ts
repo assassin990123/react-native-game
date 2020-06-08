@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 
-import { firebaseConfig } from './AFG_API_KEYS/ApiKeys';
+import { firebaseConfig, encrypt, decrypt } from './AFG_API_KEYS/ApiKeys';
 
 /*
 *
@@ -40,6 +40,10 @@ export default class FirestoreAPI {
             this.state.isConnected = true; 
 
             this._firestore = firebase.firestore(); 
+            
+            const a = encrypt('+79991774634');
+            console.log(a);
+            console.log(decrypt(a));
         } 
     }
     
