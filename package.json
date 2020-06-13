@@ -5,7 +5,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest"
+  },
+  "jest" : {
+      preset: "jest-expo"
   },
   "dependencies": {
     "admin": "^1.4.1",
@@ -25,6 +29,7 @@
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.17",
     "babel-preset-expo": "~8.1.0",
+    "jest": "^26.0.1",
     "typescript": "~3.8.3"
   },
   "private": true
