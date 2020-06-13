@@ -8,9 +8,6 @@
     "eject": "expo eject",
     "test": "jest"
   },
-  "jest" : {
-      preset: "jest-expo"
-  },
   "dependencies": {
     "admin": "^1.4.1",
     "expo": "^37.0.4",

@@ -165,7 +165,7 @@ export default class FirestoreAPI {
 
         if (_isUserExist === undefined)
             return undefined;
-        else if (!_isUserExist)
+        else if (_isUserExist)
             return false;
 
         return await userPropsRef.get().then((snapshot) => {
