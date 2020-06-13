@@ -23,6 +23,8 @@ export default class FirestoreAPI {
     private _firestore: firebase.firestore.Firestore;
     private _defaultCollectionName: string = 'users_props';
 
+    private _collectionName: string = '';
+
     private state = {
         isConnected: false
     };
@@ -45,14 +47,23 @@ export default class FirestoreAPI {
 
     public isConnected = (): boolean => { return this.state.isConnected; }
 
-    private _getUsers = async (): Promise<UserData[] | undefined> => {
+    private _setCollectionName(collectionName?: String) {
+        if (collectionName !== undefined)
+            this._collectionName = collectionName.toString();
+        else
+            this._collectionName = this._defaultCollectionName;
+    }
+
+    private _getUsers = async (collectionName?: String): Promise<UserData[] | undefined> => {
         if ( !this.state.isConnected ) {
             return undefined;
         }
 
+        this._setCollectionName(collectionName);
+
         let res: UserData[] = [];
 
-        await this._firestore.collection(this._defaultCollectionName).get()
+        await this._firestore.collection(this._collectionName).get()
             .then(
                 (snapshot: firebase.firestore.QuerySnapshot) => {
                     snapshot.forEach((doc: any) => {
@@ -64,19 +75,21 @@ export default class FirestoreAPI {
                 });
             })
             .catch((err: any) => {
-                console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
+                console.error('[fireStoreAPT] -> Error: cant get document', err);
                 return undefined;
             });
 
         return res;
     }
 
-    public getUserFields = async (userName: String): Promise<User | undefined> => {
+    public getUserFields = async (userName: String, collectionName?: String): Promise<User | undefined> => {
         if ( !this.state.isConnected ) {
             return undefined;
         }
 
-        const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
+        this._setCollectionName(collectionName);
+
+        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
 
         return await userPropsRef.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
             if (snapshot.exists) {
@@ -97,27 +110,31 @@ export default class FirestoreAPI {
                 return undefined;
             }
         }).catch((err) => {
-            console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
+            console.error('[fireStoreAPT] -> Error: cant get document', err);
             return undefined;
         });
     };
 
-    public isUserExist = async (userName: string): Promise<boolean | undefined> => {
-        return await this._firestore.collection(this._defaultCollectionName)
+    public isUserExist = async (userName: string, collectionName?: string): Promise<boolean | undefined> => {
+        this._setCollectionName(collectionName);
+
+        return await this._firestore.collection(this._collectionName)
                                     .doc(encrypt(userName))
                                     .get().then(snapshot => {
                                         return snapshot.exists;
                                     })
                                     .catch(err => {
-                                        console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
+                                        console.error('[fireStoreAPT] -> Error: cant get document', err);
                                         return undefined;
                                     });
     }
 
-    public setUserFields = async (userName: string, newProps: Object): Promise<boolean | undefined> => {
+    public setUserFields = async (userName: string, newProps: Object, collectionName?: string): Promise<boolean | undefined> => {
         if ( !this.state.isConnected ) {
             return undefined;
         }
+
+        this._setCollectionName(collectionName);
 
         const _isUserExist = await this.isUserExist(userName);
 
@@ -126,7 +143,7 @@ export default class FirestoreAPI {
         else if (!_isUserExist)
             return false;
 
-        const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
+        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
 
         for (let [key, value] of Object.entries(newProps)) {
             userPropsRef.set( { [key]: value }, {merge: true} );
@@ -135,12 +152,14 @@ export default class FirestoreAPI {
         return true;
     };
 
-    public createUser = async (userName: string): Promise<boolean | undefined> => {
+    public createUser = async (userName: string, collectionName?: string): Promise<boolean | undefined> => {
         if ( !this.state.isConnected ) {
             return undefined;
         }
 
-        const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
+        this._setCollectionName(collectionName);
+
+        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
 
         let _isUserExist = await this.isUserExist(decrypt(userName));
 
@@ -157,7 +176,7 @@ export default class FirestoreAPI {
                 return true;
         })
         .catch((err: any) => {
-            console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
+            console.error('[fireStoreAPT] -> Error: cant get document', err);
             return undefined;
         });
     }
