@@ -15,7 +15,7 @@ type User = {
 };
 
 type UserData = {
-    id: string
+    id: String
     userProps: User,
 };
 
@@ -35,23 +35,19 @@ export default class FirestoreAPI {
 
 
     constructor() {
-        if ( !firebase.apps.length ) { 
-            firebase.initializeApp(firebaseConfig); 
-            this.state.isConnected = true; 
+        if ( !firebase.apps.length ) {
+            firebase.initializeApp(firebaseConfig);
+            this.state.isConnected = true;
 
-            this._firestore = firebase.firestore(); 
-            
-            let a = encrypt('+79991774634');
-            a = encrypt('+79991774634');
-            console.log(decrypt(a));
-        } 
+            this._firestore = firebase.firestore();
+        }
     }
-    
+
     public isConnected = (): boolean => { return this.state.isConnected; }
 
-     getUsers = async (): Promise<UserData[]> => {
+    private _getUsers = async (): Promise<UserData[] | undefined> => {
         if ( !this.state.isConnected ) {
-            return [];
+            return undefined;
         }
 
         let res: UserData[] = [];
@@ -62,26 +58,26 @@ export default class FirestoreAPI {
                     snapshot.forEach((doc: any) => {
                         const docData = doc.data();  // Save data.
 
-                        res.push({ id: decrypt(doc.id), userProps: { hairColor: docData.eysColor, 
-                                                                     eysColor:  docData.eysColor, 
+                        res.push({ id: decrypt(doc.id), userProps: { hairColor: docData.hairColor,
+                                                                     eysColor:  docData.eysColor,
                                                                      skinColor: docData.skinColor } });
                 });
             })
-            .catch((err: any) => { 
+            .catch((err: any) => {
                 console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
-                return [];
+                return undefined;
             });
-        
-        console.log(res);
+
         return res;
     }
-    
+
     public getUserFields = async (userName: String): Promise<User | undefined> => {
         if ( !this.state.isConnected ) {
             return undefined;
         }
 
-        let userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
+        const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
+
         return await userPropsRef.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
             if (snapshot.exists) {
                 const snapData = snapshot.data();
@@ -89,42 +85,48 @@ export default class FirestoreAPI {
                 if (snapData === undefined)
                     return undefined;
 
+                console.log({ hairColor: snapData.hairColor,
+                         eysColor:  snapData.eysColor,
+                         skinColor: snapData.skinColor });
+
                 return { hairColor: snapData.hairColor,
                          eysColor:  snapData.eysColor,
                          skinColor: snapData.skinColor }
             } else {
-                console.warn('[fireStoreAPT] -> Warn: Document no exists')
+                console.warn('[fireStoreAPT] -> Warn: Document no exists');
                 return undefined;
             }
         }).catch((err) => {
             console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
             return undefined;
         });
-    }; 
+    };
+
+    public isUserExist = async (userName: string): Promise<boolean | undefined> => {
+        return await this._firestore.collection(this._defaultCollectionName)
+                                    .doc(encrypt(userName))
+                                    .get().then(snapshot => {
+                                        return snapshot.exists;
+                                    })
+                                    .catch(err => {
+                                        console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
+                                        return undefined;
+                                    });
+    }
 
     public setUserFields = async (userName: string, newProps: Object): Promise<boolean | undefined> => {
         if ( !this.state.isConnected ) {
-            return false;
+            return undefined;
         }
 
-        let userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
-        
-        const isUserExist = await userPropsRef.get().then((snapshot) => {
-            if (snapshot.exists) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        })
-        .catch((err: any) => {
-            console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
+        const _isUserExist = await this.isUserExist(userName);
+
+        if (_isUserExist === undefined)
             return undefined;
-        });
-        
-        if (!isUserExist) {
+        else if (!_isUserExist)
             return false;
-        }
+
+        const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
 
         for (let [key, value] of Object.entries(newProps)) {
             userPropsRef.set( { [key]: value }, {merge: true} );
@@ -133,28 +135,30 @@ export default class FirestoreAPI {
         return true;
     };
 
-    public createUser = async (userName: string): Promise<boolean> => {
+    public createUser = async (userName: string): Promise<boolean | undefined> => {
         if ( !this.state.isConnected ) {
-            return false;
+            return undefined;
         }
 
         const userPropsRef = this._firestore.collection(this._defaultCollectionName).doc(encrypt(userName));
-        
+
+        let _isUserExist = await this.isUserExist(decrypt(userName));
+
+        if (_isUserExist === undefined)
+            return undefined;
+        else if (!_isUserExist)
+            return false;
+
         return await userPropsRef.get().then((snapshot) => {
-            if (snapshot.exists) {
-                return false;
-            }
-            else {
                 for (let [key, value] of Object.entries(this._defaultUserProps)) {
                     userPropsRef.set( { [key]: value }, {merge: true} );
                 }
 
                 return true;
-            }
         })
         .catch((err: any) => {
             console.error('[fireStoreAPT] -> Error: cant get document: ' + err);
-            return false;
+            return undefined;
         });
     }
 }
