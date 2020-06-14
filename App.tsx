@@ -1,12 +1,27 @@
-import React from 'react';
 import { View } from 'react-native';
 
-import MenuButton from './components/MenuBottom/MenuBottom';
+import React, { Component } from "react";
 
-export default function App() {
-  return (
-    <View>
-        <MenuButton/>
-    </View>
-  );
+import MenuButton from './components/MenuBottom/MenuBottom';
+import FirestoreAPI from './api/FirestoreAPI';
+
+export default class App extends Component {
+    constructor(props: any) {
+        super(props);
+    }
+
+    componentDidMount() {
+        // const firestore = new FirestoreAPI();
+        // firestore.createUser('+7999*******');
+        // firestore.getUsers().then(val => { console.log(val); })
+    }
+
+    render () {
+        return (
+          <View>
+              <MenuButton/>
+          </View>
+      );
+    }
 }
+
