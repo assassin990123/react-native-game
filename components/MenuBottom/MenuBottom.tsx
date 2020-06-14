@@ -32,7 +32,7 @@ export default class MenuBottom extends Component {
         return -1;
     }
 
-    handleClick = (icon: string): void => {
+    handleClick = async (icon: string): Promise<void> => {
         for (let [key, value] of Object.entries(this._icons)) {
             value.pressed = false;
             
@@ -41,8 +41,7 @@ export default class MenuBottom extends Component {
             }
         }
         
-        this._handlers[this.findIndex(icon)]();
-        
+        await this._handlers[this.findIndex(icon)]();
         
         this.forceUpdate();
     };
@@ -58,7 +57,8 @@ export default class MenuBottom extends Component {
 
         for (let [key, value] of Object.entries(this._icons)) {
             iconsArray.push(<TouchableOpacity key={key} onPress={() => {this.handleClick(key)}} 
-                                              style={value.pressed ? styles.pressedButton : styles.defaultButton}>
+                                              style={value.pressed ? styles.pressedButton : styles.defaultButton}
+                                              activeOpacity={1}>
                                     <Image source={value.link} key = {key}
                                            style={value.pressed ? styles.imageDefaultColor : styles.imagePressedColor} />
                             </TouchableOpacity>);
