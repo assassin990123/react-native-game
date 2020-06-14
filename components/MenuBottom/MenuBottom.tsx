@@ -15,8 +15,6 @@ export default class MenuBottom extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    state = { button: true };
-
     _handlers: any[] = [];
 
     findIndex = (name: string): number => {
