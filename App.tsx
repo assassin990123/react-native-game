@@ -1,4 +1,4 @@
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, Dimensions } from 'react-native';
 
 import React, { Component } from "react";
 
@@ -12,6 +12,7 @@ export default class App extends Component {
     constructor(props: any) {
         super(props);
 
+        if (Dimensions.get('screen').height - Dimensions.get('window').height > 25)
         StatusBar.setHidden(true);
     }
 

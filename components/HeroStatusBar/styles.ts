@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
         width: '100%', 
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-        height: height * 0.1, 
+        height: Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? height * 0.08 : height * 0.09,  // Use diff height for devices with notch and without.
         backgroundColor: '#EE8AF0', 
         justifyContent: 'center', 
         alignItems: 'center',
