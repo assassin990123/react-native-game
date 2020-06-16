@@ -1,4 +1,4 @@
-import { View, ActivityIndicator } from 'react-native';
+import { View, StatusBar } from 'react-native';
 
 import React, { Component } from "react";
 
@@ -11,6 +11,8 @@ import FirestoreAPI from './api/FirestoreAPI';
 export default class App extends Component {
     constructor(props: any) {
         super(props);
+
+        StatusBar.setHidden(true);
     }
 
     render () {

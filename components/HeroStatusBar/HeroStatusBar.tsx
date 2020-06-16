@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { Image, View, TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native';
 
 import {styles} from './styles';
 
@@ -34,19 +34,15 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
     
     async componentDidMount() {
-        // const firestore = new FirestoreAPI();
-        // firestore.createUser('+7999*******');
-        // firestore.getUsers().then(val => { console.log(val); })
-
-        await Font.loadAsync({
-            'Montserrat-Regular':require('../../assets/fonts/Montserrat-Regular.ttf'),
-            'Montserrat-Black':require('../../assets/fonts/Montserrat-Black.ttf'),
-            'Montserrat-Medium':require('../../assets/fonts/Montserrat-Medium.ttf'),
-            'Montserrat-Light':require('../../assets/fonts/Montserrat-Light.ttf'),
-            'Montserrat-Italic':require('../../assets/fonts/Montserrat-Italic.ttf'),
-            'Montserrat-Thin':require('../../assets/fonts/Montserrat-Thin.ttf'),
-            'Montserrat-SemiBold': require('../../assets/fonts/Montserrat-SemiBold.ttf')
-        })     
+        // await Font.loadAsync({
+        //     'Montserrat-Regular':require('../../assets/fonts/Montserrat-Regular.ttf'),
+        //     'Montserrat-Black':require('../../assets/fonts/Montserrat-Black.ttf'),
+        //     'Montserrat-Medium':require('../../assets/fonts/Montserrat-Medium.ttf'),
+        //     'Montserrat-Light':require('../../assets/fonts/Montserrat-Light.ttf'),
+        //     'Montserrat-Italic':require('../../assets/fonts/Montserrat-Italic.ttf'),
+        //     'Montserrat-Thin':require('../../assets/fonts/Montserrat-Thin.ttf'),
+        //     'Montserrat-SemiBold': require('../../assets/fonts/Montserrat-SemiBold.ttf')
+        // })     
         
         this.setState({fontLoaded: true});
     }
@@ -73,18 +69,20 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         }
         
         return (
-            <View style={styles.StatusBar}>
-                <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
-                    <Text style={styles.levelText}>12</Text>
-                </TouchableOpacity>
+            <View style = {Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null}>
+                <View style={styles.StatusBar}>
+                    <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
+                        <Text style={styles.levelText}>12</Text>
+                    </TouchableOpacity>
 
-                <View style={[styles.StatusBarSubMenu, styles.defaultMargin]}>
-                    {JSXElements}
+                    <View style={[styles.StatusBarSubMenu, styles.defaultMargin]}>
+                        {JSXElements}
+                    </View>
+
+                    <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
+                        <Image source={require('./assets/settings.png')} />
+                    </TouchableOpacity>              
                 </View>
-
-                <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
-                    <Image source={require('./assets/settings.png')} />
-                </TouchableOpacity>              
             </View>
         );
     }

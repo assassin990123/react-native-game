@@ -1,21 +1,32 @@
-import { Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet, StatusBar} from 'react-native';
+
 
 const { width, height } = Dimensions.get('screen');
-console.log(width);
+
+console.log(Dimensions.get('screen').height - Dimensions.get('window').height)
+
+const test: any = StatusBar.currentHeight;
+console.log(test);
 
 export const styles = StyleSheet.create({
     StatusBar: {
+        width: '100%', 
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-        width: '100%', 
-        height: height * 0.12, 
+        height: height * 0.1, 
         backgroundColor: '#EE8AF0', 
         justifyContent: 'center', 
         alignItems: 'center',
         top: 0,
         flexDirection: 'row',
         display: 'flex', 
-        paddingTop: 25
+    },
+
+    notchPadding: {
+        paddingTop: 25,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        backgroundColor: '#EE8AF0',
     },
 
     StatusBarSubMenu: {
@@ -66,7 +77,7 @@ export const styles = StyleSheet.create({
     }, 
 
     levelText: {
-        fontFamily: 'Montserrat-SemiBold',
+        // fontFamily: 'Montserrat-SemiBold',
         fontSize: 24, 
         color: 'white'
     }
