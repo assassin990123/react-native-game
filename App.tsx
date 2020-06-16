@@ -1,7 +1,9 @@
+import { View } from 'react-native';
+
 import React, { Component } from "react";
 
+import MenuButton from './components/MenuBottom/MenuBottom';
 import FirestoreAPI from './api/FirestoreAPI';
-import { View } from "react-native";
 
 export default class App extends Component {
     constructor(props: any) {
@@ -10,13 +12,16 @@ export default class App extends Component {
 
     componentDidMount() {
         // const firestore = new FirestoreAPI();
-        // firestore.createUser('+79991774634');
+        // firestore.createUser('+7999*******');
         // firestore.getUsers().then(val => { console.log(val); })
     }
 
     render () {
         return (
-            <View/>
+          <View>
+              <MenuButton/>
+          </View>
       );
     }
 }
+
