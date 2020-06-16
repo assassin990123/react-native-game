@@ -2,7 +2,10 @@ import { View } from 'react-native';
 
 import React, { Component } from "react";
 
+// View components.
 import MenuButton from './components/MenuBottom/MenuBottom';
+import HeroStatusBar from './components/HeroStatusBar/HeroStatusBar';
+
 import FirestoreAPI from './api/FirestoreAPI';
 
 export default class App extends Component {
@@ -19,6 +22,7 @@ export default class App extends Component {
     render () {
         return (
           <View>
+              <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
               <MenuButton/>
           </View>
       );

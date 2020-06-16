@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet} from 'react-native';
 
-const { width } = Dimensions.get('screen');
+const { width, height } = Dimensions.get('screen');
 console.log(width);
 
 export const styles = StyleSheet.create({
@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
         width: '100%', 
-        height: 70, 
+        height: height * 0.08, 
         backgroundColor: '#EE8AF0', 
         justifyContent: 'center', 
         alignItems: 'center',
