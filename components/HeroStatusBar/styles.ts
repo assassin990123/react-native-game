@@ -8,13 +8,14 @@ export const styles = StyleSheet.create({
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
         width: '100%', 
-        height: height * 0.08, 
+        height: height * 0.12, 
         backgroundColor: '#EE8AF0', 
         justifyContent: 'center', 
         alignItems: 'center',
         top: 0,
         flexDirection: 'row',
-        display: 'flex'
+        display: 'flex', 
+        paddingTop: 25
     },
 
     StatusBarSubMenu: {
@@ -52,7 +53,7 @@ export const styles = StyleSheet.create({
         marginRight: '1%',
         justifyContent: 'center', 
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: '#000000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 6,

@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 import React, { Component } from "react";
 
@@ -13,18 +13,12 @@ export default class App extends Component {
         super(props);
     }
 
-    componentDidMount() {
-        // const firestore = new FirestoreAPI();
-        // firestore.createUser('+7999*******');
-        // firestore.getUsers().then(val => { console.log(val); })
-    }
-
     render () {
         return (
-          <View>
-              <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
-              <MenuButton/>
-          </View>
+            <View> 
+                <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
+                <MenuButton/>
+            </View>
       );
     }
 }

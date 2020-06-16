@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Image, View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-import * as Font from 'expo-font';
-
 import {styles} from './styles';
+
+import * as Font from 'expo-font';
 
 /*
 *
@@ -16,7 +16,7 @@ interface IHeroStatusBar {
 }
 
 export default class HeroStatusBar extends Component<IHeroStatusBar> {
-    constructor(props: any) {
+    constructor (props: any) {
         super(props);
         props.handler();
     }
@@ -27,8 +27,29 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             sleep:     { link: require('./assets/sleep.png'),     currentState: 100 },
             cleanness: { link: require('./assets/cleanness.png'), currentState: 100 },
             mood:      { link: require('./assets/mood.png'),      currentState: 100 }
-        }
+        },
+
+        fontLoaded: false
     };
+
+    
+    async componentDidMount() {
+        // const firestore = new FirestoreAPI();
+        // firestore.createUser('+7999*******');
+        // firestore.getUsers().then(val => { console.log(val); })
+
+        await Font.loadAsync({
+            'Montserrat-Regular':require('../../assets/fonts/Montserrat-Regular.ttf'),
+            'Montserrat-Black':require('../../assets/fonts/Montserrat-Black.ttf'),
+            'Montserrat-Medium':require('../../assets/fonts/Montserrat-Medium.ttf'),
+            'Montserrat-Light':require('../../assets/fonts/Montserrat-Light.ttf'),
+            'Montserrat-Italic':require('../../assets/fonts/Montserrat-Italic.ttf'),
+            'Montserrat-Thin':require('../../assets/fonts/Montserrat-Thin.ttf'),
+            'Montserrat-SemiBold': require('../../assets/fonts/Montserrat-SemiBold.ttf')
+        })     
+        
+        this.setState({fontLoaded: true});
+    }
 
     getCurrentColor = (currntStateNum: number) => {
         if (currntStateNum < 50) {
@@ -40,29 +61,17 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         }
     };
 
-    componentDidMount = async () => {
-        await Font.loadAsync({
-            'Montserrat-Regular':require('../../assets/fonts/Montserrat-Regular.ttf'),
-            'Montserrat-Black':require('../../assets/fonts/Montserrat-Black.ttf'),
-            'Montserrat-Medium':require('../../assets/fonts/Montserrat-Medium.ttf'),
-            'Montserrat-Light':require('../../assets/fonts/Montserrat-Light.ttf'),
-            'Montserrat-Italic':require('../../assets/fonts/Montserrat-Italic.ttf'),
-            'Montserrat-Thin':require('../../assets/fonts/Montserrat-Thin.ttf')
-        }).then(() => this.setState( { fontLoaded: true } ))
-          .catch(error => console.error('[HeroStatusBar]: Cant load fonts.' + error));
-    }
-
     render(): JSX.Element {
         let JSXElements: JSX.Element[] = [];
 
         for (let [key, value] of Object.entries(this.state._icons)) {
-            JSXElements.push(<TouchableOpacity key={key} onPress={() => {}} 
-                                              style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color]}
-                                              activeOpacity={1}>
-                                    <Image source={value.link} key = {key} />
+            JSXElements.push(<TouchableOpacity onPress={() => {}} 
+                                               style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color]}
+                                               activeOpacity={1}>
+                                    <Image source={value.link} />
                             </TouchableOpacity>);
         }
-
+        
         return (
             <View style={styles.StatusBar}>
                 <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
@@ -74,7 +83,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                 </View>
 
                 <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
-                    <Image source={require('./assets/settings.png')} key = {'setting'} />
+                    <Image source={require('./assets/settings.png')} />
                 </TouchableOpacity>              
             </View>
         );
