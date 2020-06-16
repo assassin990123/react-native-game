@@ -61,14 +61,12 @@ export default class StartMenu extends Component {
             <View style = {styles.content}>
                            
                 <View style = {styles.header}> 
-                    { /* TODO: There should be logo. */ }
                     <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } 
                                       style = {styles.headerButton}/>
                     <Text style = {styles.logoText}>PEDO</Text> 
                 </View>
 
-              
-                    { /* Login panel. */ }
+
                     <View style = {styles.inputContainer}>
                         <TextInput style          = {styles.input}
                                    placeholder           = "Номер телефона"

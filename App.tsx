@@ -17,7 +17,9 @@ import { View } from 'react-native';
 export default function App() {
   return (
     <View>
-     {/* <RegistrationMenu/>
+     {/*
+      <RegistrationMenu/>
+
       <StartMenu/>
       <CharacterMenu/>
       <CreationCharacterMenu/>*/}
