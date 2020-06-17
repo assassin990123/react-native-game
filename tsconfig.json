@@ -18,5 +18,6 @@
     , "skipDefaultLibCheck": false
     , "preserveConstEnums": false
     , "allowUnreachableCode": false
+    , "strictPropertyInitialization": false
   }
 }

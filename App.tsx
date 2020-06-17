@@ -1,37 +1,26 @@
-import React from 'react';
-
-//import StartMenu from './components/startMenu/startMenu';
-//import RegistrationMenu from './components/registrationMenu/RegistrationMenu';
-//import CharacterMenu from './components/characterMenu/chracterMenu';
-//import CreationCharacterMenu from './components/creationCharacterMenu/creationCharacterMenu'
-import Constructer from './components/constructer/constructer'
-
-
-//import { NavigationContainer } from '@react-navigation/native';
-//import { createStackNavigator } from '@react-navigation/stack';
-
 import { View } from 'react-native';
 
-//const Stack = createStackNavigator();
+import React, { Component } from "react";
 
-export default function App() {
-  return (
-    <View>
-     {/*
-      <RegistrationMenu/>
+import MenuButton from './components/MenuBottom/MenuBottom';
+import FirestoreAPI from './api/FirestoreAPI';
 
-      <StartMenu/>
-      <CharacterMenu/>
-      <CreationCharacterMenu/>*/}
+export default class App extends Component {
+    constructor(props: any) {
+        super(props);
+    }
 
-      <Constructer/>
+    componentDidMount() {
+        // const firestore = new FirestoreAPI();
+        // firestore.createUser('+7999*******');
+        // firestore.getUsers().then(val => { console.log(val); })
+    }
 
-     {/* <NavigationContainer>
-      <Stack.Navigator initialRouteName="StartMenu">
-        <Stack.Screen name="StartMenu" component={StartMenu} />
-        <Stack.Screen name="RegistrationMenu" component={RegistrationMenu} />
-      </Stack.Navigator>
-    </NavigationContainer>*/}
-    </View>
-  );
+    render () {
+        return (
+          <View>
+              <MenuButton/>
+          </View>
+      );
+    }
 }

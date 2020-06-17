@@ -1,0 +1,3 @@
+[submodule "api/AFG_API_KEYS"]
+	path = api/AFG_API_KEYS
+	url = https://github.com/andrwnv/AFG_API_KEYS.git
