@@ -27,25 +27,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             sleep:     { link: require('./assets/sleep.png'),     currentState: 100 },
             cleanness: { link: require('./assets/cleanness.png'), currentState: 100 },
             mood:      { link: require('./assets/mood.png'),      currentState: 100 }
-        },
-
-        fontLoaded: false
+        }
     };
-
-    
-    async componentDidMount() {
-        // await Font.loadAsync({
-        //     'Montserrat-Regular':require('../../assets/fonts/Montserrat-Regular.ttf'),
-        //     'Montserrat-Black':require('../../assets/fonts/Montserrat-Black.ttf'),
-        //     'Montserrat-Medium':require('../../assets/fonts/Montserrat-Medium.ttf'),
-        //     'Montserrat-Light':require('../../assets/fonts/Montserrat-Light.ttf'),
-        //     'Montserrat-Italic':require('../../assets/fonts/Montserrat-Italic.ttf'),
-        //     'Montserrat-Thin':require('../../assets/fonts/Montserrat-Thin.ttf'),
-        //     'Montserrat-SemiBold': require('../../assets/fonts/Montserrat-SemiBold.ttf')
-        // })     
-        
-        this.setState({fontLoaded: true});
-    }
 
     getCurrentColor = (currntStateNum: number) => {
         if (currntStateNum < 50) {
@@ -63,7 +46,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         for (let [key, value] of Object.entries(this.state._icons)) {
             JSXElements.push(<TouchableOpacity onPress={() => {}} 
                                                style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color]}
-                                               activeOpacity={1}>
+                                               activeOpacity={1}
+                                               key={key}>
                                     <Image source={value.link} />
                             </TouchableOpacity>);
         }

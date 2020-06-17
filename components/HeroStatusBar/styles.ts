@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
     }, 
 
     levelText: {
-        // fontFamily: 'Montserrat-SemiBold',
+        fontFamily: 'Montserrat-SemiBold',
         fontSize: 24, 
         color: 'white'
     }
