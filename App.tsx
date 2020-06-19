@@ -1,14 +1,13 @@
 import { View, StatusBar, Dimensions } from 'react-native';
-
 import React, { Component } from "react";
+import * as Font from 'expo-font';
 
 // View components.
 import MenuButton from './components/MenuBottom/MenuBottom';
 import HeroStatusBar from './components/HeroStatusBar/HeroStatusBar';
 
 import FirestoreAPI from './api/FirestoreAPI';
-
-import * as Font from 'expo-font';
+import Routes from './Routes';
 
 
 export default class App extends Component {
@@ -39,10 +38,11 @@ export default class App extends Component {
     render () {
       if (this.state.fontLoaded){
           return (
-              <View> 
-                  <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
-                  <MenuButton/>
-              </View>
+              <Routes />
+              // <View> 
+              //     <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
+              //     <MenuButton/>
+              // </View>
         );
       } else {
         return ( <View></View> )
