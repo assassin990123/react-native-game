@@ -51,7 +51,7 @@ export default class StartMenu extends Component {
                 
 
                 <TouchableOpacity style   = {styles.playButton}
-                                    onPress = { () => this.onClickHandler('patrion')}>
+                                    onPress = { () => { Actions.GameComponent(); } }>
                     <Text style = {styles.buttonsText}>Играть!</Text>
                 </TouchableOpacity>
                     
