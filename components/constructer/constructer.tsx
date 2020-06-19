@@ -1,12 +1,7 @@
 import React, { Component } from "react";
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image } from 'react-native';
 
-
-import * as Font from 'expo-font';
-
 import { styles } from './styles';
-
-//const navigation=useNavigation();
 
 /*
 *
@@ -21,24 +16,6 @@ export default class StartMenu extends Component {
         this.state = {
           characterName: String,
         }
-
-        this.state = {
-            fontLoaded: false
-        };
-    }
-
-
-     componentDidMount = async() => {
-        await Font.loadAsync({
-            'Montserrat-Regular':require('../../assets/fonts/Montserrat-Regular.ttf'),
-            'Montserrat-Black':require('../../assets/fonts/Montserrat-Black.ttf'),
-            'Montserrat-Medium':require('../../assets/fonts/Montserrat-Medium.ttf'),
-            'Montserrat-Light':require('../../assets/fonts/Montserrat-Light.ttf'),
-            'Montserrat-Italic':require('../../assets/fonts/Montserrat-Italic.ttf'),
-            'Montserrat-Thin':require('../../assets/fonts/Montserrat-Thin.ttf')
-        });
-
-        this.setState( { fontLoaded: true } );
     }
 
     onClickHandler = (viewId: String) => {
@@ -70,7 +47,6 @@ export default class StartMenu extends Component {
 
                                    onChangeText = { (characterName) => this.setState({characterName}) } />
                 </View>
-
             </View>
 
         </KeyboardAvoidingView>
