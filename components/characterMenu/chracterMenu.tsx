@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import * as Font from 'expo-font';
-
 import { styles } from './styles';
 
 const DescriptionText: string = 'some text';

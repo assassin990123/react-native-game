@@ -2,9 +2,7 @@ import { View, StatusBar, Dimensions } from 'react-native';
 import React, { Component } from "react";
 import * as Font from 'expo-font';
 
-import FirestoreAPI from './api/FirestoreAPI';
 import Routes from './Routes';
-
 
 export default class App extends Component {
     constructor(props: any) {
