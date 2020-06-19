@@ -3,8 +3,6 @@ import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image } 
 
 import { styles } from './styles';
 
-//const navigation=useNavigation();
-
 /*
 *
     @brief: Authentication component.
