@@ -3,8 +3,6 @@ import { Image, View, TouchableOpacity, Text, StyleSheet, Dimensions } from 'rea
 
 import {styles} from './styles';
 
-import * as Font from 'expo-font';
-
 /*
 *
     @brief: Status bar to display characters needs, such as sleep, food, lvl and etc.

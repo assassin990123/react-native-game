@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Image} from 'react-native';
-
+import { Actions } from 'react-native-router-flux';
 
 import * as Font from 'expo-font';
 
@@ -28,7 +28,7 @@ export default class StartMenu extends Component {
             <View style = {styles.content}>
 
                 <TouchableOpacity style   = {styles.backButton}
-                                    onPress = { () => {} }>
+                                    onPress = { () => Actions.LogIn() }>
                         <Image source={require("../../assets/arrow.png")}/>
                 </TouchableOpacity>
 
@@ -36,7 +36,6 @@ export default class StartMenu extends Component {
                                     onPress = { () => {} }>
                         <Image source={require("../../assets/basket.png")}/>
                 </TouchableOpacity>
- 
  
                 <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } 
                                     style = {styles.headerButton}/>
