@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Image} from 'react-native';
-
-
-import * as Font from 'expo-font';
+import { Actions } from 'react-native-router-flux';
 
 import { styles } from './styles';
 
@@ -26,9 +24,8 @@ export default class StartMenu extends Component {
     render() {
         return (
             <View style = {styles.content}>
-
                 <TouchableOpacity style   = {styles.backButton}
-                                    onPress = { () => {} }>
+                                    onPress = { () => Actions.LogIn() }>
                         <Image source={require("../../assets/arrow.png")}/>
                 </TouchableOpacity>
 
@@ -52,7 +49,7 @@ export default class StartMenu extends Component {
                 
 
                 <TouchableOpacity style   = {styles.playButton}
-                                    onPress = { () => this.onClickHandler('patrion')}>
+                                  onPress = { () => { Actions.GameComponent(); } }>
                     <Text style = {styles.buttonsText}>Играть!</Text>
                 </TouchableOpacity>
                     

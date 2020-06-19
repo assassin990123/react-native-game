@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image } from 'react-native';
 
-
-import * as Font from 'expo-font';
-
 import { styles } from './styles';
 
 //const navigation=useNavigation();

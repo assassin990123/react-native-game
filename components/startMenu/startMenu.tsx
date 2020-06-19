@@ -1,16 +1,10 @@
 import React, { Component } from "react";
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
-//import { useNavigation } from '@react-navigation/native';
-//import { createStackNavigator } from '@react-navigation/stack';
-//import RegistrationMenu from './components/registrationMenu/RegistrationMenu';
-//import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
-
-import * as Font from 'expo-font';
+import * as WebBrowser from 'expo-web-browser';
 
 import { styles } from './styles';
-
-//const navigation=useNavigation();
 
 /*
 *
@@ -69,20 +63,20 @@ export default class StartMenu extends Component {
                     </View>
                 
                     <TouchableOpacity style   = {styles.logButton}
-                                      onPress = { () => this.onClickHandler('login') }>
+                                      onPress = { () => Actions.CharacterMenu() }>
                         <Text style = {styles.buttonsText}>Войти</Text>
                     </TouchableOpacity>
                     
                     <Text style = {styles.agitText}>У вас еще нету аккаунта в нашей потрясающей аниме игре?????</Text>
 
                     <TouchableOpacity style   = {styles.regButton}
-                                      onPress = { () => this.onClickHandler('patrion')}>
+                                      onPress = { () => Actions.SigIn() }>
                         <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
                     </TouchableOpacity>
                     
                 <View style = {styles.donation}>
                     <TouchableOpacity style   = {styles.donatButton}
-                                      onPress = { () => this.onClickHandler('patrion') }>
+                                      onPress = { async () => { await WebBrowser.openBrowserAsync('https://patreon.com') } }>
                         <Text style = {styles.donatButtonsText}>Поддержать нас!</Text>
                     </TouchableOpacity>
                 </View>

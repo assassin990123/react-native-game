@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Actions } from 'react-native-router-flux';
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image} from 'react-native';
 
 import * as Font from 'expo-font';
@@ -39,9 +40,8 @@ export default class RegistrationMenu extends Component {
                 
                     
                 <TouchableOpacity style   = {styles.backButton}
-                                    onPress = { () => {} }>
+                                  onPress = { () => Actions.LogIn()}>
                         <Image source={require("../../assets/arrow.png")}/>
-                    {/*   <Text style = {styles.logoText}>PEDO</Text>*/}
                 </TouchableOpacity>
 
                 <View style = {styles.header}> 
@@ -103,8 +103,8 @@ export default class RegistrationMenu extends Component {
                     </View>
 
                     <TouchableOpacity style   = {styles.continueButton}
-                                      onPress = { () => this.onClickHandler('continue') }>
-                        <Text style = {styles.buttonsText}>Продолжить</Text>
+                                      onPress = { () => Actions.CharacterMenu()}>
+                        <Text style = {styles.buttonsText}>Подтвердить</Text>
                     </TouchableOpacity>
             </View>
        </KeyboardAvoidingView>
