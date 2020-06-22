@@ -1,12 +1,6 @@
-import { Dimensions, StyleSheet, StatusBar} from 'react-native';
-
+import { Dimensions, StyleSheet } from 'react-native';
 
 const { width, height } = Dimensions.get('screen');
-
-console.log(Dimensions.get('screen').height - Dimensions.get('window').height)
-
-const test: any = StatusBar.currentHeight;
-console.log(test);
 
 export const styles = StyleSheet.create({
     StatusBar: {
@@ -80,5 +74,64 @@ export const styles = StyleSheet.create({
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 24, 
         color: 'white'
+    },
+
+    modalContainer: {
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        backgroundColor: 'rgba(52, 52, 52, 0.8)', 
+        width: '100%', 
+        height: '100%'
+    },
+
+    modalView: {
+        borderRadius: 10,
+        backgroundColor: 'white',
+        width: '80%',
+        height: '75%', 
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    modalTitle: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 30, 
+        marginBottom: 15
+    },
+
+    modalSettingItem: {
+        borderWidth: 1,
+        borderColor: '#E76BC0',
+        width: '70%',
+        height: '18%',
+        borderRadius: 10, 
+        marginBottom: 7
+    },
+
+    modalSettingsTitleBox: {
+        backgroundColor: '#E76BC0',
+        height: '50%',
+        borderRadius: 8.5,
+        justifyContent: 'center'
+    }, 
+
+    modalSettingsTitle: {
+        color: 'white', 
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 16, 
+        textAlign: 'center'
+    },
+
+    modalSettingNumber: {
+        fontFamily: 'Montserrat-SemiBold', 
+        fontSize: 30, 
+        width: '33%', 
+        textAlign: 'center'
+    },
+
+    modalSettingArrow: {
+        width: '33%', 
+        justifyContent: 'center', 
+        alignItems: 'center'
     }
 });
