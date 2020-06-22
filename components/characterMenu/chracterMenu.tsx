@@ -73,7 +73,7 @@ export default class StartMenu extends Component {
                                     onPress = { () => {this.setModalVisible(!this.state.modalVisible);} }>
                         <Image source={require('../../assets/basket.png')}/>
                 </TouchableOpacity>
- 
+
                 <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } 
                                     style = {styles.headerButton}/>
                 <Text style = {styles.logoText}>PEDO</Text> 
