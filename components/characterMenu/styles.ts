@@ -119,5 +119,64 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         //top: height/2
+    },
+
+    modalContainer: {
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        backgroundColor: 'rgba(52, 52, 52, 0.8)', 
+        width: '100%', 
+        height: '100%'
+    },
+
+    modalView: {
+        borderRadius: 10,
+        backgroundColor: 'white',
+        width: '80%',
+        height: '45%', 
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    
+    modalTitle: {
+        fontFamily: 'Montserrat-SemiBold',
+        textTransform: 'uppercase',
+        fontSize: 20
+    },
+    
+    modalText: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 16, 
+        textAlign: 'center'
+    },
+
+    modalPadding: {
+        paddingBottom: 20
+    },
+
+    modalButton: {
+        marginLeft: 18, 
+        marginRight: 18, 
+        height: '100%', 
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10, 
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+    },
+
+    modalButtonGroup: {
+        flexDirection: 'row', 
+        height: '16%',
+        width: '30%', 
+        justifyContent: 'center', 
+        marginTop: 10
     }
 });
