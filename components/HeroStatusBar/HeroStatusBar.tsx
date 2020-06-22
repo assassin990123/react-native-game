@@ -95,7 +95,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 </View>
                             </View>
 
-                            <TouchableOpacity style={{backgroundColor: 'white', width: '85%', height: '10%', justifyContent: 'center', alignItems:'center', borderColor:'#F37052', borderRadius: 10, borderWidth: 1, marginTop: 40}}><Text style={{color: '#F37052'}}>кароче типа выйти</Text></TouchableOpacity>
+                            <TouchableOpacity style={styles.modalExitButton}>
+                                <Text style={styles.modalExitButtonText}>кароче типа выйти</Text>
+                            </TouchableOpacity>
                         </View>   
                     </View>
                 </Modal>

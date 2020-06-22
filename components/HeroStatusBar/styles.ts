@@ -133,5 +133,32 @@ export const styles = StyleSheet.create({
         width: '33%', 
         justifyContent: 'center', 
         alignItems: 'center'
+    },
+
+    modalExitButton: {
+        backgroundColor: 'white', 
+        width: '85%', 
+        height: '10%', 
+        justifyContent: 'center', 
+        alignItems:'center', 
+        borderColor:'#F37052', 
+        borderRadius: 10, 
+        borderWidth: 1, 
+        marginTop: 40,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+    },
+
+    modalExitButtonText: {
+        color: '#F37052',
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 20, 
+        textAlign: 'center'
     }
 });
