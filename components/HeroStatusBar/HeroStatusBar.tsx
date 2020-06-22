@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, View, TouchableOpacity, Text, StyleSheet, Dimensions, Modal } from 'react-native';
+import { Image, View, TouchableOpacity, Text, StyleSheet, Dimensions, Modal, BackHandler  } from 'react-native';
 
 import {styles} from './styles';
 
@@ -95,7 +95,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 </View>
                             </View>
 
-                            <TouchableOpacity style={styles.modalExitButton}>
+                            <TouchableOpacity style={styles.modalExitButton} onPress={() => BackHandler.exitApp() }>
                                 <Text style={styles.modalExitButtonText}>кароче типа выйти</Text>
                             </TouchableOpacity>
                         </View>   
