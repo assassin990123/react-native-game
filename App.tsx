@@ -4,6 +4,10 @@ import * as Font from 'expo-font';
 
 import Routes from './Routes';
 
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from './aws-exports';
+Amplify.configure(awsconfig);
+
 export default class App extends Component {
     constructor(props: any) {
         super(props);

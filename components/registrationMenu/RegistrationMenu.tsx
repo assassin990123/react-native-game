@@ -12,22 +12,46 @@ import { styles } from './styles';
 *
 */
 
+import { Auth } from 'aws-amplify';
+
 export default class RegistrationMenu extends Component {
+    state = {
+        phone_number: '',
+        username: '',
+        password: '',
+        email: '',
+        smsKode: '',
+
+      }
+
     constructor(props: any) {
         super(props);
-        
-        this.state = {
-          phone: String,
-          username: String,
-          password: String,
-          repPassword: String,
-          smsKode: String,
-
-        }
     }
 
     onClickHandler = (viewId: String) => {
         alert('Button pressed ' + viewId);
+    }
+
+    signUp = async () =>  {
+        const username:any = this.state.username
+        const password:any = this.state.password
+        const email:any = this.state.email
+        const phone_number:any = this.state.phone_number
+        await Auth.signUp({
+            username,
+            password,
+            attributes:{
+                email,
+                phone_number
+            }
+        }).then(()=>console.log('signup successful'))
+          .catch(error=>{console.log('signup error', error), alert('oops' + error)});
+    }
+
+    confirmSignUp = async() => {
+        await Auth.confirmSignUp(this.state.username, this.state.smsKode)
+            .then(()=>console.log('successful confirm singtup'))
+            .catch(error=>console.log('error confirming signing up',error));
     }
 
     render() {
@@ -56,7 +80,7 @@ export default class RegistrationMenu extends Component {
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (phone) => this.setState({phone}) } />
+                                   onChangeText = { (username) => this.setState({username}) } />
                     </View>
 
                     <View style = {styles.inputContainer}>
@@ -65,7 +89,7 @@ export default class RegistrationMenu extends Component {
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (username) => this.setState({username}) } />
+                                   onChangeText = { (phone_number) => this.setState({phone_number}) } />
                     </View>
         
                     <View style = {styles.inputContainer}>
@@ -80,16 +104,15 @@ export default class RegistrationMenu extends Component {
 
                     <View style = {styles.inputContainer}>
                         <TextInput style                 = {styles.input}
-                                   placeholder           = "Повторите пароль"
+                                   placeholder           = "Email"
                                    keyboardType          = "default"
-                                   secureTextEntry       = {true}
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (repPassword) => this.setState({repPassword}) } />
+                                   onChangeText = { (email) => this.setState({email}) } />
                     </View>
             
                     <TouchableOpacity style   = {styles.sendButton}
-                                      onPress = { () => this.onClickHandler('continue') }>
+                                      onPress = { () => this.signUp()}>
                         <Text style = {styles.buttonsText}>Отправить код</Text>
                     </TouchableOpacity>
 
@@ -103,7 +126,7 @@ export default class RegistrationMenu extends Component {
                     </View>
 
                     <TouchableOpacity style   = {styles.continueButton}
-                                      onPress = { () => Actions.CharacterMenu()}>
+                                      onPress = { () => this.confirmSignUp()}>
                         <Text style = {styles.buttonsText}>Подтвердить</Text>
                     </TouchableOpacity>
             </View>
@@ -111,3 +134,4 @@ export default class RegistrationMenu extends Component {
          );
     }
 }
+
