@@ -21,13 +21,14 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
     state = {
         _icons: {
-            satietly:  { link: require('./assets/satiety.png'),   currentState: 100 },
-            sleep:     { link: require('./assets/sleep.png'),     currentState: 100 },
-            cleanness: { link: require('./assets/cleanness.png'), currentState: 100 },
-            mood:      { link: require('./assets/mood.png'),      currentState: 100 }
+            satietly:  { link: require('./assets/satiety.png'),   currentState: 100,  name: 'Голод' },
+            sleep:     { link: require('./assets/sleep.png'),     currentState: 100,  name: 'Бодрость' },
+            cleanness: { link: require('./assets/cleanness.png'), currentState: 100,  name: 'Чистота' },
+            mood:      { link: require('./assets/mood.png'),      currentState: 100,  name: 'Настроение' }
         },
 
-        modalVisible: false,
+        settingsModalVisible: false,
+        statsModalVisible: false
     };
 
     getCurrentColor = (currntStateNum: number) => {
@@ -41,10 +42,10 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     };
 
     render(): JSX.Element {
-        let StatusBarItems: JSX.Element[] = [];
+        let statusBarItems: JSX.Element[] = [];
 
         for (let [key, value] of Object.entries(this.state._icons)) {
-            StatusBarItems.push(<TouchableOpacity onPress={() => {}} 
+            statusBarItems.push(<TouchableOpacity onPress={() => {}} 
                                                style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color]}
                                                activeOpacity={1}
                                                key={key}>
@@ -52,12 +53,27 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                             </TouchableOpacity>);
         }
         
+        let statsItems: JSX.Element[] = [];
+
+        for (let [,value] of Object.entries(this.state._icons)) {
+            statsItems.push(<View style={{flexDirection: 'row', marginBottom: 30}}>
+                                <View style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color, {marginRight: 0}]}>
+                                    <Image source={value.link} />
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
+                                    <Text style={{width: '48%', fontFamily: 'Montserrat-SemiBold', fontSize: 16, textAlign: 'left'}}>{value.name}: </Text>
+                                    <Text style={{width: '35%', fontFamily: 'Montserrat-SemiBold', fontSize: 16, textAlign: 'right'}}>{value.currentState}%</Text>
+                                </View>
+                               
+                            </View>);
+        }
+
         return (
             <View style = {Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null}>
                 <Modal animationType='fade'
                        transparent={true}
-                       visible={this.state.modalVisible}
-                       onRequestClose={() => {this.setState({modalVisible: false})}}>
+                       visible={this.state.settingsModalVisible}
+                       onRequestClose={() => {this.setState({settingsModalVisible: false})}}>
                     <View style={styles.modalContainer}>
                         <View style={styles.modalView}>
                             <Text style={[styles.modalTitle]}>Настройки</Text>
@@ -71,7 +87,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                     }}>
                                         <Image source={require('./assets/modalFiles/arrow-left.png')}/>
                                     </TouchableOpacity>
-                                    <Text style={styles.modalSettingNumber}>{this.state.currentBrightness}</Text>
+                                    <Text style={styles.modalSettingNumber}>{5}</Text>
                                     <TouchableOpacity style={styles.modalSettingArrow} onPress={() => {
                                     }}>
                                         <Image source={require('./assets/modalFiles/arrow-right.png')}/>
@@ -101,24 +117,41 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 </View>
                             </View>
 
-                            <TouchableOpacity style={styles.modalExitButton} onPress={() => {BackHandler.exitApp(); VisualEffectsController.getInstance().setDefaultParams(); } }>
+                            <TouchableOpacity style={styles.modalExitButton} onPress={() => {BackHandler.exitApp(); } }>
                                 <Text style={styles.modalExitButtonText}>кароче типа выйти</Text>
                             </TouchableOpacity>
                         </View>   
                     </View>
                 </Modal>
+                
+                <Modal animationType='fade'
+                       transparent={true}
+                       visible={this.state.statsModalVisible}
+                       onRequestClose={() => {this.setState({statsModalVisible: false})}}>
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalView}>
+                            <Text style={[styles.modalTitle]}>Состояние {"\n"} героя</Text>
+                            
+                            <View style={{justifyContent: "center", alignItems: 'center'}}>{statsItems}</View>
+                            
+                            <TouchableOpacity style={styles.modalExitButton} onPress={() => { this.setState({statsModalVisible: false}) } }>
+                                <Text style={styles.modalExitButtonText}>Назад</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
 
                 <View style={styles.StatusBar}>
                     <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
-                        <Text style={styles.levelText}>12</Text>
+                        <Text style={styles.levelText} onPress = {() => this.setState({statsModalVisible: true})}>12</Text>
                     </TouchableOpacity>
 
                     <View style={[styles.StatusBarSubMenu, styles.defaultMargin]}>
-                        {StatusBarItems}
+                        {statusBarItems}
                     </View>
 
                     <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]} onPress={() => {
-                        this.setState({modalVisible: true});
+                        this.setState({settingsModalVisible: true});
                     }}>
                         <Image source={require('./assets/settings.png')} />
                     </TouchableOpacity>              

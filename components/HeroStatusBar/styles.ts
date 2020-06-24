@@ -96,7 +96,8 @@ export const styles = StyleSheet.create({
     modalTitle: {
         fontFamily: 'Montserrat-SemiBold',
         fontSize: 30, 
-        marginBottom: 15
+        marginBottom: 15,
+        textAlign: 'center'
     },
 
     modalSettingItem: {
