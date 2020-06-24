@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+
 const colorSpectrum = {
     white: '#ffffff',
     pink:  '#FBC9FF',
