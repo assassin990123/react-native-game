@@ -3,8 +3,6 @@ import { Image, View, TouchableOpacity, Text, StyleSheet, Dimensions, Modal, Bac
 
 import {styles} from './styles';
 
-import VisualEffectsController from '../../endpoints/VisualEffecrsController';
-
 /*
 *
     @brief: Status bar to display characters needs, such as sleep, food, lvl and etc.
@@ -30,7 +28,6 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         },
 
         modalVisible: false,
-        currentBrightness: VisualEffectsController.getInstance().currentBrightness()
     };
 
     getCurrentColor = (currntStateNum: number) => {
@@ -71,15 +68,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 </View>
                                 <View style={{flexDirection: 'row', height: '50%', justifyContent: 'center', alignItems: 'center'}}> 
                                     <TouchableOpacity style={styles.modalSettingArrow} onPress={() => {
-                                        VisualEffectsController.getInstance().lowerBrightness();
-                                        this.setState({currentBrightness: VisualEffectsController.getInstance().currentBrightness()})
                                     }}>
                                         <Image source={require('./assets/modalFiles/arrow-left.png')}/>
                                     </TouchableOpacity>
                                     <Text style={styles.modalSettingNumber}>{this.state.currentBrightness}</Text>
                                     <TouchableOpacity style={styles.modalSettingArrow} onPress={() => {
-                                        VisualEffectsController.getInstance().raiseBrightness();
-                                        this.setState({currentBrightness: VisualEffectsController.getInstance().currentBrightness()})
                                     }}>
                                         <Image source={require('./assets/modalFiles/arrow-right.png')}/>
                                     </TouchableOpacity>
