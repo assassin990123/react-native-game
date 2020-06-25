@@ -12,18 +12,29 @@ import { styles } from './styles';
 *
 */
 
+import { Auth } from 'aws-amplify';
+
 export default class StartMenu extends Component {
+    state = {
+        username: '',
+        password: '',
+      }
+    
     constructor(props: any) {
         super(props);
-        
-        this.state = {
-          username: String,
-          password: String,
-        }
     }
 
     onClickHandler = (viewId: String) => {
         alert('Button pressed ' + viewId);
+    }
+
+    SingIn = async () => {
+        // const username:any = this.state.username
+        // const password:any = this.state.password
+        await Auth.signIn(this.state.username, 
+                          this.state.password)
+            .then(()=>{console.log('singin Succses'),  Actions.CharacterMenu()})
+            .catch(error=>{console.log('signin error', error), alert('Woops, '+ error.message)});
     }
 
     render() {
@@ -45,7 +56,7 @@ export default class StartMenu extends Component {
 
                     <View style = {styles.inputContainer}>
                         <TextInput style          = {styles.input}
-                                   placeholder           = "Номер телефона"
+                                   placeholder           = "Номер телефона +7"
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
@@ -63,7 +74,7 @@ export default class StartMenu extends Component {
                     </View>
                 
                     <TouchableOpacity style   = {styles.logButton}
-                                      onPress = { () => Actions.CharacterMenu() }>
+                                      onPress = { () => this.SingIn()}>
                         <Text style = {styles.buttonsText}>Войти</Text>
                     </TouchableOpacity>
                     

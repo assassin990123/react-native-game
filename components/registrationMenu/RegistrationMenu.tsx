@@ -45,13 +45,14 @@ export default class RegistrationMenu extends Component {
                 phone_number
             }
         }).then(()=>console.log('signup successful'))
-          .catch(error=>{console.log('signup error', error), alert('oops' + error)});
+          .catch(error=>{console.log('signup error', error), alert('Woops, ' + error.message)});
     }
 
     confirmSignUp = async() => {
-        await Auth.confirmSignUp(this.state.username, this.state.smsKode)
-            .then(()=>console.log('successful confirm singtup'))
-            .catch(error=>console.log('error confirming signing up',error));
+        await Auth.confirmSignUp(this.state.username, 
+                                 this.state.smsKode)
+            .then(()=>{console.log('successful confirm singtup'), Actions.CreateCharacter()})
+            .catch(error=>{console.log('error confirming signing up',error), alert('Woops, ' + error.message)});
     }
 
     render() {
@@ -76,20 +77,20 @@ export default class RegistrationMenu extends Component {
 
                     <View style = {styles.inputContainer}>
                         <TextInput style          = {styles.input}
-                                   placeholder           = "Номер телефона"
-                                   keyboardType          = "default"
-                                   underlineColorAndroid = 'transparent'
-
-                                   onChangeText = { (username) => this.setState({username}) } />
-                    </View>
-
-                    <View style = {styles.inputContainer}>
-                        <TextInput style                 = {styles.input}
-                                   placeholder           = "Имя пользователя"
+                                   placeholder           = "Номер телефона +7"
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
                                    onChangeText = { (phone_number) => this.setState({phone_number}) } />
+                    </View>
+
+                    <View style = {styles.inputContainer}>
+                        <TextInput style                 = {styles.input}
+                                   placeholder           = "Повторите номер телефона +7"
+                                   keyboardType          = "default"
+                                   underlineColorAndroid = 'transparent'
+
+                                   onChangeText = { (username) => this.setState({username}) } />
                     </View>
         
                     <View style = {styles.inputContainer}>
