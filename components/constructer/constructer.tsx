@@ -88,6 +88,11 @@ export default class StartMenu extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <View style={{position: 'absolute', top: width * 1.5, width: '100%', height: '100%'}}> 
+                        <TouchableOpacity style={{backgroundColor: '#E76BC0', borderRadius: 10, width: '90%', height: '10%', justifyContent: 'center', alignItems: 'center', marginBottom: 10, marginLeft: 'auto', marginRight: 'auto'}}> 
+                            <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Создать</Text>
+                        </TouchableOpacity>
+                    </View>
             </View>
 
         </KeyboardAvoidingView>
