@@ -56,7 +56,8 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 10,
         textAlign: 'center',
-        textAlignVertical:'center'
+        textAlignVertical:'center',
+        fontFamily: 'Montserrat-SemiBold'
     },
 
     backButton: {

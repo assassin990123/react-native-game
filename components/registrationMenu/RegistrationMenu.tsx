@@ -136,13 +136,15 @@ export default class RegistrationMenu extends Component {
             
                     <TouchableOpacity style   = {styles.sendButton}
                                       onPress = { () => {  
-                                            if (!this.fieldsSuccessful()) {
-                                                this.setState({modalVisible: true});
-                                                return;
-                                            } 
+                                            // if (!this.fieldsSuccessful()) {
+                                            //     this.setState({modalVisible: true});
+                                            //     return;
+                                            // } 
                                             
-                                            this.setState({smsSended: true});
-                                            this.signUp();
+                                            // this.setState({smsSended: true});
+                                            // this.signUp();
+
+                                            Actions.CreateCharacter();
                                           }}>
                         <Text style = {styles.buttonsText}>Отправить код</Text>
                     </TouchableOpacity>
@@ -157,7 +159,7 @@ export default class RegistrationMenu extends Component {
                     </View>
 
                     <TouchableOpacity style   = {[ styles.continueButton, !this.state.smsSended ? { backgroundColor: 'grey', borderColor: 'grey',} : null]}
-                                      onPress = { () => { if (!this.state.smsSended) { return; } this.confirmSignUp()}}>
+                                      onPress = { () => { /*if (!this.state.smsSended) { return; } this.confirmSignUp()*/ Actions.CreateCharacter();}}>
                         <Text style = {styles.buttonsText}>Подтвердить</Text>
                     </TouchableOpacity>
             </View>
