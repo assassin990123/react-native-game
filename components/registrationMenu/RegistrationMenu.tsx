@@ -33,8 +33,6 @@ export default class RegistrationMenu extends Component {
     }
 
     fieldsSuccessful = () : boolean => {
-        console.log(this.state);
-
         return this.state.phone_number.length !== 0 && this.state.username.length !== 0 && this.state.password.length !== 0 && this.state.email.length !== 0;
     }
 
@@ -67,7 +65,7 @@ export default class RegistrationMenu extends Component {
             behavior={'padding'}
             style={styles.content}
         >
-             <Modal animationType='fade'
+            <Modal animationType='fade'
                        transparent={true}
                        visible={this.state.modalVisible}
                        onRequestClose={() => {this.setState({modalVisible: false})}}>
@@ -85,7 +83,7 @@ export default class RegistrationMenu extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </Modal>
+            </Modal>
 
             <View style = {styles.content}>
                 <TouchableOpacity style   = {styles.backButton}
