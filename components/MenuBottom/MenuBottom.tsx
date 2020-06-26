@@ -58,7 +58,7 @@ export default class MenuBottom extends Component {
                                               style={value.pressed ? styles.pressedButton : styles.defaultButton}
                                               activeOpacity={1}>
                                     <Image source={value.link} key = {key}
-                                           style={value.pressed ? styles.imageDefaultColor : styles.imagePressedColor} />
+                                           style={value.pressed ? styles.imagePressedColor : styles.imageDefaultColor} />
                             </TouchableOpacity>);
             
             this._handlers.push(() => {

@@ -23,11 +23,11 @@ export const styles = StyleSheet.create({
     },
 
     imageDefaultColor: {
-        tintColor: '#575DF3'
+        tintColor: '#B72FA9'
     },
 
     imagePressedColor: {
-        tintColor: '#BD00FF'
+        tintColor: '#FFFFFF'
     },
 
     defaultButton: {
@@ -51,6 +51,6 @@ export const styles = StyleSheet.create({
         marginLeft: '2%',
         marginRight: '2%',
         marginTop: '1%',
-        backgroundColor: 'rgba(251, 201, 255, 0.85)'
+        backgroundColor: '#B72FA9'
     },
 });
