@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Actions } from 'react-native-router-flux';
-import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image} from 'react-native';
-
-import * as Font from 'expo-font';
+import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, Modal} from 'react-native';
 
 import { styles } from './styles';
 
@@ -16,12 +14,16 @@ import { Auth } from 'aws-amplify';
 
 export default class RegistrationMenu extends Component {
     state = {
-        phone_number: '',
-        username: '',
-        password: '',
-        email: '',
-        smsKode: '',
-
+        regProps: {
+            phone_number: '',
+            username: '',
+            password: '',
+            email: '',
+            smsKode: '',
+        }, 
+        
+        modalVisible: false, 
+        smsSended: false
       }
 
     constructor(props: any) {
@@ -32,11 +34,22 @@ export default class RegistrationMenu extends Component {
         alert('Button pressed ' + viewId);
     }
 
+    fieldsSuccessful = () : boolean => {
+        console.log(this.state);
+        for (let [, value] of Object.entries(this.state.regProps)) {
+            if (value.length === 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     signUp = async () =>  {
-        const username:any = this.state.username
-        const password:any = this.state.password
-        const email:any = this.state.email
-        const phone_number:any = this.state.phone_number
+        const username:any = this.state.regProps.username
+        const password:any = this.state.regProps.password
+        const email:any = this.state.regProps.email
+        const phone_number:any = this.state.regProps.phone_number
         await Auth.signUp({
             username,
             password,
@@ -49,8 +62,8 @@ export default class RegistrationMenu extends Component {
     }
 
     confirmSignUp = async() => {
-        await Auth.confirmSignUp(this.state.username, 
-                                 this.state.smsKode)
+        await Auth.confirmSignUp(this.state.regProps.username, 
+                                 this.state.regProps.smsKode)
             .then(()=>{console.log('successful confirm singtup'), Actions.CreateCharacter()})
             .catch(error=>{console.log('error confirming signing up',error), alert('Woops, ' + error.message)});
     }
@@ -61,6 +74,26 @@ export default class RegistrationMenu extends Component {
             behavior={'padding'}
             style={styles.content}
         >
+             <Modal animationType='fade'
+                       transparent={true}
+                       visible={this.state.modalVisible}
+                       onRequestClose={() => {this.setState({modalVisible: false})}}>
+                    <View style={styles.modalContainer}>
+                        <View style={[styles.modalView]}>
+                            <Text style={[styles.modalTitle]}>Ошибка!</Text>
+                            <View style={{justifyContent: "center", alignItems: 'center'}}>
+                                <Text style={styles.modalErrorText}>
+                                    Поля регистрации {"\n"} не могут быть пустыми!
+                                </Text>
+                            </View>
+                            
+                            <TouchableOpacity style={styles.modalOkButton} onPress={() => { this.setState({modalVisible: false}) } }>
+                                <Text style={styles.modalOkButtonText}>Понятно</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+
             <View style = {styles.content}>
                 
                     
@@ -113,7 +146,15 @@ export default class RegistrationMenu extends Component {
                     </View>
             
                     <TouchableOpacity style   = {styles.sendButton}
-                                      onPress = { () => this.signUp()}>
+                                      onPress = { () => {  
+                                            if (!this.fieldsSuccessful()) {
+                                                this.setState({modalVisible: true});
+                                                return;
+                                            } 
+                                            
+                                            this.setState({smsSended: true});
+                                            this.signUp()
+                                          }}>
                         <Text style = {styles.buttonsText}>Отправить код</Text>
                     </TouchableOpacity>
 
@@ -126,8 +167,8 @@ export default class RegistrationMenu extends Component {
                                    onChangeText = { (smsKode) => this.setState({smsKode}) } />
                     </View>
 
-                    <TouchableOpacity style   = {styles.continueButton}
-                                      onPress = { () => this.confirmSignUp()}>
+                    <TouchableOpacity style   = {[ styles.continueButton, !this.state.smsSended ? { backgroundColor: 'grey', borderColor: 'grey',} : null]}
+                                      onPress = { () => { if (!this.state.smsSended) { return; } this.confirmSignUp()}}>
                         <Text style = {styles.buttonsText}>Подтвердить</Text>
                     </TouchableOpacity>
             </View>
