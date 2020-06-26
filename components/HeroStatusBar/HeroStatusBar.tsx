@@ -24,11 +24,15 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             satietly:  { link: require('./assets/satiety.png'),   currentState: 100,  name: 'Голод' },
             sleep:     { link: require('./assets/sleep.png'),     currentState: 100,  name: 'Бодрость' },
             cleanness: { link: require('./assets/cleanness.png'), currentState: 100,  name: 'Чистота' },
-            mood:      { link: require('./assets/mood.png'),      currentState: 100,  name: 'Настроение' }
+            mood:      { link: require('./assets/mood.png'),      currentState: 100,  name: 'Настроение' },
         },
+        
+        _money: { link: require('./assets/money.png'), currentState: 0,  name: 'Монетки' },
 
         settingsModalVisible: false,
-        statsModalVisible: false
+        statsModalVisible:    false,
+
+        level: {number: 1, exp: 1000}
     };
 
     getCurrentColor = (currntStateNum: number) => {
@@ -61,12 +65,31 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                     <Image source={value.link} />
                                 </View>
                                 <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
-                                    <Text style={{width: '48%', fontFamily: 'Montserrat-SemiBold', fontSize: 16, textAlign: 'left'}}>{value.name}: </Text>
-                                    <Text style={{width: '35%', fontFamily: 'Montserrat-SemiBold', fontSize: 16, textAlign: 'right'}}>{value.currentState}%</Text>
+                                    <Text style={styles.modalStatePropName}>{value.name}: </Text>
+                                    <Text style={styles.modalStatePropNumber}>{value.currentState}%</Text>
                                 </View>
-                               
                             </View>);
         }
+
+        statsItems.push(<View style={{flexDirection: 'row', marginBottom: 30}}>
+                                        <View style={[styles.iconStyleSubMenu, {marginRight: 0}]}>
+                                            <Image source={this.state._money.link} />
+                                        </View>
+                                        <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
+                                            <Text style={styles.modalStatePropName}>{this.state._money.name}: </Text>
+                                            <Text style={styles.modalStatePropNumber}>{this.state._money.currentState}</Text>
+                                        </View>
+                                    </View>);
+
+        statsItems.push(<View style={{flexDirection: 'row'}}>
+                                <View style={[styles.iconStyleSubMenu, {marginRight: 0}]}>
+                                    <Image source={require('./assets/lvl-icon.png')} />
+                                </View>
+                                <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
+                                <Text style={styles.modalStatePropName}>Уровень {this.state.level.number}: </Text>
+                                <Text style={styles.modalStatePropNumber}>{this.state.level.exp} exp</Text>
+                                </View>
+                            </View>);
 
         return (
             <View style = {Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null}>
@@ -129,7 +152,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                        visible={this.state.statsModalVisible}
                        onRequestClose={() => {this.setState({statsModalVisible: false})}}>
                     <View style={styles.modalContainer}>
-                        <View style={styles.modalView}>
+                        <View style={[styles.modalView, {height: '87%'}]}>
                             <Text style={[styles.modalTitle]}>Состояние {"\n"} героя</Text>
                             
                             <View style={{justifyContent: "center", alignItems: 'center'}}>{statsItems}</View>
@@ -143,7 +166,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
                 <View style={styles.StatusBar}>
                     <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
-                        <Text style={styles.levelText} onPress = {() => this.setState({statsModalVisible: true})}>12</Text>
+                                <Text style={styles.levelText} onPress = {() => this.setState({statsModalVisible: true})}>{this.state.level.number}</Text>
                     </TouchableOpacity>
 
                     <View style={[styles.StatusBarSubMenu, styles.defaultMargin]}>

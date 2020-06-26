@@ -161,5 +161,19 @@ export const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Medium',
         fontSize: 20, 
         textAlign: 'center'
+    },
+
+    modalStatePropName: {
+        width: '48%', 
+        fontFamily: 'Montserrat-SemiBold', 
+        fontSize: 16, 
+        textAlign: 'left'
+    },
+
+    modalStatePropNumber: {
+        width: '35%', 
+        fontFamily: 'Montserrat-SemiBold', 
+        fontSize: 16, 
+        textAlign: 'right'
     }
 });
