@@ -194,7 +194,7 @@ export const styles = StyleSheet.create({
         fontFamily: 'Montserrat-SemiBold', 
         fontSize: 16, 
         textAlign: 'center',
-        height: '38%'
+        height: '40%'
     },
 
 });

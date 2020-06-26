@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Actions } from 'react-native-router-flux';
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, Modal} from 'react-native';
+import { Auth } from 'aws-amplify';
 
 import { styles } from './styles';
 
@@ -10,18 +11,15 @@ import { styles } from './styles';
 *
 */
 
-import { Auth } from 'aws-amplify';
 
 export default class RegistrationMenu extends Component {
     state = {
-        regProps: {
-            phone_number: '',
-            username: '',
-            password: '',
-            email: '',
-            smsKode: '',
-        }, 
-        
+        phone_number: '',
+        username: '',
+        password: '',
+        email: '',
+        smsKode: '',
+
         modalVisible: false, 
         smsSended: false
       }
@@ -36,20 +34,15 @@ export default class RegistrationMenu extends Component {
 
     fieldsSuccessful = () : boolean => {
         console.log(this.state);
-        for (let [, value] of Object.entries(this.state.regProps)) {
-            if (value.length === 0) {
-                return false;
-            }
-        }
 
-        return true;
+        return this.state.phone_number.length !== 0 && this.state.username.length !== 0 && this.state.password.length !== 0 && this.state.email.length !== 0;
     }
 
     signUp = async () =>  {
-        const username:any = this.state.regProps.username
-        const password:any = this.state.regProps.password
-        const email:any = this.state.regProps.email
-        const phone_number:any = this.state.regProps.phone_number
+        const username:any = this.state.username
+        const password:any = this.state.password
+        const email:any = this.state.email
+        const phone_number:any = this.state.phone_number
         await Auth.signUp({
             username,
             password,
@@ -62,8 +55,8 @@ export default class RegistrationMenu extends Component {
     }
 
     confirmSignUp = async() => {
-        await Auth.confirmSignUp(this.state.regProps.username, 
-                                 this.state.regProps.smsKode)
+        await Auth.confirmSignUp(this.state.username, 
+                                 this.state.smsKode)
             .then(()=>{console.log('successful confirm singtup'), Actions.CreateCharacter()})
             .catch(error=>{console.log('error confirming signing up',error), alert('Woops, ' + error.message)});
     }
@@ -95,8 +88,6 @@ export default class RegistrationMenu extends Component {
                 </Modal>
 
             <View style = {styles.content}>
-                
-                    
                 <TouchableOpacity style   = {styles.backButton}
                                   onPress = { () => Actions.LogIn()}>
                         <Image source={require("../../assets/arrow.png")}/>
@@ -114,7 +105,7 @@ export default class RegistrationMenu extends Component {
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (phone_number) => this.setState({phone_number}) } />
+                                   onChangeText = { (phone_number) => this.setState({phone_number: phone_number}) } />
                     </View>
 
                     <View style = {styles.inputContainer}>
@@ -123,7 +114,7 @@ export default class RegistrationMenu extends Component {
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (username) => this.setState({username}) } />
+                                   onChangeText = { (username) => this.setState({username: username}) } />
                     </View>
         
                     <View style = {styles.inputContainer}>
@@ -133,7 +124,7 @@ export default class RegistrationMenu extends Component {
                                    secureTextEntry       = {true}
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (password) => this.setState({password}) } />
+                                   onChangeText = { (password) => this.setState({password: password}) } />
                     </View>
 
                     <View style = {styles.inputContainer}>
@@ -142,7 +133,7 @@ export default class RegistrationMenu extends Component {
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (email) => this.setState({email}) } />
+                                   onChangeText = { (email) => this.setState({email: email}) } />
                     </View>
             
                     <TouchableOpacity style   = {styles.sendButton}
@@ -153,7 +144,7 @@ export default class RegistrationMenu extends Component {
                                             } 
                                             
                                             this.setState({smsSended: true});
-                                            this.signUp()
+                                            this.signUp();
                                           }}>
                         <Text style = {styles.buttonsText}>Отправить код</Text>
                     </TouchableOpacity>
@@ -164,7 +155,7 @@ export default class RegistrationMenu extends Component {
                                    keyboardType          = "default"
                                    underlineColorAndroid = 'transparent'
 
-                                   onChangeText = { (smsKode) => this.setState({smsKode}) } />
+                                   onChangeText = { (smsKode) => this.setState({smsKode: smsKode}) } />
                     </View>
 
                     <TouchableOpacity style   = {[ styles.continueButton, !this.state.smsSended ? { backgroundColor: 'grey', borderColor: 'grey',} : null]}
