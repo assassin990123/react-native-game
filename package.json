@@ -12,6 +12,7 @@
     "@react-native-community/netinfo": "^5.9.3",
     "aws-amplify": "^3.0.18",
     "expo": "^37.0.4",
+    "expo-brightness": "~8.1.0",
     "expo-font": "~8.1.0",
     "expo-web-browser": "^8.2.1",
     "firebase": "7.9.0",

@@ -167,4 +167,3 @@ export default class RegistrationMenu extends Component {
          );
     }
 }
-

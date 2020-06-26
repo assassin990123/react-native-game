@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+
 const colorSpectrum = {
     white: '#ffffff',
     pink:  '#FBC9FF',
@@ -11,6 +12,7 @@ const colorSpectrum = {
     orange:'#FF7A00',
     red:'#C34A08'
 }
+
 
 export const styles = StyleSheet.create({
     content: {
@@ -24,7 +26,6 @@ export const styles = StyleSheet.create({
     header: {
         backgroundColor: colorSpectrum.white,
         flex: 2,
-        //top: height / 10,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -48,38 +49,30 @@ export const styles = StyleSheet.create({
     sendButton: {
         zIndex: 7,
         bottom:height/10,
-       // top: height / 1.7,
         backgroundColor: colorSpectrum.alternativPink,
         borderRadius: 10,
         borderColor: colorSpectrum.alternativPink,
         borderWidth: 1,
         width: width / 1.2,
         height: height / 14,
-        //marginBottom: 10,
-       // flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
     },
 
     continueButton: {
         zIndex: 7,
-       // top: height / 1.7,
         backgroundColor: colorSpectrum.alternativPink,
         borderRadius: 10,
         borderColor: colorSpectrum.alternativPink,
         borderWidth: 1,
         width: width / 1.2,
         height: height / 14,
-        //marginBottom: 10,
-       // flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         bottom: height/20
     },
 
     backButton: {
-        //marginBottom: 10,
-        //flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'flex-start',
         right:width/2.5,
@@ -90,7 +83,6 @@ export const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize: 50,
         color:colorSpectrum.black,
-        //flex: 1,
         bottom: height/15
     },
 
@@ -113,7 +105,6 @@ export const styles = StyleSheet.create({
         height: height / 14,
         marginBottom: 10,
         flexDirection: 'row',
-       // alignItems: 'stretch' 
         bottom: height/10  
     },
 
@@ -126,7 +117,6 @@ export const styles = StyleSheet.create({
         height: height / 14,
         marginBottom: 10,
         flexDirection: 'row',
-       // alignItems: 'stretch' 
         bottom: height/20  
     },
     
@@ -135,7 +125,6 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         color:colorSpectrum.white,
         fontFamily: 'Montserrat-Regular'
-        //fontFamily: 
     },
 
     modalOkButton: {

@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+
 const colorSpectrum = {
     white: '#ffffff',
     pink:  '#FBC9FF',
@@ -40,7 +41,6 @@ export const styles = StyleSheet.create({
     header: {
         backgroundColor: colorSpectrum.white,
         flex: 2,
-        //top: height / 10,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -49,22 +49,14 @@ export const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize: 50,
         color:colorSpectrum.black,
-        //flex: 1,
         bottom: height/15
     },
 
     backButton: {
-        //marginBottom: 10,
-        //flexDirection: 'column',
-      //  justifyContent: 'flex-end',
-      //  alignItems: 'flex-start',
         right:width/2.5,
-       // top: height/8
     },
 
     basketButton:{
-      //  justifyContent: 'flex-end',
-        //alignItems: 'flex',
         left:width/2.5,
         bottom:height/25
     },
@@ -74,7 +66,6 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         color:colorSpectrum.white,
         fontFamily: 'Montserrat-Regular'
-        //fontFamily: 
     },
 
     descriptionContaner:{
@@ -91,33 +82,84 @@ export const styles = StyleSheet.create({
 
     playButton:{
         zIndex: 7,
-       // top: height / 1.7,
         backgroundColor: colorSpectrum.alternativPink,
         borderRadius: 10,
         borderColor: colorSpectrum.alternativPink,
         borderWidth: 1,
         width: width / 1.2,
         height: height / 14,
-        //marginBottom: 10,
-       // flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        //top: height/2
     },
 
     nameContaner:{
         zIndex: 7,
-        // top: height / 1.7,
         backgroundColor: colorSpectrum.alternativPink,
         borderRadius: 10,
         borderColor: colorSpectrum.alternativPink,
         borderWidth: 1,
         width: width / 1.2,
         height: height / 14,
-        //marginBottom: 10,
-    // flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        //top: height/2
+    },
+
+    modalContainer: {
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        backgroundColor: 'rgba(52, 52, 52, 0.8)', 
+        width: '100%', 
+        height: '100%'
+    },
+
+    modalView: {
+        borderRadius: 10,
+        backgroundColor: 'white',
+        width: '80%',
+        height: '45%', 
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    
+    modalTitle: {
+        fontFamily: 'Montserrat-SemiBold',
+        textTransform: 'uppercase',
+        fontSize: 20
+    },
+    
+    modalText: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 16, 
+        textAlign: 'center'
+    },
+
+    modalPadding: {
+        paddingBottom: 20
+    },
+
+    modalButton: {
+        marginLeft: 18, 
+        marginRight: 18, 
+        height: '100%', 
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10, 
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+    },
+
+    modalButtonGroup: {
+        flexDirection: 'row', 
+        height: '16%',
+        width: '30%', 
+        justifyContent: 'center', 
+        marginTop: 10
     }
 });
