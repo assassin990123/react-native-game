@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { Actions } from 'react-native-router-flux';
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image} from 'react-native';
 
-import * as Font from 'expo-font';
-
 import { styles } from './styles';
 
 /*
