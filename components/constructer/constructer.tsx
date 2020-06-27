@@ -8,7 +8,9 @@ import Pictures from '../../assets/hero_sprites/Pictures';
 
 /*
 *
-    @brief: Authentication component.
+    @brief: Constructor hero component.
+
+    @info: DRUNK MASTER CODE INCOMIN'.
 *
 */
 
