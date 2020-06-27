@@ -4,7 +4,7 @@ import { Actions } from 'react-native-router-flux';
 
 import { styles } from './styles';
 
-const { width, height } = Dimensions.get('screen');
+const { height } = Dimensions.get('screen');
 
 interface ShopItem {
     title: string,
@@ -13,6 +13,7 @@ interface ShopItem {
     debuf: number, 
     price: number
 }
+
 
 export default class ShopComponent extends Component {
     constructor(props: any) {
@@ -33,7 +34,7 @@ export default class ShopComponent extends Component {
             return;
         } 
 
-        for (let [key, value] of Object.entries(this.state)) {
+        for (let [, value] of Object.entries(this.state)) {
             if (typeof(value) === 'string') {
                 continue;
             }
@@ -42,7 +43,7 @@ export default class ShopComponent extends Component {
 
             if (value.name === propName) {
                 this.state.currPressed = propName;
-                this.setState({key: {pressed: true, name: propName}})
+                this.setState({key: {pressed: true, name: propName}});
                 value.pressed = true;
             }
         }
