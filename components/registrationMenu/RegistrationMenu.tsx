@@ -107,7 +107,7 @@ export default class RegistrationMenu extends Component {
                                        }}
                                        
                                        value={this.state.phone_number}
-                                       onChangeText = { (phoneNumber: string) => {this.setState({phone_number: phoneNumber})} } />
+                                       onChangeText = { (phoneNumber: string) => {this.setState({phone_number: phoneNumber.replace(/\s/g, '')})} } />
                     </View>
 
                     <View style = {styles.inputContainer}>
@@ -119,7 +119,7 @@ export default class RegistrationMenu extends Component {
                                        }}
                                        
                                        value={this.state.username}
-                                       onChangeText = { (username: string) => {this.setState({username: username})} } />
+                                       onChangeText = { (username: string) => {this.setState({username: username.replace(/\s/g, '')})} } />
                     </View>
         
                     <View style = {styles.inputContainer}>
