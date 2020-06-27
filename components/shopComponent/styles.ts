@@ -11,8 +11,8 @@ export const styles = StyleSheet.create({
     selector: {
         width: '100%',
         height: '10%',
+        flexDirection: 'row',
         backgroundColor: 'red', 
-        
     },
 
     listView: {
@@ -52,5 +52,13 @@ export const styles = StyleSheet.create({
         marginBottom: 10, 
         marginLeft: 'auto', 
         marginRight: 'auto'
+    },
+
+    pressedSection: {
+        width: '50%', height: '100%', borderWidth: 1, borderColor: 'blue', borderRadius: 10
+    },
+
+    defaultSection: {
+        width: '16.6%', height: '100%', borderWidth: 1, borderColor: 'blue', borderRadius: 10
     }
 });

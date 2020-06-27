@@ -19,6 +19,13 @@ export default class ShopComponent extends Component {
         super(props);
     }
 
+    state = {
+        clothesSection: true,
+        puritySection: false,
+        nutritionSection: false,
+        gaietySection: false
+    }
+
     someItesms: ShopItem[] = [  {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
                                 {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
                                 {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
@@ -41,6 +48,10 @@ export default class ShopComponent extends Component {
         return (
             <ImageBackground source={require('./assets/background.png')} style={styles.container}> 
                 <View style={styles.selector}>
+                    <TouchableOpacity style={styles.pressedSection}></TouchableOpacity>
+                    <TouchableOpacity style={styles.defaultSection}></TouchableOpacity>
+                    <TouchableOpacity style={styles.defaultSection}></TouchableOpacity>
+                    <TouchableOpacity style={styles.defaultSection}></TouchableOpacity>
                 </View>
                 
                 <View style={{height: '75%'}}>
