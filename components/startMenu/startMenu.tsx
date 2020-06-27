@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Modal } from 'react-native';
+import { TextInput, Text, View, TouchableOpacity, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { TextInputMask } from 'react-native-masked-text';
 
 import * as WebBrowser from 'expo-web-browser';
 
@@ -34,8 +35,6 @@ export default class StartMenu extends Component {
     }
 
     SingIn = async () => {
-        // const username:any = this.state.username
-        // const password:any = this.state.password
         await Auth.signIn(this.state.username, 
                           this.state.password)
             .then(()=>{console.log('singin Succses'),  Actions.CharacterMenu()})
@@ -44,9 +43,8 @@ export default class StartMenu extends Component {
 
     render() {
         return (
-        <KeyboardAvoidingView
-            behavior={'padding'}
-            style={styles.content}
+        <View
+            style={[styles.content, {alignSelf: 'stretch'}]}
           >
              <Modal animationType='fade'
                        transparent={true}
@@ -76,14 +74,16 @@ export default class StartMenu extends Component {
                     <Text style = {styles.logoText}>PEDO</Text> 
                 </View>
 
-
-                    <View style = {styles.inputContainer}>
-                        <TextInput style          = {styles.input}
-                                   placeholder           = "Номер телефона +7"
-                                   keyboardType          = "default"
-                                   underlineColorAndroid = 'transparent'
-
-                                   onChangeText = { (username) => this.setState({username}) } />
+                <View style = {styles.inputContainer}>
+                <TextInputMask style = {styles.input}
+                               placeholder = "Номер телефона +7"
+                               type={'custom'}
+                               options={{
+                                   mask: '+9 999 999 99 99'
+                                }}
+                                       
+                                value={this.state.username}
+                                onChangeText = { (phoneNumber: string) => {this.setState({username: phoneNumber})} } />
                     </View>
 
                     <View style = {styles.inputContainer}>
@@ -123,7 +123,7 @@ export default class StartMenu extends Component {
                     </TouchableOpacity>
                 </View>
             </View>
-        </KeyboardAvoidingView>
+        </View>
         );
     }
 }

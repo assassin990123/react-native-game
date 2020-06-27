@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Actions } from 'react-native-router-flux';
-import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, Modal} from 'react-native';
+import { TextInput, Text, View, TouchableOpacity,  Image, Modal} from 'react-native';
 import { Auth } from 'aws-amplify';
+
+import { TextInputMask } from 'react-native-masked-text'
 
 import { styles } from './styles';
 
@@ -61,9 +63,8 @@ export default class RegistrationMenu extends Component {
 
     render() {
         return (
-        <KeyboardAvoidingView
-            behavior={'padding'}
-            style={styles.content}
+        <View
+            style={[styles.content, {alignSelf: 'stretch'}]}
         >
             <Modal animationType='fade'
                        transparent={true}
@@ -98,21 +99,27 @@ export default class RegistrationMenu extends Component {
                 </View>
 
                     <View style = {styles.inputContainer}>
-                        <TextInput style          = {styles.input}
-                                   placeholder           = "Номер телефона +7"
-                                   keyboardType          = "default"
-                                   underlineColorAndroid = 'transparent'
-
-                                   onChangeText = { (phone_number) => this.setState({phone_number: phone_number}) } />
+                        <TextInputMask style          = {styles.input}
+                                       placeholder           = "Номер телефона +7"
+                                       type={'custom'}
+                                       options={{
+                                           mask: '+9 999 999 99 99'
+                                       }}
+                                       
+                                       value={this.state.phone_number}
+                                       onChangeText = { (phoneNumber: string) => {this.setState({phone_number: phoneNumber})} } />
                     </View>
 
                     <View style = {styles.inputContainer}>
-                        <TextInput style                 = {styles.input}
-                                   placeholder           = "Повторите номер телефона +7"
-                                   keyboardType          = "default"
-                                   underlineColorAndroid = 'transparent'
-
-                                   onChangeText = { (username) => this.setState({username: username}) } />
+                        <TextInputMask style                 = {styles.input}
+                                       placeholder           = "Повторите номер телефона +7"
+                                       type={'custom'}
+                                       options={{
+                                           mask: '+9 999 999 99 99'
+                                       }}
+                                       
+                                       value={this.state.username}
+                                       onChangeText = { (username: string) => {this.setState({username: username})} } />
                     </View>
         
                     <View style = {styles.inputContainer}>
@@ -161,7 +168,7 @@ export default class RegistrationMenu extends Component {
                         <Text style = {styles.buttonsText}>Подтвердить</Text>
                     </TouchableOpacity>
             </View>
-       </KeyboardAvoidingView>
+       </View>
          );
     }
 }

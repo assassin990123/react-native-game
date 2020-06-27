@@ -145,7 +145,6 @@ export default class StartMenu extends Component {
                         </TouchableOpacity>
                     </View>
             </View>
-
         </KeyboardAvoidingView>
         );
     }
