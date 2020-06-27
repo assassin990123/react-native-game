@@ -18,6 +18,7 @@
     , "skipDefaultLibCheck": false
     , "preserveConstEnums": false
     , "allowUnreachableCode": false
-    , "strictPropertyInitialization": false
+    , "strictPropertyInitialization": false,
+    "target": "ES2020"
   }
 }

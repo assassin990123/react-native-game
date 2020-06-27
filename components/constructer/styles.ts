@@ -24,7 +24,6 @@ export const styles = StyleSheet.create({
     header: {
         backgroundColor: colorSpectrum.white,
         flex: 0.5,
-        //top: height / 10,
         alignItems: 'center',
         justifyContent: 'center',
         margin: '5%'
@@ -56,13 +55,34 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 10,
         textAlign: 'center',
-        textAlignVertical:'center'
+        textAlignVertical:'center',
+        fontFamily: 'Montserrat-SemiBold'
     },
 
     backButton: {
         justifyContent: 'flex-end',
-       // alignItems: 'flex-start',
         right:width/2.5,
-        //top: height/8
     },
+
+    selectButton: {
+        borderRadius: 10, 
+        width: '90%', 
+        height: '13%',
+        marginLeft: width * 0.085, 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        marginBottom: 10
+    },
+
+    agreeButton: {
+        backgroundColor: '#E76BC0', 
+        borderRadius: 10,
+        width: '90%', 
+        height: '10%', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        marginBottom: 10, 
+        marginLeft: 'auto', 
+        marginRight: 'auto'
+    }
 })

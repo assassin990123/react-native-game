@@ -21,6 +21,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
     "react-native-device-info": "^5.6.1",
     "react-native-gesture-handler": "~1.6.0",
+    "react-native-masked-text": "^1.13.0",
     "react-native-reanimated": "~1.7.0",
     "react-native-router-flux": "^4.2.0",
     "react-native-screens": "~2.2.0",
