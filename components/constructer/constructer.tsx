@@ -121,13 +121,13 @@ export default class StartMenu extends Component {
 
                 <View style={{width: '100%', flexDirection: 'row', height: '70%'}}>
                     <View style={{width: '50%', marginTop: height * 0.05}}>
-                        <TouchableOpacity onPress = {() => this.setEysColor()} style={{backgroundColor: '#E76BC0', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
+                        <TouchableOpacity onPress = {() => this.setEysColor()} style={[styles.selectButton, {backgroundColor: '#E76BC0'}]}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет глаз</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress = {() => this.setSkinColor()} style={{backgroundColor: '#128949', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
+                        <TouchableOpacity onPress = {() => this.setSkinColor()} style={[styles.selectButton, {backgroundColor: '#128949'}]}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет кожи</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress = {() => this.setHairColor()} style={{backgroundColor: '#FCB712', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
+                        <TouchableOpacity onPress = {() => this.setHairColor()} style={[styles.selectButton, {backgroundColor: '#FCB712'}]}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет волос</Text>
                         </TouchableOpacity>
                     </View>
@@ -140,7 +140,7 @@ export default class StartMenu extends Component {
                 </View>
                 <View style={{position: 'absolute', top: width * 1.5, width: '100%', height: '100%'}}> 
                         <TouchableOpacity  onPress={() => { Actions.GameComponent(); }}
-                                           style={{backgroundColor: '#E76BC0', borderRadius: 10, width: '90%', height: '10%', justifyContent: 'center', alignItems: 'center', marginBottom: 10, marginLeft: 'auto', marginRight: 'auto'}}> 
+                                           style={styles.agreeButton}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Создать</Text>
                         </TouchableOpacity>
                     </View>
