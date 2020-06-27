@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, Dimensions } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 import { styles } from './styles';
+
+import Pictures from '../../assets/hero_sprites/Pictures';
 
 /*
 *
@@ -17,12 +20,12 @@ export default class StartMenu extends Component {
     }
 
     state = {
-        sprites: {
-            titanda: {link: require('../../assets/hero_sprites/titanda/sprite_default.png')},
-            asuna: {link: require('../../assets/hero_sprites/asuna/sprite_default.png')}
-        },
+        skinColor: 'white',
+        hairColor: 'black',
+        eysColor:  'purple',
 
-        currentSprite: require('../../assets/hero_sprites/titanda/sprite_default.png'),
+        currentSpriteName: 'titanda',
+        currentSprite: Pictures.get('titanda_white_black_green'),
         characterName: String,
     };
 
@@ -31,17 +34,64 @@ export default class StartMenu extends Component {
     }
 
     setDefaultSprite = () => {
-        switch (this.state.currentSprite) {
-            case this.state.sprites.titanda.link: {
-                this.setState({currentSprite: this.state.sprites.asuna.link});
+        switch (this.state.currentSpriteName) {
+            case 'titanda': {
+                this.state.currentSpriteName = 'asuna';
                 break;
             }
-            case this.state.sprites.asuna.link: {
-                this.setState({currentSprite: this.state.sprites.titanda.link});
+            case 'asuna': {
+                this.state.currentSpriteName = 'titanda';
                 break;
             }
         }
+
+        this.setState({currentSprite: Pictures.get(`${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)});
     };
+
+    setSkinColor = () => {
+        switch (this.state.skinColor) {
+            case 'white': {
+                this.state.skinColor = 'alt';
+                break;
+            }
+            case 'alt': {
+                this.state.skinColor = 'white';
+                break;
+            }
+        }
+
+        this.setState({currentSprite: Pictures.get(`${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)});
+    }
+
+    setHairColor = () => {
+        switch (this.state.hairColor) {
+            case 'black': {
+                this.state.hairColor = 'purple';
+                break;
+            }
+            case 'purple': {
+                this.state.hairColor = 'black';
+                break;
+            }
+        }
+
+        this.setState({currentSprite: Pictures.get(`${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)});
+    }
+
+    setEysColor = () => {
+        switch (this.state.eysColor) {
+            case 'purple': {
+                this.state.eysColor = 'green';
+                break;
+            }
+            case 'green': {
+                this.state.eysColor = 'purple';
+                break;
+            }
+        }
+
+        this.setState({currentSprite: Pictures.get(`${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)});
+    }
 
     render() {
         return (
@@ -52,7 +102,7 @@ export default class StartMenu extends Component {
             <View style = {styles.content}>
 
                 <TouchableOpacity style   = {styles.backButton}
-                                    onPress = { () => {} }>
+                                    onPress = { () => { Actions.LogIn(); } }>
                         <Image source={require("../../assets/arrow.png")}/>
                 </TouchableOpacity>
 
@@ -71,20 +121,20 @@ export default class StartMenu extends Component {
 
                 <View style={{width: '100%', flexDirection: 'row', height: '70%'}}>
                     <View style={{width: '50%', marginTop: height * 0.05}}>
-                        <TouchableOpacity style={{backgroundColor: '#E76BC0', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
+                        <TouchableOpacity onPress = {() => this.setEysColor()} style={{backgroundColor: '#E76BC0', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет глаз</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{backgroundColor: '#128949', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
+                        <TouchableOpacity onPress = {() => this.setSkinColor()} style={{backgroundColor: '#128949', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет кожи</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{backgroundColor: '#FCB712', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
+                        <TouchableOpacity onPress = {() => this.setHairColor()} style={{backgroundColor: '#FCB712', borderRadius: 10, width: '90%', height: '13%', marginLeft: width * 0.085, justifyContent: 'center', alignItems: 'center', marginBottom: 10}}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет волос</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{width: '50%'}}>
                         <TouchableOpacity style={{width: '100%', justifyContent: 'center', alignItems:'center'}}
                                           onPress={() => { this.setDefaultSprite(); }}>
-                            <Image source={this.state.currentSprite} style={{resizeMode: 'contain'}}/>
+                            <Image source={ this.state.currentSprite} style={{resizeMode: 'contain'}}/>
                         </TouchableOpacity>
                     </View>
                 </View>
