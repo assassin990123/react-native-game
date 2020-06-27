@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: '10%',
         flexDirection: 'row',
-        backgroundColor: 'red', 
     },
 
     listView: {
@@ -55,10 +54,24 @@ export const styles = StyleSheet.create({
     },
 
     pressedSection: {
-        width: '50%', height: '100%', borderWidth: 1, borderColor: 'blue', borderRadius: 10
+        width: '50%',
+        height: '100%', 
+        borderWidth: 1, 
+        borderColor: 'black', 
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F57CFF'
     },
 
     defaultSection: {
-        width: '16.6%', height: '100%', borderWidth: 1, borderColor: 'blue', borderRadius: 10
+        width: '16.6%', 
+        height: '100%', 
+        borderWidth: 1, 
+        borderColor: 'black', 
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F57CFF'
     }
 });

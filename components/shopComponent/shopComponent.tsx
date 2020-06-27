@@ -20,10 +20,32 @@ export default class ShopComponent extends Component {
     }
 
     state = {
-        clothesSection: true,
-        puritySection: false,
-        nutritionSection: false,
-        gaietySection: false
+        clothesSection: {pressed: true,  name: 'clothes'},
+        cleanSection:   {pressed: false, name: 'clean'},
+        eatSection:     {pressed: false, name: 'eat'},
+        funSection:     {pressed: false, name: 'fun'},
+
+        currPressed: 'clothes'
+    }
+
+    setSection = (propName: string) => {
+        if (propName === this.state.currPressed) {
+            return;
+        } 
+
+        for (let [key, value] of Object.entries(this.state)) {
+            if (typeof(value) === 'string') {
+                continue;
+            }
+
+            value.pressed = false;
+
+            if (value.name === propName) {
+                this.state.currPressed = propName;
+                this.setState({key: {pressed: true, name: propName}})
+                value.pressed = true;
+            }
+        }
     }
 
     someItesms: ShopItem[] = [  {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
@@ -48,10 +70,25 @@ export default class ShopComponent extends Component {
         return (
             <ImageBackground source={require('./assets/background.png')} style={styles.container}> 
                 <View style={styles.selector}>
-                    <TouchableOpacity style={styles.pressedSection}></TouchableOpacity>
-                    <TouchableOpacity style={styles.defaultSection}></TouchableOpacity>
-                    <TouchableOpacity style={styles.defaultSection}></TouchableOpacity>
-                    <TouchableOpacity style={styles.defaultSection}></TouchableOpacity>
+                    <TouchableOpacity style={this.state.clothesSection.pressed ? [styles.pressedSection, {flexDirection: 'row'}] : styles.defaultSection} onPress={() => { this.setSection('clothes'); }}>
+                        <Image source={require('./assets/clothes_icon.png')}/>
+                        <Text style={[{fontFamily: 'Montserrat-Regular', fontSize: 20, paddingLeft: 30}, this.state.clothesSection.pressed ? null : {display: 'none'}]}>Одежда</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={this.state.cleanSection.pressed ?  [styles.pressedSection, {flexDirection: 'row'}] : styles.defaultSection} onPress={() => { this.setSection('clean'); }}>
+                        <Image source={require('./assets/clean_icon.png')}/>
+                        <Text style={[{fontFamily: 'Montserrat-Regular', fontSize: 20, paddingLeft: 30}, this.state.cleanSection.pressed ? null : {display: 'none'}]}>Чистота</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={this.state.eatSection.pressed ?  [styles.pressedSection, {flexDirection: 'row'}] : styles.defaultSection} onPress={() => { this.setSection('eat'); }}>
+                        <Image source={require('./assets/eat_icon.png')}/>
+                        <Text style={[{fontFamily: 'Montserrat-Regular', fontSize: 20, paddingLeft: 30}, this.state.eatSection.pressed ? null : {display: 'none'}]}>Еда</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={this.state.funSection.pressed ?  [styles.pressedSection, {flexDirection: 'row'}] : styles.defaultSection} onPress={() => { this.setSection('fun'); }}>
+                        <Image source={require('./assets/fun_icon.png')}/>
+                        <Text style={[{fontFamily: 'Montserrat-Regular', fontSize: 20, paddingLeft: 30}, this.state.funSection.pressed ? null : {display: 'none'}]}>Разлечения</Text>
+                    </TouchableOpacity>
                 </View>
                 
                 <View style={{height: '75%'}}>
