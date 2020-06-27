@@ -83,7 +83,7 @@ export default class StartMenu extends Component {
                                 }}
                                        
                                 value={this.state.username}
-                                onChangeText = { (phoneNumber: string) => {this.setState({username: phoneNumber})} } />
+                                onChangeText = { (phoneNumber: string) => {this.setState({username: phoneNumber.replace(/\s/g, '')})} } />
                     </View>
 
                     <View style = {styles.inputContainer}>
