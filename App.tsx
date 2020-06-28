@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import * as Font from 'expo-font';
 
 import Routes from './Routes';
-import Shop from './components/shopComponent/shopComponent';
 
 // @ts-ignore
 import awsconfig from './aws-exports';
@@ -40,8 +39,7 @@ export default class App extends Component {
     render () {
       if (this.state.fontLoaded){
           return (
-              <Shop/>
-              /*<Routes />*/
+              <Routes />
         );
       } else {
         return ( <View/> );
