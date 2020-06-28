@@ -4,6 +4,7 @@ import React from 'react';
 import CharacterConstructor from './components/constructer/constructer';
 import RegistrationMenu     from './components/registrationMenu/RegistrationMenu'
 import CreateCharacter      from './components/creationCharacterMenu/creationCharacterMenu';
+import ShopComponent        from './components/shopComponent/shopComponent';
 import GameComponent        from './components/gameComponent/gameComponent';
 import CharacterMenu        from './components/characterMenu/chracterMenu';
 import startMenu            from './components/startMenu/startMenu';
@@ -17,6 +18,7 @@ const Routes = () => (
          <Scene key = "CharacterConstructor" component = {CreateCharacter}      hideNavBar = {true} title = "Construct" />
          <Scene key = "CreateCharacter"      component = {CharacterConstructor} hideNavBar = {true} title = "Create" />
          <Scene key = "GameComponent"        component = {GameComponent}        hideNavBar = {true} title = "Game" />
+         <Scene key = "Shop"                 component = {ShopComponent}        hideNavBar = {true} title = "Shop" />
       </Scene>
    </Router>
 );

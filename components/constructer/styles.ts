@@ -81,7 +81,6 @@ export const styles = StyleSheet.create({
         height: '10%', 
         justifyContent: 'center', 
         alignItems: 'center', 
-        marginBottom: 10, 
         marginLeft: 'auto', 
         marginRight: 'auto'
     }
