@@ -2,7 +2,9 @@ import { View, StatusBar, Dimensions } from 'react-native';
 import React, { Component } from "react";
 import * as Font from 'expo-font';
 
-import Routes from './Routes';
+// import Routes from './Routes';
+
+import GameComponent from "./components/GameComponent/GameComponent";
 
 // @ts-ignore
 import awsconfig from './aws-exports';
@@ -39,7 +41,8 @@ export default class App extends Component {
     render () {
       if (this.state.fontLoaded){
           return (
-              <Routes />
+              <GameComponent />
+              // <Routes />
         );
       } else {
         return ( <View/> );
