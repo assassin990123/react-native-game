@@ -22,8 +22,10 @@ export default class RegistrationMenu extends Component {
         email: '',
         smsCode: '',
 
-        modalVisible: false, 
-        smsSent: false
+        modalVisible: false,
+        modalText: '',
+
+        smsSent: false,
       }
 
     constructor(props: any) {
@@ -51,14 +53,19 @@ export default class RegistrationMenu extends Component {
                 phone_number
             }
         }).then(()=>console.log('signup successful'))
-          .catch(error=>{console.log('signup error', error), alert('Woops, ' + error.message)});
+          .catch(error=>{console.log('signup error', error); this.openWarningModal('Ошибка соединения или \n некорректно введены данные!');});
     }
 
     confirmSignUp = async() => {
         await Auth.confirmSignUp(this.state.username, 
                                  this.state.smsCode)
-            .then(()=>{console.log('successful confirm singtup'), Actions.CreateCharacter()})
-            .catch(error=>{console.log('error confirming signing up',error), alert('Woops, ' + error.message)});
+            .then(()=>{console.log('successful confirm singtup'); Actions.CreateCharacter()})
+            .catch(error=>{console.log('error confirming signing up',error); this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!')});
+    }
+
+    openWarningModal = (message: string) => {
+        this.state.modalText = message;
+        this.setState({modalVisible: true});
     }
 
     render() {
@@ -73,7 +80,7 @@ export default class RegistrationMenu extends Component {
                         <Text style={[styles.modalTitle]}>Ошибка!</Text>
                         <View style={{justifyContent: "center", alignItems: 'center'}}>
                             <Text style={styles.modalErrorText}>
-                                Поля регистрации {"\n"} не могут быть пустыми!
+                                {this.state.modalText}
                             </Text>
                         </View>
 
@@ -136,7 +143,7 @@ export default class RegistrationMenu extends Component {
                     <TouchableOpacity style   = {styles.sendButton}
                                       onPress = { () => {  
                                             if (!this.fieldsSuccessful()) {
-                                                this.setState({modalVisible: true});
+                                                this.openWarningModal('Поля регистрации \n не могут быть пустыми!');
                                                 return;
                                             } 
                                             

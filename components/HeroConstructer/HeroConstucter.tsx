@@ -16,7 +16,7 @@ import Pictures from '../../assets/hero_sprites/Pictures';
 
 const { width, height } = Dimensions.get('screen');
 
-export default class StartMenu extends Component {
+export default class HeroConstucter extends Component {
     constructor(props: any) {
         super(props);
     }

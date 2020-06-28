@@ -19,7 +19,8 @@ export default class StartMenu extends Component {
     state = {
         username: '',
         password: '',
-        modalVisible: false
+        modalVisible: false,
+        modalText: '',
       }
     
     constructor(props: any) {
@@ -38,7 +39,12 @@ export default class StartMenu extends Component {
         await Auth.signIn(this.state.username, 
                           this.state.password)
             .then(()=>{console.log('singin Succses');  Actions.CharacterMenu()})
-            .catch(error=>{console.log('signin error', error); alert('Woops, '+ error.message)});
+            .catch(error=>{console.log('signin error', error); this.openWarningModal('Не правильно введен \n номер телефона или пароль!');});
+    }
+
+    openWarningModal = (message: string) => {
+        this.state.modalText = message;
+        this.setState({modalVisible: true});
     }
 
     render() {
@@ -50,21 +56,21 @@ export default class StartMenu extends Component {
                        transparent={true}
                        visible={this.state.modalVisible}
                        onRequestClose={() => {this.setState({modalVisible: false})}}>
-                    <View style={styles.modalContainer}>
-                        <View style={[styles.modalView]}>
-                            <Text style={[styles.modalTitle]}>Ошибка!</Text>
-                            <View style={{justifyContent: "center", alignItems: 'center'}}>
-                                <Text style={styles.modalErrorText}>
-                                    Поля входа {"\n"} не могут быть пустыми!
-                                </Text>
-                            </View>
-                            
-                            <TouchableOpacity style={styles.modalOkButton} onPress={() => { this.setState({modalVisible: false}) } }>
-                                <Text style={styles.modalOkButtonText}>Понятно</Text>
-                            </TouchableOpacity>
+                <View style={styles.modalContainer}>
+                    <View style={[styles.modalView]}>
+                        <Text style={[styles.modalTitle]}>Ошибка!</Text>
+                        <View style={{justifyContent: "center", alignItems: 'center'}}>
+                            <Text style={styles.modalErrorText}>
+                                {this.state.modalText}
+                            </Text>
                         </View>
+
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { this.setState({modalVisible: false}) } }>
+                            <Text style={styles.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
                     </View>
-                </Modal>
+                </View>
+             </Modal>
 
             <View style = {styles.content}>
                            
@@ -99,7 +105,7 @@ export default class StartMenu extends Component {
                     <TouchableOpacity style   = {styles.logButton}
                                       onPress = { () => {  
                                         if (!this.fieldsSuccessful()) {
-                                            this.setState({modalVisible: true});
+                                            this.openWarningModal('Поля входа \n не могут быть пустыми!');
                                             return;
                                         } 
                                         

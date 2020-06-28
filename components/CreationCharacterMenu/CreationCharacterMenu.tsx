@@ -7,7 +7,7 @@ import { styles } from './styles';
 const DescriptionText: string = 'some text';
 const CharacterName: string ='Name';
 
-export default class StartMenu extends Component {
+export default class CreationCharacterMenu extends Component {
     constructor(props: any) {
         super(props);
         
