@@ -70,7 +70,7 @@ export default class ShopComponent extends Component {
     render() {
         return (
             <ImageBackground source={require('./assets/background.png')} style={styles.container}> 
-                <View style={styles.selector}>
+                <View style={[styles.selector, Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null]}>
                     <TouchableOpacity style={this.state.clothesSection.pressed ? [styles.pressedSection, {flexDirection: 'row'}] : styles.defaultSection} onPress={() => { this.setSection('clothes'); }}>
                         <Image source={require('./assets/clothes_icon.png')}/>
                         <Text style={[{fontFamily: 'Montserrat-Regular', fontSize: 20, paddingLeft: 30}, this.state.clothesSection.pressed ? null : {display: 'none'}]}>Одежда</Text>

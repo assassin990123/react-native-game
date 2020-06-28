@@ -73,5 +73,12 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F57CFF'
-    }
+    },
+
+    notchPadding: {
+        paddingTop: 25,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        backgroundColor: '#543731',
+    },
 });
