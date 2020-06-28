@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { View, FlatList, Text, ImageBackground, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+import { clickAudioEffect } from "../../endpoints/AudioEffects";
+
 import { styles } from './styles';
 
 const { height } = Dimensions.get('screen');
@@ -30,6 +32,8 @@ export default class ShopComponent extends Component {
     }
 
     setSection = (propName: string) => {
+        clickAudioEffect();
+
         if (propName === this.state.currPressed) {
             return;
         } 
@@ -71,7 +75,7 @@ export default class ShopComponent extends Component {
         return (
             <ImageBackground source={require('./assets/background.png')} style={styles.container}> 
                 <View style={[styles.selector, Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null]}>
-                    <TouchableOpacity style={this.state.clothesSection.pressed ? [styles.pressedSection, {flexDirection: 'row'}] : styles.defaultSection} onPress={() => { this.setSection('clothes'); }}>
+                    <TouchableOpacity style={this.state.clothesSection.pressed ? [styles.pressedSection, {flexDirection: 'row'}] : styles.defaultSection} onPress={() => { this.setSection('clothes');}}>
                         <Image source={require('./assets/clothes_icon.png')}/>
                         <Text style={[{fontFamily: 'Montserrat-Regular', fontSize: 20, paddingLeft: 30}, this.state.clothesSection.pressed ? null : {display: 'none'}]}>Одежда</Text>
                     </TouchableOpacity>
@@ -111,7 +115,10 @@ export default class ShopComponent extends Component {
                                             <Text style={styles.priceText}>{`${item.price}P`}</Text>
                                         </View>
 
-                                        <TouchableOpacity style={{backgroundColor: 'yellow', width: '100%', height: '40%', alignItems: 'center', justifyContent: 'center', borderBottomRightRadius: 10, borderTopLeftRadius: 10}}>
+                                        <TouchableOpacity style={{backgroundColor: 'yellow', width: '100%', height: '40%', alignItems: 'center', justifyContent: 'center', borderBottomRightRadius: 10, borderTopLeftRadius: 10}}
+                                                           onPress={() => {
+                                                               clickAudioEffect();
+                                                           }}>
                                             <Text style={[styles.priceText, {fontSize: 16}]}>Купить</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -120,7 +127,7 @@ export default class ShopComponent extends Component {
                     </View>
 
                     <View style={{width: '100%', height: '15%', justifyContent: 'center', alignContent: 'center'}}>
-                        <TouchableOpacity  onPress={() => { Actions.GameComponent(); }}
+                        <TouchableOpacity  onPress={() => { Actions.GameComponent(); clickAudioEffect(); }}
                                             style={styles.backButton}> 
                                 <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Назад</Text>
                         </TouchableOpacity>

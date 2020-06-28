@@ -12,6 +12,7 @@
     "@react-native-community/netinfo": "^5.9.3",
     "aws-amplify": "^3.0.18",
     "expo": "^37.0.4",
+    "expo-av": "^8.2.1",
     "expo-brightness": "~8.1.0",
     "expo-font": "~8.1.0",
     "expo-web-browser": "^8.2.1",
@@ -25,6 +26,7 @@
     "react-native-reanimated": "~1.7.0",
     "react-native-router-flux": "^4.2.0",
     "react-native-screens": "~2.2.0",
+    "react-native-sound": "^0.11.0",
     "react-native-web": "~0.11.7",
     "react-navigation-tabs": "^2.8.13"
   },
