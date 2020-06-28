@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import * as Font from 'expo-font';
 
 import Routes from './Routes';
-import Shop from './components/shopComponent';
+import Shop from './components/shopComponent/shopComponent';
 
 // @ts-ignore
 import awsconfig from './aws-exports';
