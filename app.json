@@ -22,10 +22,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "android": {
-      "package": "com.yourcompany.yourappname",
+      "package": "com.afg.afg",
       "versionCode": 1
     }
   }

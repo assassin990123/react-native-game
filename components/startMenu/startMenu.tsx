@@ -37,8 +37,8 @@ export default class StartMenu extends Component {
     SingIn = async () => {
         await Auth.signIn(this.state.username, 
                           this.state.password)
-            .then(()=>{console.log('singin Succses'),  Actions.CharacterMenu()})
-            .catch(error=>{console.log('signin error', error), alert('Woops, '+ error.message)});
+            .then(()=>{console.log('singin Succses');  Actions.CharacterMenu()})
+            .catch(error=>{console.log('signin error', error); alert('Woops, '+ error.message)});
     }
 
     render() {
