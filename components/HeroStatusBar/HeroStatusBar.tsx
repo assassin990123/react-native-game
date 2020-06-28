@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Image, View, TouchableOpacity, Text, StyleSheet, Dimensions, Modal, BackHandler  } from 'react-native';
 
+import { clickAudioEffect } from '../../endpoints/AudioEffects';
+
 import {styles} from './styles';
 
 /*
@@ -49,7 +51,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         let statusBarItems: JSX.Element[] = [];
 
         for (let [key, value] of Object.entries(this.state._icons)) {
-            statusBarItems.push(<TouchableOpacity onPress={() => {}} 
+            statusBarItems.push(<TouchableOpacity onPress={() => { }}
                                                style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color]}
                                                activeOpacity={1}
                                                key={key}>
@@ -107,11 +109,13 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 </View>
                                 <View style={{flexDirection: 'row', height: '50%', justifyContent: 'center', alignItems: 'center'}}> 
                                     <TouchableOpacity style={styles.modalSettingArrow} onPress={() => {
+                                        clickAudioEffect();
                                     }}>
                                         <Image source={require('./assets/modalFiles/arrow-left.png')}/>
                                     </TouchableOpacity>
                                     <Text style={styles.modalSettingNumber}>{5}</Text>
                                     <TouchableOpacity style={styles.modalSettingArrow} onPress={() => {
+                                        clickAudioEffect();
                                     }}>
                                         <Image source={require('./assets/modalFiles/arrow-right.png')}/>
                                     </TouchableOpacity>
@@ -123,9 +127,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                     <Text style={[styles.modalSettingsTitle]}>Громкость эффектов</Text>
                                 </View>
                                 <View style={{flexDirection: 'row', height: '50%', justifyContent: 'center', alignItems: 'center'}}> 
-                                    <TouchableOpacity style={styles.modalSettingArrow}><Image source={require('./assets/modalFiles/arrow-left.png')}/></TouchableOpacity>
+                                    <TouchableOpacity style={styles.modalSettingArrow} onPress={() => clickAudioEffect()}><Image source={require('./assets/modalFiles/arrow-left.png')}/></TouchableOpacity>
                                     <Text style={styles.modalSettingNumber}>5</Text>
-                                    <TouchableOpacity style={styles.modalSettingArrow}><Image source={require('./assets/modalFiles/arrow-right.png')}/></TouchableOpacity>
+                                    <TouchableOpacity style={styles.modalSettingArrow} onPress={() => clickAudioEffect()}><Image source={require('./assets/modalFiles/arrow-right.png')}/></TouchableOpacity>
                                 </View>
                             </View>
 
@@ -134,13 +138,13 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                     <Text style={[styles.modalSettingsTitle]}>Громкость музыки</Text>
                                 </View>
                                 <View style={{flexDirection: 'row', height: '50%', justifyContent: 'center', alignItems: 'center'}}> 
-                                    <TouchableOpacity style={styles.modalSettingArrow}><Image source={require('./assets/modalFiles/arrow-left.png')}/></TouchableOpacity>
+                                    <TouchableOpacity style={styles.modalSettingArrow} onPress={() => clickAudioEffect()}><Image source={require('./assets/modalFiles/arrow-left.png')}/></TouchableOpacity>
                                     <Text style={styles.modalSettingNumber}>5</Text>
-                                    <TouchableOpacity style={styles.modalSettingArrow}><Image source={require('./assets/modalFiles/arrow-right.png')}/></TouchableOpacity>
+                                    <TouchableOpacity style={styles.modalSettingArrow} onPress={() => clickAudioEffect()}><Image source={require('./assets/modalFiles/arrow-right.png')}/></TouchableOpacity>
                                 </View>
                             </View>
 
-                            <TouchableOpacity style={styles.modalExitButton} onPress={() => {BackHandler.exitApp(); } }>
+                            <TouchableOpacity style={styles.modalExitButton} onPress={() => { clickAudioEffect(); BackHandler.exitApp(); } }>
                                 <Text style={styles.modalExitButtonText}>кароче типа выйти</Text>
                             </TouchableOpacity>
                         </View>   
@@ -157,7 +161,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                             
                             <View style={{justifyContent: "center", alignItems: 'center'}}>{statsItems}</View>
                             
-                            <TouchableOpacity style={styles.modalExitButton} onPress={() => { this.setState({statsModalVisible: false}) } }>
+                            <TouchableOpacity style={styles.modalExitButton} onPress={() => { this.setState({statsModalVisible: false}); clickAudioEffect(); } }>
                                 <Text style={styles.modalExitButtonText}>Назад</Text>
                             </TouchableOpacity>
                         </View>
@@ -165,8 +169,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                 </Modal>
 
                 <View style={styles.StatusBar}>
-                    <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]}>
-                                <Text style={styles.levelText} onPress = {() => this.setState({statsModalVisible: true})}>{this.state.level.number}</Text>
+                    <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]} onPress = {() => {
+                        this.setState({statsModalVisible: true});
+                        clickAudioEffect();
+                    }}>
+                                <Text style={styles.levelText} >{this.state.level.number}</Text>
                     </TouchableOpacity>
 
                     <View style={[styles.StatusBarSubMenu, styles.defaultMargin]}>

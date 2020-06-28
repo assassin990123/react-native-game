@@ -3,9 +3,11 @@ import { Image, View, TouchableOpacity } from 'react-native';
 
 import {styles} from './styles';
 
+import { clickAudioEffect } from '../../endpoints/AudioEffects';
+
 /*
 *
-    @brief: Element of game control for change loactions.
+    @brief: Element of game control for change locations.
 *
 */
 
@@ -32,15 +34,12 @@ export default class MenuBottom extends Component {
 
     handleClick = async (icon: string): Promise<void> => {
         for (let [key, value] of Object.entries(this._icons)) {
-            value.pressed = false;
-            
-            if (key === icon) {
-                value.pressed = true;
-            }
+            value.pressed = key === icon;
         }
         
         await this._handlers[this.findIndex(icon)]();
-        
+
+        clickAudioEffect();
         this.forceUpdate();
     };
 

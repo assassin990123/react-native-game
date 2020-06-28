@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Image} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+import { clickAudioEffect } from "../../endpoints/AudioEffects";
+
 import { styles } from './styles';
 
 const DescriptionText: string = 'some text';
@@ -25,7 +27,10 @@ export default class CreationCharacterMenu extends Component {
         return (
             <View style = {styles.content}>
                 <TouchableOpacity style   = {styles.backButton}
-                                    onPress = { () => Actions.LogIn() }>
+                                    onPress = { () => {
+                                        Actions.LogIn();
+                                        clickAudioEffect();
+                                    } }>
                         <Image source={require("../../assets/arrow.png")}/>
                 </TouchableOpacity>
 
@@ -33,9 +38,8 @@ export default class CreationCharacterMenu extends Component {
                                     onPress = { () => {} }>
                         <Image source={require("../../assets/refresh.png")}/>
                 </TouchableOpacity>
- 
- 
-                <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } 
+
+                <TouchableOpacity onPress = { () => {this.onClickHandler('Header'); clickAudioEffect();} }
                                     style = {styles.headerButton}/>
                 <Text style = {styles.logoText}>PEDO</Text> 
 
@@ -49,7 +53,7 @@ export default class CreationCharacterMenu extends Component {
                 
 
                 <TouchableOpacity style   = {styles.playButton}
-                                  onPress = { () => { Actions.GameComponent(); } }>
+                                  onPress = { () => { Actions.GameComponent(); clickAudioEffect(); } }>
                     <Text style = {styles.buttonsText}>Играть!</Text>
                 </TouchableOpacity>
                     

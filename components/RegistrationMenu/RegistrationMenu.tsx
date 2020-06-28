@@ -3,7 +3,8 @@ import { Actions } from 'react-native-router-flux';
 import { TextInput, Text, View, TouchableOpacity,  Image, Modal} from 'react-native';
 import { Auth } from 'aws-amplify';
 
-import { TextInputMask } from 'react-native-masked-text'
+import { TextInputMask } from 'react-native-masked-text';
+import { clickAudioEffect } from '../../endpoints/AudioEffects';
 
 import { styles } from './styles';
 
@@ -84,7 +85,7 @@ export default class RegistrationMenu extends Component {
                             </Text>
                         </View>
 
-                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { this.setState({modalVisible: false}) } }>
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({modalVisible: false}) } }>
                             <Text style={styles.modalOkButtonText}>Понятно</Text>
                         </TouchableOpacity>
                     </View>
@@ -141,7 +142,9 @@ export default class RegistrationMenu extends Component {
                     </View>
             
                     <TouchableOpacity style   = {styles.sendButton}
-                                      onPress = { () => {  
+                                      onPress = { () => {
+                                            clickAudioEffect();
+
                                             if (!this.fieldsSuccessful()) {
                                                 this.openWarningModal('Поля регистрации \n не могут быть пустыми!');
                                                 return;
@@ -163,7 +166,14 @@ export default class RegistrationMenu extends Component {
                     </View>
 
                     <TouchableOpacity style   = {[ styles.continueButton, !this.state.smsSent ? { backgroundColor: 'grey', borderColor: 'grey',} : null]}
-                                      onPress = { () => { if (!this.state.smsSent) { return; } this.confirmSignUp(); }}>
+                                      onPress = { () => {
+                                          clickAudioEffect();
+
+                                          if (!this.state.smsSent) {
+                                              return;
+                                          }
+                                          this.confirmSignUp();
+                                      }}>
                         <Text style = {styles.buttonsText}>Подтвердить</Text>
                     </TouchableOpacity>
             </View>
