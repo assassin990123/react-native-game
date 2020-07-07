@@ -36,7 +36,7 @@ export default class App extends Component {
     render () {
       if (this.state.fontLoaded){
           return (
-              <Routes />
+              //<Routes />
         );
       } else {
         return ( <View></View> )
