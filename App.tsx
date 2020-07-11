@@ -8,8 +8,6 @@ import Routes from './Routes';
 import awsconfig from './aws-exports';
 import Amplify from 'aws-amplify';
 
-import Darts from "./components/darts/Darts";
-
 Amplify.configure(awsconfig);
 
 export default class App extends Component {
