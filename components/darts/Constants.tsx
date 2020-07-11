@@ -1,12 +1,12 @@
 import { Dimensions } from 'react-native';
 
-const Constants = {
-    MAX_WIDTH: Dimensions.get("screen").width,
-    MAX_HEIGHT: Dimensions.get("screen").height,
-    CENTER: 25,
-    MIN_SIDE: Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height),
-    PSEUDO_PIXEL: Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height)/50,
-    DART_SIZE: Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height)/50
-}
+const { width, height } = Dimensions.get('screen');
 
-export { Constants }
+export const Constants = {
+    MAX_WIDTH: width,
+    MAX_HEIGHT: height,
+    CENTER: 25,
+    MIN_SIDE: Math.min(width, height),
+    PSEUDO_PIXEL: Math.min(width, height) / 50,
+    DART_SIZE: Math.min(width, height) / 50
+};

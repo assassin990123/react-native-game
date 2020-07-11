@@ -1,24 +1,22 @@
-import React, {Component} from "react";
-import {View, Image, Animated} from "react-native";
-import { back } from "react-native/Libraries/Animated/src/Easing";
-import {Constants} from './Constants'
+import React, { Component } from "react";
+import { View } from "react-native";
 
-export default class Aim extends Component{
-    constructor(props){
+import { Constants } from './Constants'
+
+export default class Aim extends Component {
+    constructor(props: any){
         super(props);
+
+        this.props = props;
     }
 
-    
+    props: any;
 
-
-    render(){
-        
-       
-        let renderState = this.props.renderState;
+    render() {
         const x = this.props.position[0];
         const y = this.props.position[1];
  
-        return(
+        return (
             <View>
                 <View style = {{ 
                     width: Constants.DART_SIZE,
@@ -29,23 +27,9 @@ export default class Aim extends Component{
                     top: y*Constants.PSEUDO_PIXEL*0.9 - Constants.DART_SIZE/2,
                     borderRadius: 100,
                     zIndex: 3
-                    
                 }}>
-        
                 </View>
             </View>
-        )
-        
-        
-
-
-
-        
-    //}
-    
-    
-    
-        
-
+        );
     }
 }
