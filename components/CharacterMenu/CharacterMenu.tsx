@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity, Image, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+import { clickAudioEffect } from '../../endpoints/AudioEffects';
+
 import { styles } from './styles';
 
 const DescriptionText: string = 'some text';
 const CharacterName: string ='Name';
 
-export default class StartMenu extends Component {
+export default class CharacterMenu extends Component {
     constructor(props: any) {
         super(props);
     }
@@ -47,6 +49,7 @@ export default class StartMenu extends Component {
                                     style={[{backgroundColor: '#F37052'}, styles.modalButton]}
                                     onPress={() => {
                                         this.setModalVisible(!this.state.modalVisible);
+                                        clickAudioEffect();
                                     }}
                                 >
                                     <Text style={[{color: 'white'}, styles.modalText]}>Да</Text>
@@ -54,6 +57,7 @@ export default class StartMenu extends Component {
                                 <TouchableOpacity
                                     style={[{backgroundColor: '#128949'}, styles.modalButton]}
                                     onPress={() => {
+                                        clickAudioEffect();
                                         this.setModalVisible(!this.state.modalVisible);
                                     }}
                                 >
@@ -65,16 +69,19 @@ export default class StartMenu extends Component {
                 </Modal>
 
                 <TouchableOpacity style   = {styles.backButton}
-                                  onPress = { () => Actions.LogIn() }>
+                                  onPress = { () => {
+                                      Actions.LogIn();
+                                      clickAudioEffect();
+                                  } }>
                         <Image source={require('../../assets/arrow.png')}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity style   = {styles.basketButton}
-                                    onPress = { () => {this.setModalVisible(!this.state.modalVisible);} }>
+                                    onPress = { () => {this.setModalVisible(!this.state.modalVisible); clickAudioEffect();} }>
                         <Image source={require('../../assets/basket.png')}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress = { () => {this.onClickHandler('Header')} } 
+                <TouchableOpacity onPress = { () => {this.onClickHandler('Header'); clickAudioEffect();} }
                                     style = {styles.headerButton}/>
                 <Text style = {styles.logoText}>PEDO</Text> 
 
@@ -85,10 +92,9 @@ export default class StartMenu extends Component {
                 <View style = {styles.descriptionContaner}>
                     <Text>{DescriptionText}</Text>
                 </View>  
-                
 
                 <TouchableOpacity style   = {styles.playButton}
-                                    onPress = { () => { Actions.GameComponent(); } }>
+                                    onPress = { () => { Actions.GameComponent(); clickAudioEffect(); } }>
                     <Text style = {styles.buttonsText}>Играть!</Text>
                 </TouchableOpacity>
                     

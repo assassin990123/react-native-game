@@ -5,6 +5,8 @@ import { TextInputMask } from 'react-native-masked-text';
 
 import * as WebBrowser from 'expo-web-browser';
 
+import { clickAudioEffect } from '../../endpoints/AudioEffects';
+
 import { styles } from './styles';
 
 /*
@@ -19,7 +21,8 @@ export default class StartMenu extends Component {
     state = {
         username: '',
         password: '',
-        modalVisible: false
+        modalVisible: false,
+        modalText: '',
       }
     
     constructor(props: any) {
@@ -37,8 +40,13 @@ export default class StartMenu extends Component {
     SingIn = async () => {
         await Auth.signIn(this.state.username, 
                           this.state.password)
-            .then(()=>{console.log('singin Succses'),  Actions.CharacterMenu()})
-            .catch(error=>{console.log('signin error', error), alert('Woops, '+ error.message)});
+            .then(()=>{console.log('singin Succses');  Actions.CharacterMenu()})
+            .catch(error=>{console.log('signin error', error); this.openWarningModal('Не правильно введен \n номер телефона или пароль!');});
+    }
+
+    openWarningModal = (message: string) => {
+        this.state.modalText = message;
+        this.setState({modalVisible: true});
     }
 
     render() {
@@ -50,21 +58,21 @@ export default class StartMenu extends Component {
                        transparent={true}
                        visible={this.state.modalVisible}
                        onRequestClose={() => {this.setState({modalVisible: false})}}>
-                    <View style={styles.modalContainer}>
-                        <View style={[styles.modalView]}>
-                            <Text style={[styles.modalTitle]}>Ошибка!</Text>
-                            <View style={{justifyContent: "center", alignItems: 'center'}}>
-                                <Text style={styles.modalErrorText}>
-                                    Поля входа {"\n"} не могут быть пустыми!
-                                </Text>
-                            </View>
-                            
-                            <TouchableOpacity style={styles.modalOkButton} onPress={() => { this.setState({modalVisible: false}) } }>
-                                <Text style={styles.modalOkButtonText}>Понятно</Text>
-                            </TouchableOpacity>
+                <View style={styles.modalContainer}>
+                    <View style={[styles.modalView]}>
+                        <Text style={[styles.modalTitle]}>Ошибка!</Text>
+                        <View style={{justifyContent: "center", alignItems: 'center'}}>
+                            <Text style={styles.modalErrorText}>
+                                {this.state.modalText}
+                            </Text>
                         </View>
+
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({modalVisible: false}) } }>
+                            <Text style={styles.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
                     </View>
-                </Modal>
+                </View>
+             </Modal>
 
             <View style = {styles.content}>
                            
@@ -97,14 +105,15 @@ export default class StartMenu extends Component {
                     </View>
                 
                     <TouchableOpacity style   = {styles.logButton}
-                                      onPress = { () => {  
-                                        if (!this.fieldsSuccessful()) {
-                                            this.setState({modalVisible: true});
+                                      onPress = { () => {
+                                          clickAudioEffect();
+                                          if (!this.fieldsSuccessful()) {
+                                            this.openWarningModal('Поля входа \n не могут быть пустыми!');
                                             return;
-                                        } 
+                                          }
                                         
-                                        this.setState({smsSended: true});
-                                        this.SingIn();
+                                          this.setState({smsSended: true});
+                                          this.SingIn();
                                       }}>
                         <Text style = {styles.buttonsText}>Войти</Text>
                     </TouchableOpacity>
@@ -112,7 +121,10 @@ export default class StartMenu extends Component {
                     <Text style = {styles.agitText}>У вас еще нету аккаунта в нашей потрясающей аниме игре?????</Text>
 
                     <TouchableOpacity style   = {styles.regButton}
-                                      onPress = { () => Actions.SigIn() }>
+                                      onPress = { () => {
+                                          clickAudioEffect();
+                                          Actions.SigIn();
+                                      } }>
                         <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
                     </TouchableOpacity>
                     

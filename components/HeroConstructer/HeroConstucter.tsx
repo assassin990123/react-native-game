@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+import { clickAudioEffect } from '../../endpoints/AudioEffects';
+
 import { styles } from './styles';
 
 import Pictures from '../../assets/hero_sprites/Pictures';
@@ -16,7 +18,7 @@ import Pictures from '../../assets/hero_sprites/Pictures';
 
 const { width, height } = Dimensions.get('screen');
 
-export default class StartMenu extends Component {
+export default class HeroConstucter extends Component {
     constructor(props: any) {
         super(props);
     }
@@ -123,25 +125,25 @@ export default class StartMenu extends Component {
 
                 <View style={{width: '100%', flexDirection: 'row', height: '70%'}}>
                     <View style={{width: '50%', marginTop: height * 0.05}}>
-                        <TouchableOpacity onPress = {() => this.setEysColor()} style={[styles.selectButton, {backgroundColor: '#E76BC0'}]}> 
+                        <TouchableOpacity onPress = {() => {this.setEysColor(); clickAudioEffect();}} style={[styles.selectButton, {backgroundColor: '#E76BC0'}]}>
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет глаз</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress = {() => this.setSkinColor()} style={[styles.selectButton, {backgroundColor: '#128949'}]}> 
+                        <TouchableOpacity onPress = {() => {this.setSkinColor(); clickAudioEffect();}} style={[styles.selectButton, {backgroundColor: '#128949'}]}>
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет кожи</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress = {() => this.setHairColor()} style={[styles.selectButton, {backgroundColor: '#FCB712'}]}> 
+                        <TouchableOpacity onPress = {() => {this.setHairColor(); clickAudioEffect();}} style={[styles.selectButton, {backgroundColor: '#FCB712'}]}>
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Цвет волос</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{width: '50%'}}>
                         <TouchableOpacity style={{width: '100%', justifyContent: 'center', alignItems:'center'}}
-                                          onPress={() => { this.setDefaultSprite(); }}>
+                                          onPress={() => { this.setDefaultSprite(); clickAudioEffect(); }}>
                             <Image source={ this.state.currentSprite} style={{resizeMode: 'contain'}}/>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{position: 'absolute', top: width * 1.5, width: '100%', height: '100%'}}> 
-                        <TouchableOpacity  onPress={() => { Actions.GameComponent(); }}
+                        <TouchableOpacity  onPress={() => { Actions.GameComponent(); clickAudioEffect(); }}
                                            style={styles.agreeButton}> 
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Создать</Text>
                         </TouchableOpacity>

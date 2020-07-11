@@ -4,8 +4,10 @@ import * as Font from 'expo-font';
 
 import Routes from './Routes';
 
-import Amplify, { Auth } from 'aws-amplify';
+// @ts-ignore
 import awsconfig from './aws-exports';
+import Amplify from 'aws-amplify';
+
 Amplify.configure(awsconfig);
 
 export default class App extends Component {
@@ -27,7 +29,8 @@ export default class App extends Component {
           'Montserrat-Light'    :require('./assets/fonts/Montserrat-Light.ttf'),
           'Montserrat-Italic'   :require('./assets/fonts/Montserrat-Italic.ttf'),
           'Montserrat-Thin'     :require('./assets/fonts/Montserrat-Thin.ttf'),
-          'Montserrat-SemiBold' :require('./assets/fonts/Montserrat-SemiBold.ttf')
+          'Montserrat-SemiBold' :require('./assets/fonts/Montserrat-SemiBold.ttf'),
+          'Montserrat-Bold'     :require('./assets/fonts/Montserrat-Bold.ttf')
       });
 
       this.setState( { fontLoaded: true } );
@@ -39,7 +42,7 @@ export default class App extends Component {
               //<Routes />
         );
       } else {
-        return ( <View></View> )
+        return ( <View/> );
       }
     }
    
