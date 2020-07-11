@@ -123,7 +123,7 @@ export default class StartMenu extends Component {
                     <TouchableOpacity style   = {styles.regButton}
                                       onPress = { () => {
                                           clickAudioEffect();
-                                          Actions.SigIn();
+                                          Actions.SignIn();
                                       } }>
                         <Text style = {styles.buttonsText}>Зарегистрироваться</Text>
                     </TouchableOpacity>
