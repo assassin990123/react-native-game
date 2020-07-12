@@ -8,7 +8,7 @@ import ShopComponent        from './components/ShopComponent/ShopComponent';
 import GameComponent        from './components/gameComponent/GameComponent';
 import CharacterMenu        from './components/characterMenu/CharacterMenu';
 import StartMenu            from './components/startMenu/StartMenu';
-import Darts                from "./components/darts/Darts";
+import Darts                from "./components/games/darts/Darts";
 
 const Routes = () => (
    <Router>

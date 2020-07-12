@@ -2,11 +2,17 @@ import { View, StatusBar, Dimensions } from 'react-native';
 import React, { Component } from "react";
 import * as Font from 'expo-font';
 
+
+//import Duck from "./components/games/ducks/Duck";
+//import Hf from "./components/games/headphones/headphones";
+
+
 import Routes from './Routes';
 
 // @ts-ignore
 import awsconfig from './aws-exports';
 import Amplify from 'aws-amplify';
+import { Router } from 'react-native-router-flux';
 
 Amplify.configure(awsconfig);
 
@@ -38,7 +44,7 @@ export default class App extends Component {
 
     render () {
       if (this.state.fontLoaded) {
-          return ( <Routes /> );
+          return ( <Routes/> );
       } else {
         return ( <View/> );
       }
