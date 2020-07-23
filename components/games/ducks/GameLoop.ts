@@ -1,24 +1,21 @@
 import { Constants } from './Constants'
 
+type TouchEvents = {
+    touches:   any,
+    dispatch?: any,
+    events?:   any
+};
 
-const randomBetween = (min, max) => {
+const randomBetween = (min: number, max: number) => {
     return Math.floor(Math.random() *  (max - min + 1) + min);
 }
 
-const distance = (x1,y1,x2,y2) => {
-    return Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
-}
-
-
-
-const GameLoop = (entities, { touches, dispatch, events}) => {
-
-    
+export const GameLoop = (entities: any, { touches }: TouchEvents) => {
     const projectile = entities.projectile;
     const duck = entities.duck;
     const points = entities.points;
 
-    if (projectile.amount != 0){
+    if (projectile.amount !== 0){
         let startPos =  projectile.startPos;
         let endPos =  projectile.endPos;
     
@@ -49,9 +46,9 @@ const GameLoop = (entities, { touches, dispatch, events}) => {
     
         }
         else {
-            let start = touches.find(x => x.type === "start");
-            let move = touches.find(x => x.type === "move");
-            let end = touches.find(x => x.type === "end");
+            let start = touches.find((x: any) => x.type === "start");
+            let move = touches.find((x: any) => x.type === "move");
+            let end = touches.find((x: any) => x.type === "end");
     
             if (start) {
     
@@ -118,7 +115,7 @@ const GameLoop = (entities, { touches, dispatch, events}) => {
                 points.score += 10;
             }
             console.log(points.score);
-            if (projectile.amount != 1){
+            if (projectile.amount !== 1){
                 projectile.position.x = 25;
                 projectile.position.y = 75;
                 projectile.speed.x = 0;
@@ -142,5 +139,3 @@ const GameLoop = (entities, { touches, dispatch, events}) => {
 
     return entities;
 }
-
-export {GameLoop} ;
