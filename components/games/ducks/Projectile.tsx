@@ -31,8 +31,8 @@ export default class Projectile extends Component<Interface>{
                     width: Constants.DART_SIZE * 2.5,
                     height: Constants.DART_SIZE * 2,
                     position: 'absolute',
-                    left: x * Constants.PSEUDO_PIXEL -  Constants.PSEUDO_PIXEL * 2,
-                    top: y * Constants.PSEUDO_PIXEL -  Constants.PSEUDO_PIXEL * 2,
+                    left: x * Constants.PSEUDO_PIXEL -  Constants.PSEUDO_PIXEL * 3,
+                    top: y * Constants.PSEUDO_PIXEL -  Constants.PSEUDO_PIXEL * 3,
                     zIndex: 3,                
                     transform: [{ rotate: deg }]
                 }}
@@ -45,10 +45,5 @@ export default class Projectile extends Component<Interface>{
                 <View/>
             )
         }
-
-        
-        
- 
-
     }
 }

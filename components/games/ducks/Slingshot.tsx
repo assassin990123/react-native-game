@@ -1,15 +1,22 @@
 import React, {Component } from "react";
-import {View, Image} from "react-native";
+import {Image} from "react-native";
 import {Constants} from './Constants'
 
+interface Interface {
+    position: {
+        x: number,
+        y: number
+    },
+    deg: number
+}
 
+export default class Slingshot extends Component<Interface> {
+    props: any;
 
-
-export default class Slingshot extends Component{
-
-
-    constructor(props){
+    constructor(props: any){
         super(props);
+
+        this.props = props;
     }
 
  
@@ -34,8 +41,5 @@ export default class Slingshot extends Component{
              />
     
         )
-        
- 
-
     }
 }
