@@ -1,6 +1,7 @@
-import React, {Component} from "react";
-import {View, Image} from "react-native";
-import {Constants} from './Constants'   
+import React, { Component } from 'react';
+import { View, Image }      from 'react-native';
+
+import { Constants }        from './Constants';
 
 interface Interface {
     position: {
@@ -37,7 +38,7 @@ export default class Projectile extends Component<Interface>{
                     transform: [{ rotate: deg }]
                 }}
                 
-                source={require('./Bread.png')}/>
+                source={require('./assets/Bread.png')}/>
             )
         }
         else{

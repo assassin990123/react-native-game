@@ -1,20 +1,17 @@
-import React, {Component} from "react";
-import {View, Image} from "react-native";
-import {Constants} from './Constants';
+import React, {Component} from 'react';
+import { Image }          from 'react-native';
 
+import { Constants }      from './Constants';
 
+export default class Projectile extends Component {
+    props: any;
 
-export default class Projectile extends Component{
-
-
-    constructor(props){
+    constructor(props: any) {
         super(props);
+        this.props = props;
     }
 
- 
-
-    render(){
-
+    render() {
         const x = this.props.position.x;
         const y = this.props.position.y;
         
@@ -28,8 +25,7 @@ export default class Projectile extends Component{
                 zIndex: 3,                
             }}
             
-            source={require('./Duck.png')}/>
-        )
-
+            source={require('./assets/Duck.png')}/>
+        );
     }
 }

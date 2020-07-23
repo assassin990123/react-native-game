@@ -1,4 +1,4 @@
-import { Constants } from './Constants'
+import { Constants } from './Constants';
 
 type TouchEvents = {
     touches:   any,
@@ -135,7 +135,6 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
             projectile.missed = false;
         }
     }
-    
 
     return entities;
 }

@@ -8,8 +8,8 @@ import ShopComponent        from './components/ShopComponent/ShopComponent';
 import GameComponent        from './components/gameComponent/GameComponent';
 import CharacterMenu        from './components/characterMenu/CharacterMenu';
 import StartMenu            from './components/startMenu/StartMenu';
-import Ducks                from './components/games/ducks/App';
-import Darts                from "./components/games/darts/Darts";
+import Ducks                from './components/games/ducks/Ducks';
+import Darts                from './components/games/darts/Darts';
 
 const Routes = () => (
    <Router>
