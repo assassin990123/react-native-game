@@ -1,14 +1,17 @@
 import { Constants } from './Constants'
 
 
-const randomBetween = (min:any, max:any) => {
+const randomBetween = (min, max) => {
     return Math.floor(Math.random() *  (max - min + 1) + min);
+}
+
+const distance = (x1,y1,x2,y2) => {
+    return Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
 }
 
 
 
-
-const GameLoop = (entities: any, touches: any) => {
+const GameLoop = (entities, { touches, dispatch, events}) => {
 
     
     const projectile = entities.projectile;
@@ -46,9 +49,9 @@ const GameLoop = (entities: any, touches: any) => {
     
         }
         else {
-            let start = touches.find((x:any) => {x.type === "start"});
-            let move = touches.find((x:any) => {x.type === "move"});
-            let end = touches.find((x:any) => {x.type === "end"});
+            let start = touches.find(x => x.type === "start");
+            let move = touches.find(x => x.type === "move");
+            let end = touches.find(x => x.type === "end");
     
             if (start) {
     

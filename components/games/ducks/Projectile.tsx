@@ -2,16 +2,20 @@ import React, {Component} from "react";
 import {View, Image} from "react-native";
 import {Constants} from './Constants'   
 
+interface Interface {
+    position: {
+        x: number,
+        y: number
+    },
+    deg: number
+}
 
-
-export default class Projectile extends Component{
-    constructor(props: any){
+export default class Projectile extends Component<Interface>{
+    props: any;
+    constructor(props: any) {
         super(props);
-
         this.props = props;
     }
-
-    props: any;
 
     render(){
 
@@ -33,7 +37,7 @@ export default class Projectile extends Component{
                     transform: [{ rotate: deg }]
                 }}
                 
-                source={require('./assets/Bread.png')}/>
+                source={require('./Bread.png')}/>
             )
         }
         else{
@@ -41,5 +45,10 @@ export default class Projectile extends Component{
                 <View/>
             )
         }
+
+        
+        
+ 
+
     }
 }

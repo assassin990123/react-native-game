@@ -1,23 +1,25 @@
 import React, {Component } from "react";
-import {Image} from "react-native";
+import {View, Image} from "react-native";
 import {Constants} from './Constants'
 
 
 
 
 export default class Slingshot extends Component{
-    constructor(props: any){
-        super(props);
 
-        this.props = props;
+
+    constructor(props){
+        super(props);
     }
 
-    props: any;
+ 
 
     render(){
 
         const x = this.props.position.x;
         const y = this.props.position.y;
+
+        //console.log(x);
         
         return(
             <Image style = {{ 
@@ -28,7 +30,7 @@ export default class Slingshot extends Component{
                 top: y * Constants.PSEUDO_PIXEL - Constants.SLIGNSHOT_SIDE.y/8,
                 
             }}
-            source={require('./assets/Slingshot.png')}
+            source={require('./Slingshot.png')}
              />
     
         )
