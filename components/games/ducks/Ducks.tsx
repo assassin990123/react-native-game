@@ -8,10 +8,10 @@ import Projectile                       from './Projectile';
 import Slingshot                        from './Slingshot';
 import Duck                             from './Duck';
 
-export default class DF extends Component {
+export default class Ducks extends Component {
     boardSize: number;
-    engine: any;
-    props: any;
+    engine:    any;
+    props:     any;
 
     state = {
        running: true,
