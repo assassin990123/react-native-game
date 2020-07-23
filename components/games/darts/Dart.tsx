@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import {View, Image} from "react-native";
+import React, { Component } from 'react';
+import { View, Image }      from 'react-native';
 
-import { Constants } from './Constants';
+import { Constants }        from './Constants';
 
 export default class Dart extends Component {
-    constructor(props:any){
+    props: any;
+
+    constructor(props:any) {
         super(props);
 
         this.props = props;
     }
 
-    props: any;
-
-    render(){
+    render() {
         let dartList = this.props.elements.map((el:any, idx:any) => {
             return  <Image 
                 key = {idx}
@@ -28,9 +28,7 @@ export default class Dart extends Component {
         })
 
         return(
-            <View>
-                {dartList}
-            </View>
-        )
+            <View> {dartList} </View>
+        );
     }
 }

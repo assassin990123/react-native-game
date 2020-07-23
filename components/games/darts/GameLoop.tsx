@@ -1,10 +1,10 @@
-import { Constants } from './Constants'
+import { Constants } from './Constants';
 
-const distance = (x1:any,y1:any,x2:any,y2:any) => {
-    return Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+const distance = (x1: number, y1: number, x2: number, y2: number) => {
+    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-const GameLoop = (entities:any, {events}:any) => {
+export const GameLoop = (entities:any, {events}:any) => {
     let aim = entities.aim;
     let points = entities.points;
     let dart = entities.dart;
@@ -81,5 +81,3 @@ const GameLoop = (entities:any, {events}:any) => {
 
     return entities;
 }
-
-export {GameLoop} ;

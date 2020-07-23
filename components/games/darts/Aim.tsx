@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { View } from "react-native";
+import React, { Component } from 'react';
+import { View }             from 'react-native';
 
-import { Constants } from './Constants'
+import { Constants }        from './Constants';
 
 export default class Aim extends Component {
-    constructor(props: any){
+    props: any;
+
+    constructor(props: any) {
         super(props);
 
         this.props = props;
     }
-
-    props: any;
 
     render() {
         const x = this.props.position[0];
@@ -19,16 +19,15 @@ export default class Aim extends Component {
         return (
             <View>
                 <View style = {{ 
-                    width: Constants.DART_SIZE,
+                    width:  Constants.DART_SIZE,
                     height: Constants.DART_SIZE,
                     backgroundColor: 'red',
                     position: 'absolute',
-                    left: x*Constants.PSEUDO_PIXEL*0.9 - Constants.DART_SIZE/2,
-                    top: y*Constants.PSEUDO_PIXEL*0.9 - Constants.DART_SIZE/2,
+                    left: x * Constants.PSEUDO_PIXEL * 0.9 - Constants.DART_SIZE / 2,
+                    top:  y * Constants.PSEUDO_PIXEL * 0.9 - Constants.DART_SIZE / 2,
                     borderRadius: 100,
                     zIndex: 3
-                }}>
-                </View>
+                }} />
             </View>
         );
     }

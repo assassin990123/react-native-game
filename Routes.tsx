@@ -1,5 +1,5 @@
-import { Router, Scene } from 'react-native-router-flux';
-import React from 'react';
+import { Router, Scene }    from 'react-native-router-flux';
+import React                from 'react';
 
 import CharacterConstructor from './components/HeroConstructer/HeroConstucter';
 import RegistrationMenu     from './components/registrationMenu/RegistrationMenu';
