@@ -1,11 +1,10 @@
-import React, {Component} from 'react';
-
-import { GameEngine } from "react-native-game-engine";
-
+import React, { Component }      from 'react';
 import { View, ImageBackground } from 'react-native';
-import { Constants } from './Constants';
-import { GameLoop } from './GameLoop';
-import Node from './Node';
+import { GameEngine }            from 'react-native-game-engine';
+
+import { Constants }             from './Constants';
+import { GameLoop }              from './GameLoop';
+import Node                      from './Node';
 
 export default class Headphones extends Component {
     engine: any = null;
