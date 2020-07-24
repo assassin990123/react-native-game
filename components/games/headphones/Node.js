@@ -1,22 +1,19 @@
 import React, {Component} from "react";
 import {View , Image} from "react-native";
+import { back } from "react-native/Libraries/Animated/src/Easing";
 import {Constants} from './Constants';
-import Svg, { Line } from "react-native-svg";
+import Svg, { Path, Rect, Line } from "react-native-svg";
 
 export default class Node extends Component{
-    constructor(props:any){
+    constructor(props){
         super(props);
-
-        this.props = props;
     }
-
-    props:any;
 
     render(){
         
         
 
-        let nodeList = this.props.elements.map((el:any, idx:any) => {
+        let nodeList = this.props.elements.map((el, idx) => {
             if (idx === 0 || idx === this.props.elements.length - 1){
                 return <View key = {idx}/>
             }
@@ -35,7 +32,7 @@ export default class Node extends Component{
 
         let el = this.props.elements;
         
-        let threadList = this.props.elements.map((hz:any, idx:any) => {
+        let threadList = this.props.elements.map((hz, idx) => {
 
 
             if (idx != el.length - 1){
@@ -75,7 +72,7 @@ export default class Node extends Component{
                     top: el[0].y * Constants.PSEUDO_PIXEL + 2*Constants.PSEUDO_PIXEL,
                     transform: [{ rotate: "85deg" }]
                 }}
-                source={require('./assets/Headphone.png')}/>
+                source={require('./Headphone.png')}/>
                 {nodeList}
                 {threadList}
                 <Image
@@ -87,7 +84,7 @@ export default class Node extends Component{
                     top: el[el.length - 1].y * Constants.PSEUDO_PIXEL + 2*Constants.PSEUDO_PIXEL,
                     transform: [{ rotate: "95deg" }]
                 }}
-                source={require('./assets/Headphone.png')}/>
+                source={require('./Headphone.png')}/>
             </View>
         )
 

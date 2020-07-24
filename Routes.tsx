@@ -7,6 +7,7 @@ import CreateCharacter      from './components/creationCharacterMenu/CreationCha
 import ShopComponent        from './components/ShopComponent/ShopComponent';
 import GameComponent        from './components/gameComponent/GameComponent';
 import CharacterMenu        from './components/characterMenu/CharacterMenu';
+import Headphones           from "./components/games/headphones/Headphones";
 import StartMenu            from './components/startMenu/StartMenu';
 import Ducks                from './components/games/ducks/Ducks';
 import Darts                from './components/games/darts/Darts';
@@ -22,7 +23,8 @@ const Routes = () => (
          <Scene key = "GameComponent"        component = {GameComponent}        hideNavBar = {true} title = "Game" />
          <Scene key = "Shop"                 component = {ShopComponent}        hideNavBar = {true} title = "Shop" />
          <Scene key = "Darts"                component = {Darts}                hideNavBar = {true} title = "Darts" />
-         <Scene key = "Ducks"                component = {Ducks}                hideNavBar = {true} title = "Ducks" initial = {true} />
+         <Scene key = "Ducks"                component = {Ducks}                hideNavBar = {true} title = "Ducks" />
+         <Scene key = "Headphones"           component = {Headphones}           hideNavBar = {true} title = "Headphones" initial = {true}/>
       </Scene>
    </Router>
 );

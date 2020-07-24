@@ -8,18 +8,17 @@ import { GameLoop } from './GameLoop';
 import Node from './Node';
 
 export default class Headphones extends Component {
-    boardSize: number = 500;
     engine: any = null;
     state = {
-       running: true
+        running: true
     }
 
-    constructor(props: any){
+    constructor(props: any) {
         super(props);
     }
 
-    onEvent = (e: any) => {
-        if (e.type === "game-over"){
+    onEvent(e: any) {
+        if (e.type === "game-over") {
             alert("Game Over");
             this.setState({
                 running: false
@@ -27,8 +26,8 @@ export default class Headphones extends Component {
         }
     }
 
-    randomBetween = (min: number, max: number) => {
-       return Math.floor(Math.random() *  (max - min + 1) + min);
+    randomBetween(min: number, max: number) {
+        return Math.floor(Math.random() *  (max - min + 1) + min);
     }
 
     render() {
@@ -36,31 +35,30 @@ export default class Headphones extends Component {
             <View>
                 <View>
                     <ImageBackground source={require('./Back.png')} style={{width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>
-                        <View style = {{justifyContent: "center"}}>
+                        <View style = {{justifyContent: "center", width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>
                             <GameEngine
-                              ref = {(ref) => {this.engine = ref}}
-                              style={{width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}
+                                ref = {(ref) => {this.engine = ref}}
+                                systems = {[ GameLoop ]}
+                                entities = {{
+                                    node: {
+                                        elements: [],
+                                        length: 15,
+                                        filled: false,
+                                        el: -1,
+                                        intersect: true ,
+                                        renderer: <Node/>
+                                    },
+                                    state: { win : false }
+                                }}
 
-                              systems = {[ GameLoop ]}
-                              entities = {{
-                                  node: {
-                                    elements: [],
-                                    length : 15,
-                                    filled : false,
-                                    el : -1,
-                                    intersect : true ,
-                                    renderer: <Node/>
-                                  },
-                                  state: { win : false }
-                              }}
-
-                              onEvent  = {this.onEvent}
-                              running = {this.state.running}
+                                onEvent = {this.onEvent}
+                                running = {this.state.running}
                             />
                         </View>
                     </ImageBackground>
                 </View>
             </View>
-        );
+        )
+
     }
 }
