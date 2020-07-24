@@ -1,14 +1,14 @@
 import React, {Component} from "react";
-import {View} from "react-native";
+import {View, Image} from "react-native";
 import {Constants} from './Constants'
-import Svg, { Line } from "react-native-svg";
+import Svg, { Path, Rect, Line } from "react-native-svg";
 
 
 
 export default class Block extends Component{
 
 
-    constructor(props:any){
+    constructor(props){
         super(props);
     }
 

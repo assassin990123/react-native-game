@@ -11,6 +11,7 @@ import Headphones           from "./components/games/headphones/Headphones";
 import StartMenu            from './components/startMenu/StartMenu';
 import Ducks                from './components/games/ducks/Ducks';
 import Darts                from './components/games/darts/Darts';
+import Tower                from './components/games/tower/Tower';
 
 const Routes = () => (
    <Router>
@@ -24,7 +25,8 @@ const Routes = () => (
          <Scene key = "Shop"                 component = {ShopComponent}        hideNavBar = {true} title = "Shop" />
          <Scene key = "Darts"                component = {Darts}                hideNavBar = {true} title = "Darts" />
          <Scene key = "Ducks"                component = {Ducks}                hideNavBar = {true} title = "Ducks" />
-         <Scene key = "Headphones"           component = {Headphones}           hideNavBar = {true} title = "Headphones" initial = {true}/>
+         <Scene key = "Headphones"           component = {Headphones}           hideNavBar = {true} title = "Headphones"/>
+         <Scene key = "Tower"                component = {Tower}                hideNavBar = {true} title = "Tower" initial = {true}/>
       </Scene>
    </Router>
 );
