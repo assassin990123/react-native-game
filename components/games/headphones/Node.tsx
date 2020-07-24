@@ -62,7 +62,7 @@ export default class Node extends Component<Interface> {
                         top: el[0].y * Constants.PSEUDO_PIXEL + 2*Constants.PSEUDO_PIXEL,
                         transform: [{ rotate: "85deg" }]
                     }}
-                    source={require('./Headphone.png')}/>
+                    source={require('./assets/Headphone.png')}/>
 
                 {nodeList}
                 {threadList}
@@ -76,7 +76,7 @@ export default class Node extends Component<Interface> {
                         top: el[el.length - 1].y * Constants.PSEUDO_PIXEL + 2*Constants.PSEUDO_PIXEL,
                         transform: [{ rotate: "95deg" }]
                     }}
-                    source={require('./Headphone.png')}/>
+                    source={require('./assets/Headphone.png')}/>
             </View>
         );
     }

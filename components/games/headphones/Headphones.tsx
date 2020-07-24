@@ -33,7 +33,7 @@ export default class Headphones extends Component {
         return (
             <View>
                 <View>
-                    <ImageBackground source={require('./Back.png')} style={{width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>
+                    <ImageBackground source={require('./assets/Back.png')} style={{width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>
                         <View style = {{justifyContent: "center", width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>
                             <GameEngine
                                 ref = {(ref) => {this.engine = ref}}
