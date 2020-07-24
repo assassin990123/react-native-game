@@ -58,7 +58,6 @@ export default class Headphones extends Component {
                     </ImageBackground>
                 </View>
             </View>
-        )
-
+        );
     }
 }

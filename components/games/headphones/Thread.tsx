@@ -1,13 +1,13 @@
-import React, {Component} from "react";
-import {View} from "react-native";
-import Svg, { Line } from "react-native-svg";
+import React, { Component } from 'react';
+import { View }             from 'react-native';
+import Svg, { Line }        from 'react-native-svg';
 
 export default class Node extends Component {
     constructor(props: any) {
         super(props);
     }
 
-    render(){
+    render() {
         return(
             <View>
                 <Svg>

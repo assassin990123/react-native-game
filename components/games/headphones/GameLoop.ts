@@ -13,8 +13,7 @@ type Point = {
 	y: number
 }
 
-const onSegment = (p: Point, q: Point, r: Point) =>
-{
+const onSegment = (p: Point, q: Point, r: Point) => {
 	if (q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) &&
 		q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y))
 		return true;
@@ -22,8 +21,7 @@ const onSegment = (p: Point, q: Point, r: Point) =>
 	return false;
 }
 
-const doIntersect = (p1: Point , q1: Point, p2: Point, q2: Point) =>
-{
+const doIntersect = (p1: Point , q1: Point, p2: Point, q2: Point) => {
 	// Find the four orientations needed for general and
 	// special cases
 	let o1 = orientation(p1, q1, p2);
@@ -51,8 +49,7 @@ const doIntersect = (p1: Point , q1: Point, p2: Point, q2: Point) =>
 	return false; // Doesn't fall in any of the above cases
 }
 
-const orientation = (p: Point, q: Point, r: Point) =>
-{
+const orientation = (p: Point, q: Point, r: Point) => {
 	let val = (q.y - p.y) * (r.x - q.x) -
 		(q.x - p.x) * (r.y - q.y);
 
@@ -72,8 +69,8 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
 	let node = entities.node;
 	let state = entities.state;
 
-	if (!state.win){
-		if (!node.filled){
+	if (!state.win) {
+		if (!node.filled) {
 			for (let i = 0; i < node.length; i++){
 				node.elements = [{x: randomBetween(0,45), y: randomBetween(0,75)}].concat(node.elements);
 			}
