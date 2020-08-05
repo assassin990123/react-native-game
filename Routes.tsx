@@ -7,12 +7,12 @@ import CreateCharacter      from './components/CreationCharacterMenu/CreationCha
 import ShopComponent        from './components/ShopComponent/ShopComponent';
 import GameComponent        from './components/GameComponent/GameComponent';
 import CharacterMenu        from './components/CharacterMenu/CharacterMenu';
-import Headphones           from "./components/games/headphones/Headphones";
+import Headphones           from "./components/Games/Headphones/Headphones";
 import StartMenu            from './components/StartMenu/StartMenu';
-import Ducks                from './components/games/ducks/Ducks';
-import Darts                from './components/games/darts/Darts';
-import Tower                from './components/games/tower/Tower';
-import Maze                 from './components/games/maze/Maze';
+import Ducks                from './components/Games/Ducks/Ducks';
+import Darts                from './components/Games/Darts/Darts';
+import Tower                from './components/Games/Tower/Tower';
+import Maze                 from './components/Games/Maze/Maze';
 
 const Routes = () => (
    <Router>
