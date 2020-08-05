@@ -2,13 +2,13 @@ import { Router, Scene }    from 'react-native-router-flux';
 import React                from 'react';
 
 import CharacterConstructor from './components/HeroConstructer/HeroConstucter';
-import RegistrationMenu     from './components/registrationMenu/RegistrationMenu';
-import CreateCharacter      from './components/creationCharacterMenu/CreationCharacterMenu';
+import RegistrationMenu     from './components/RegistrationMenu/RegistrationMenu';
+import CreateCharacter      from './components/CreationCharacterMenu/CreationCharacterMenu';
 import ShopComponent        from './components/ShopComponent/ShopComponent';
-import GameComponent        from './components/gameComponent/GameComponent';
-import CharacterMenu        from './components/characterMenu/CharacterMenu';
+import GameComponent        from './components/GameComponent/GameComponent';
+import CharacterMenu        from './components/CharacterMenu/CharacterMenu';
 import Headphones           from "./components/games/headphones/Headphones";
-import StartMenu            from './components/startMenu/StartMenu';
+import StartMenu            from './components/StartMenu/StartMenu';
 import Ducks                from './components/games/ducks/Ducks';
 import Darts                from './components/games/darts/Darts';
 import Tower                from './components/games/tower/Tower';
