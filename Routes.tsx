@@ -1,24 +1,34 @@
-import { Router, Scene } from 'react-native-router-flux';
-import React from 'react';
+import { Router, Scene }    from 'react-native-router-flux';
+import React                from 'react';
 
 import CharacterConstructor from './components/HeroConstructer/HeroConstucter';
-import RegistrationMenu     from './components/RegistrationMenu/RegistrationMenu'
+import RegistrationMenu     from './components/RegistrationMenu/RegistrationMenu';
 import CreateCharacter      from './components/CreationCharacterMenu/CreationCharacterMenu';
 import ShopComponent        from './components/ShopComponent/ShopComponent';
 import GameComponent        from './components/GameComponent/GameComponent';
 import CharacterMenu        from './components/CharacterMenu/CharacterMenu';
+import Headphones           from "./components/games/headphones/Headphones";
 import StartMenu            from './components/StartMenu/StartMenu';
+import Ducks                from './components/games/ducks/Ducks';
+import Darts                from './components/games/darts/Darts';
+import Tower                from './components/games/tower/Tower';
+import Maze                 from './components/games/maze/Maze';
 
 const Routes = () => (
    <Router>
       <Scene key = "root">
-         <Scene key = "LogIn"                component = {StartMenu}            hideNavBar = {true} title = "LogIn" initial = {true} />
-         <Scene key = "SigIn"                component = {RegistrationMenu}     hideNavBar = {true} title = "SignIn" />
+         <Scene key = "LogIn"                component = {StartMenu}            hideNavBar = {true} title = "LogIn" initial = {true}/>
+         <Scene key = "SignIn"               component = {RegistrationMenu}     hideNavBar = {true} title = "SignIn" />
          <Scene key = "CharacterMenu"        component = {CharacterMenu}        hideNavBar = {true} title = "HeroMenu" />
          <Scene key = "CharacterConstructor" component = {CreateCharacter}      hideNavBar = {true} title = "Construct" />
          <Scene key = "CreateCharacter"      component = {CharacterConstructor} hideNavBar = {true} title = "Create" />
          <Scene key = "GameComponent"        component = {GameComponent}        hideNavBar = {true} title = "Game" />
          <Scene key = "Shop"                 component = {ShopComponent}        hideNavBar = {true} title = "Shop" />
+         <Scene key = "Darts"                component = {Darts}                hideNavBar = {true} title = "Darts" />
+         <Scene key = "Ducks"                component = {Ducks}                hideNavBar = {true} title = "Ducks" />
+         <Scene key = "Headphones"           component = {Headphones}           hideNavBar = {true} title = "Headphones"/>
+         <Scene key = "Tower"                component = {Tower}                hideNavBar = {true} title = "Tower" />
+         <Scene key = "Maze"                 component = {Maze}                 hideNavBar = {true} title = "Maze" />
       </Scene>
    </Router>
 );
