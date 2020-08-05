@@ -8,7 +8,7 @@ const Constants = {
     MIN_SIDE: Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height),
     PSEUDO_PIXEL: Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height)/50,
     DART_SIZE: Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height)/50*2,
-    SLINGSHOT_SIDE: {x : 85 * Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height)/250, y : 119 * Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height)/250}
+    SLINGSHOT_SIDE: {x : 85 * Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height)/250, y : 119 * Math.min(Dimensions.get("screen").width,Dimensions.get("screen").height)/250},
 }
 
-export { Constants }
+export { Constants };

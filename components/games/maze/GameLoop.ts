@@ -1,10 +1,6 @@
-import { Constants } from './Constants';
+import { Constants } from '../Constants';
 
-const randomBetween = (min, max) => {
-    return Math.floor(Math.random() *  (max - min + 1) + min);
-}
-
-const distance = (x1,y1,x2,y2) => {
+const distance = (x1: number, y1: number, x2: number, y2: number) => {
     return Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
 }
 

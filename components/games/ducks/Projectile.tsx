@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image }      from 'react-native';
 
-import { Constants }        from './Constants';
+import { Constants }        from '../Constants';
 
 interface Interface {
     position: {

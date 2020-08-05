@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Image }          from 'react-native';
 
-import { Constants }      from './Constants';
+import { Constants }      from '../Constants';
 
 export default class Projectile extends Component {
     props: any;
