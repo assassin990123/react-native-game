@@ -142,7 +142,7 @@ export default class RegistrationMenu extends Component {
                     </View>
             
                     <TouchableOpacity style   = {styles.sendButton}
-                                      onPress = { () => {
+                                      onPress = { async () => {
                                             clickAudioEffect();
 
                                             if (!this.fieldsSuccessful()) {
@@ -151,7 +151,7 @@ export default class RegistrationMenu extends Component {
                                             } 
                                             
                                             this.setState({smsSent: true});
-                                            this.signUp();
+                                            await this.signUp();
                                           }}>
                         <Text style = {styles.buttonsText}>Отправить код</Text>
                     </TouchableOpacity>
@@ -166,13 +166,13 @@ export default class RegistrationMenu extends Component {
                     </View>
 
                     <TouchableOpacity style   = {[ styles.continueButton, !this.state.smsSent ? { backgroundColor: 'grey', borderColor: 'grey',} : null]}
-                                      onPress = { () => {
+                                      onPress = { async () => {
                                           clickAudioEffect();
 
                                           if (!this.state.smsSent) {
                                               return;
                                           }
-                                          this.confirmSignUp();
+                                          await this.confirmSignUp();
                                       }}>
                         <Text style = {styles.buttonsText}>Подтвердить</Text>
                     </TouchableOpacity>

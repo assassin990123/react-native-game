@@ -2,12 +2,12 @@ import { Router, Scene } from 'react-native-router-flux';
 import React from 'react';
 
 import CharacterConstructor from './components/HeroConstructer/HeroConstucter';
-import RegistrationMenu     from './components/RegistrationMenu/RegistrationMenu'
-import CreateCharacter      from './components/CreationCharacterMenu/CreationCharacterMenu';
+import RegistrationMenu     from './components/registrationMenu/RegistrationMenu';
+import CreateCharacter      from './components/creationCharacterMenu/CreationCharacterMenu';
 import ShopComponent        from './components/ShopComponent/ShopComponent';
-import GameComponent        from './components/GameComponent/GameComponent';
-import CharacterMenu        from './components/CharacterMenu/CharacterMenu';
-import StartMenu            from './components/StartMenu/StartMenu';
+import GameComponent        from './components/gameComponent/GameComponent';
+import CharacterMenu        from './components/characterMenu/CharacterMenu';
+import StartMenu            from './components/startMenu/StartMenu';
 
 const Routes = () => (
    <Router>
