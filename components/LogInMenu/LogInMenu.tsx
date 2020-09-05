@@ -17,7 +17,7 @@ import { styles } from './styles';
 
 import { Auth } from 'aws-amplify';
 
-export default class StartMenu extends Component {
+export default class LogInMenu extends Component {
     state = {
         username: '',
         password: '',
