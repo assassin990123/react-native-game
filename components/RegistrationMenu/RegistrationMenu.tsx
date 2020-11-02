@@ -1,12 +1,13 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
-import { TextInput, Text, View, TouchableOpacity,  Image, Modal} from 'react-native';
+import { TextInput, Text, View, TouchableOpacity,  Image, Modal } from 'react-native';
 import { Auth } from 'aws-amplify';
 
 import { TextInputMask } from 'react-native-masked-text';
 import { clickAudioEffect } from '../../endpoints/AudioEffects';
 
 import { styles } from './styles';
+import { err } from "react-native-svg/lib/typescript/xml";
 
 /*
 *
@@ -54,14 +55,21 @@ export default class RegistrationMenu extends Component {
                 phone_number
             }
         }).then(()=>console.log('signup successful'))
-          .catch(error=>{console.log('signup error', error); this.openWarningModal('Ошибка соединения или \n некорректно введены данные!');});
+          .catch((error: Error) => {
+              console.log('signup error', error);
+              if (error.name === "UsernameExistsException") {
+                  this.openWarningModal('На данный номер \n уже зарегестрирован пользователь!');
+              } else {
+                  this.openWarningModal('Ошибка соединения или \n некорректно введены данные!');
+              }
+          })
     }
 
     confirmSignUp = async() => {
         await Auth.confirmSignUp(this.state.username, 
                                  this.state.smsCode)
-            .then(()=>{console.log('successful confirm singtup'); Actions.CreateCharacter()})
-            .catch(error=>{console.log('error confirming signing up',error); this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!')});
+            .then(()=>{console.log('successful confirm sing up'); Actions.CreateCharacter()})
+            .catch((error: Error) => {console.log('error confirming signing up',error); this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!')});
     }
 
     openWarningModal = (message: string) => {

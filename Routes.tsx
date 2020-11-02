@@ -17,8 +17,8 @@ import Maze                 from './components/Games/Maze/Maze';
 const Routes = () => (
    <Router>
       <Scene key = "root">
-         <Scene key = "LogIn"                component = {LogInMenu}            hideNavBar = {true} title = "LogIn" initial = {true} />
-         <Scene key = "SigIn"                component = {RegistrationMenu}     hideNavBar = {true} title = "SignIn" />
+         <Scene key = "LogIn"                component = {LogInMenu}            hideNavBar = {true} title = "LogIn" initial = {true}/>
+         <Scene key = "SignIn"               component = {RegistrationMenu}     hideNavBar = {true} title = "SignIn" />
          <Scene key = "CharacterMenu"        component = {CharacterMenu}        hideNavBar = {true} title = "HeroMenu" />
          <Scene key = "CharacterConstructor" component = {CreateCharacter}      hideNavBar = {true} title = "Construct" />
          <Scene key = "CreateCharacter"      component = {CharacterConstructor} hideNavBar = {true} title = "Create" />
