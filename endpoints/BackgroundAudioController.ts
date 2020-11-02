@@ -52,7 +52,7 @@ export default class BackgroundAudioController {
 
             this._isPlayingNow = true;
         })
-            .catch(err => {
+            .catch((err: Error) => {
                 console.error('[BackgroundAudioController]: Background music cant be played.', err);
             });
     }

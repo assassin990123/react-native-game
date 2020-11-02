@@ -7,7 +7,6 @@ import { TextInputMask } from 'react-native-masked-text';
 import { clickAudioEffect } from '../../endpoints/AudioEffects';
 
 import { styles } from './styles';
-import { err } from "react-native-svg/lib/typescript/xml";
 
 /*
 *
