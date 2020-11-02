@@ -11,10 +11,17 @@ import { clickAudioEffect } from '../../endpoints/AudioEffects';
 *
 */
 
-export default class MenuBottom extends Component {
+interface MenuBottomProps {
+    onSelectRoom: (selectedRoom: any) => void
+}
+
+export default class MenuBottom extends Component<MenuBottomProps> {
     constructor(props:any) {
         super(props)
-        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleLocationChange(key: string) {
+        this.props.onSelectRoom(this._icons[key].room);
     }
 
     _handlers: any[] = [];
@@ -43,25 +50,25 @@ export default class MenuBottom extends Component {
         this.forceUpdate();
     };
 
-    _icons = { home : { link: require('./assets/Home.png'), pressed: true },
-               vat  : { link: require('./assets/Vat.png'),  pressed: false },
-               cat  : { link: require('./assets/Cat.png'),  pressed: false },
-               hat  : { link: require('./assets/Hat.png'),  pressed: false },
-               dirt : { link: require('./assets/Dirt.png'), pressed: false } };
+    _icons = { home : { link: require('./assets/Home.png'), room: require('../../assets/rooms/BedRoom.png'),  pressed: true },
+               vat  : { link: require('./assets/Vat.png'),  room: require('../../assets/rooms/BathRoom.png'), pressed: false },
+               cat  : { link: require('./assets/Cat.png'),  room: require('../../assets/rooms/Hall.png'),     pressed: false },
+               hat  : { link: require('./assets/Hat.png'),  room: require('../../assets/rooms/Kitchen.png'),  pressed: false },
+               dirt : { link: require('./assets/Dirt.png'), room: require('../../assets/rooms/Map.png'),      pressed: false } };
 
     render(): JSX.Element {
         let iconsArray: JSX.Element[] = [];
 
         for (let [key, value] of Object.entries(this._icons)) {
-            iconsArray.push(<TouchableOpacity key={key} onPress={() => {this.handleClick(key)}} 
+            iconsArray.push(<TouchableOpacity key={key} onPress={() => {this.handleClick(key);}}
                                               style={value.pressed ? styles.pressedButton : styles.defaultButton}
-                                              activeOpacity={1}>
+                                              activeOpacity={1} >
                                     <Image source={value.link} key = {key}
                                            style={value.pressed ? styles.imagePressedColor : styles.imageDefaultColor} />
                             </TouchableOpacity>);
             
             this._handlers.push(() => {
-                console.log('okkkkkkkkkkkkk');
+                this.handleLocationChange(key);
             });
         }
 

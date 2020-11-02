@@ -14,6 +14,10 @@ export default class GameComponent extends Component {
         this._backgroundAudio = new BackgroundAudioController();
     }
 
+    state = {
+        room: require('../../assets/rooms/BedRoom.png')
+    }
+
     _backgroundAudio: BackgroundAudioController;
 
     componentDidMount() {
@@ -29,12 +33,16 @@ export default class GameComponent extends Component {
         this._backgroundAudio.unloadBackgroundMusic();
     }
 
+    handleSelectedRoom = (selectedRoom: any) => {
+        this.setState({room: selectedRoom});
+    }
+
     render() {
           return (
-                <ImageBackground source={require('./assets/backgrounds/BedRoom.png')} style = {{flex: 1}}> 
+                <ImageBackground source={this.state.room} style = {{flex: 1}}>
                         <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
-                        <Image source={require('./assets/sprites/AsunaDefault.png')}/>
-                        <MenuButton/>
+                        <Image style={{left: 20}} source={require('./assets/sprites/AsunaDefault.png')}/>
+                        <MenuButton onSelectRoom={this.handleSelectedRoom} />
                 </ImageBackground>
         );
     }
