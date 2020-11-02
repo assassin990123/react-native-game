@@ -99,7 +99,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                        transparent={true}
                        visible={this.state.settingsModalVisible}
                        onRequestClose={() => {this.setState({settingsModalVisible: false})}}>
-                    <View style={styles.modalContainer}>
+                    <TouchableOpacity style={styles.modalContainer}
+                                      onPress={() => {this.setState({settingsModalVisible: false})}}
+                                      activeOpacity={1} >
                         <View style={styles.modalView}>
                             <Text style={[styles.modalTitle]}>Настройки</Text>
 
@@ -148,14 +150,16 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 <Text style={styles.modalExitButtonText}>кароче типа выйти</Text>
                             </TouchableOpacity>
                         </View>   
-                    </View>
+                    </TouchableOpacity>
                 </Modal>
                 
                 <Modal animationType='fade'
                        transparent={true}
                        visible={this.state.statsModalVisible}
                        onRequestClose={() => {this.setState({statsModalVisible: false})}}>
-                    <View style={styles.modalContainer}>
+                    <TouchableOpacity style={styles.modalContainer}
+                                      onPress={() => {this.setState({statsModalVisible: false})}}
+                                      activeOpacity={1} >
                         <View style={[styles.modalView, {height: '87%'}]}>
                             <Text style={[styles.modalTitle]}>Состояние {"\n"} героя</Text>
                             
@@ -165,7 +169,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 <Text style={styles.modalExitButtonText}>Назад</Text>
                             </TouchableOpacity>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </Modal>
 
                 <View style={styles.StatusBar}>
