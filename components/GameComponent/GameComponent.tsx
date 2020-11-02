@@ -33,16 +33,17 @@ export default class GameComponent extends Component {
         this._backgroundAudio.unloadBackgroundMusic();
     }
 
-    handleSelectedRoom = (selectedRoom: any) => {
+    handleSelectedRoom = (selectedRoom: any, name: string) => {
         this.setState({room: selectedRoom});
+        console.log(name);
     }
 
     render() {
           return (
                 <ImageBackground source={this.state.room} style = {{flex: 1}}>
-                        <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
-                        <Image style={{left: 20}} source={require('./assets/sprites/AsunaDefault.png')}/>
-                        <MenuButton onSelectRoom={this.handleSelectedRoom} />
+                    <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
+                    <Image style={{left: 20}} source={require('./assets/sprites/AsunaDefault.png')}/>
+                    <MenuButton onSelectRoom={this.handleSelectedRoom} />
                 </ImageBackground>
         );
     }

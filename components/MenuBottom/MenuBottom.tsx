@@ -12,7 +12,7 @@ import { clickAudioEffect } from '../../endpoints/AudioEffects';
 */
 
 interface MenuBottomProps {
-    onSelectRoom: (selectedRoom: any) => void
+    onSelectRoom: (selectedRoom: any, name: string) => void
 }
 
 export default class MenuBottom extends Component<MenuBottomProps> {
@@ -21,14 +21,15 @@ export default class MenuBottom extends Component<MenuBottomProps> {
     }
 
     handleLocationChange(key: string) {
-        this.props.onSelectRoom(this._icons[key].room);
+        // @ts-ignore
+        this.props.onSelectRoom(this._assets[key].room, key);
     }
 
     _handlers: any[] = [];
 
     findIndex = (name: string): number => {
         let i: number = 0;
-        for (let [key, ] of Object.entries(this._icons)) {
+        for (let [key, ] of Object.entries(this._assets)) {
             if (key === name) {
                 return parseInt(i.toString());
             }
@@ -40,7 +41,7 @@ export default class MenuBottom extends Component<MenuBottomProps> {
     }
 
     handleClick = async (icon: string): Promise<void> => {
-        for (let [key, value] of Object.entries(this._icons)) {
+        for (let [key, value] of Object.entries(this._assets)) {
             value.pressed = key === icon;
         }
         
@@ -50,7 +51,7 @@ export default class MenuBottom extends Component<MenuBottomProps> {
         this.forceUpdate();
     };
 
-    _icons = { home : { link: require('./assets/Home.png'), room: require('../../assets/rooms/BedRoom.png'),  pressed: true },
+    _assets = { home : { link: require('./assets/Home.png'), room: require('../../assets/rooms/BedRoom.png'),  pressed: true },
                vat  : { link: require('./assets/Vat.png'),  room: require('../../assets/rooms/BathRoom.png'), pressed: false },
                cat  : { link: require('./assets/Cat.png'),  room: require('../../assets/rooms/Hall.png'),     pressed: false },
                hat  : { link: require('./assets/Hat.png'),  room: require('../../assets/rooms/Kitchen.png'),  pressed: false },
@@ -59,7 +60,7 @@ export default class MenuBottom extends Component<MenuBottomProps> {
     render(): JSX.Element {
         let iconsArray: JSX.Element[] = [];
 
-        for (let [key, value] of Object.entries(this._icons)) {
+        for (let [key, value] of Object.entries(this._assets)) {
             iconsArray.push(<TouchableOpacity key={key} onPress={() => {this.handleClick(key);}}
                                               style={value.pressed ? styles.pressedButton : styles.defaultButton}
                                               activeOpacity={1} >
