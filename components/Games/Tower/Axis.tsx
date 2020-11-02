@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View }             from 'react-native';
 import Svg, { Line }        from 'react-native-svg';
 
-import { Constants }        from './Constants'
+import { Constants }        from '../Constants';
 
 
 export default class Block extends Component {

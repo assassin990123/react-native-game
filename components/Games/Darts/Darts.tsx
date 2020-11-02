@@ -2,7 +2,7 @@ import React, { Component }                         from 'react';
 import { View , TouchableOpacity, ImageBackground } from 'react-native';
 import { GameEngine }                               from 'react-native-game-engine';
 
-import { Constants } from './Constants';
+import { Constants } from '../Constants';
 import { GameLoop }  from './GameLoop';
 import Aim           from './Aim';
 import Dart          from './Dart';

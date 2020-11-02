@@ -1,4 +1,4 @@
-import { Constants } from './Constants'
+import { Constants } from '../Constants';
 
 const randomBetween = (min: number, max: number) => {
 	return Math.floor(Math.random() *  (max - min + 1) + min);

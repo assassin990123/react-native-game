@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View , Image }     from 'react-native';
 import Svg, { Line }        from 'react-native-svg';
 
-import {Constants}          from './Constants';
+import {Constants}          from '../Constants';
 
 interface Interface {
     elements: any

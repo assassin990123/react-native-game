@@ -1,7 +1,7 @@
 import React         from 'react';
 import { View }      from 'react-native';
 
-import { Constants } from './Constants';
+import { Constants } from '../Constants';
 
 
 export default function Hero(props: any) {

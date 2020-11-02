@@ -1,7 +1,7 @@
 import React          from 'react';
 import {View , Image} from 'react-native';
 
-import {Constants}    from './Constants';
+import {Constants}    from '../Constants';
 
 
 export default function Walls(props: any) {
