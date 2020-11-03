@@ -1,4 +1,4 @@
-import { ImageBackground, Image } from 'react-native';
+import { ImageBackground, Image, View, Button, TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native';
 import React, { Component } from 'react';
 
 import BackgroundAudioController from '../../endpoints/BackgroundAudioController';
@@ -6,6 +6,21 @@ import BackgroundAudioController from '../../endpoints/BackgroundAudioController
 // View components.
 import MenuButton    from '../MenuBottom/MenuBottom';
 import HeroStatusBar from '../HeroStatusBar/HeroStatusBar';
+
+
+const buttonStyle = StyleSheet.create({
+    button: {
+        position: 'absolute',
+        alignSelf: 'center',
+        bottom: '2%',
+        borderRadius: 10,
+        width: '90%',
+        height: 77,
+        backgroundColor: '#EE8AF0',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
+});
 
 export default class GameComponent extends Component {
     constructor(props: any) {
@@ -15,7 +30,13 @@ export default class GameComponent extends Component {
     }
 
     state = {
-        room: require('../../assets/rooms/BedRoom.png')
+        room: require('../../assets/rooms/BedRoom.png'),
+        roomName: ''
+    }
+
+    previousState = {
+        room: require('../../assets/rooms/BedRoom.png'),
+        roomName: ''
     }
 
     _backgroundAudio: BackgroundAudioController;
@@ -34,17 +55,34 @@ export default class GameComponent extends Component {
     }
 
     handleSelectedRoom = (selectedRoom: any, name: string) => {
-        this.setState({room: selectedRoom});
+        this.previousState = this.state;
+
+        this.setState({room: selectedRoom, roomName: name});
         console.log(name);
     }
 
+    mapComponent() {
+        return (
+            <ImageBackground source={this.state.room} style = {{flex: 1}}>
+                <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
+                <TouchableOpacity onPress={() => {
+                    this.setState({room: this.previousState.room, roomName: this.previousState.roomName});
+                }}
+                                  style={buttonStyle.button}
+                                  activeOpacity={1}>
+                    <Text style = {{ fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white' }}>Назад</Text>
+                </TouchableOpacity>
+            </ImageBackground>
+        );
+    }
+
     render() {
-          return (
+        return this.state.roomName !== 'dirt' ?
                 <ImageBackground source={this.state.room} style = {{flex: 1}}>
                     <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
                     <Image style={{left: 20}} source={require('./assets/sprites/AsunaDefault.png')}/>
                     <MenuButton onSelectRoom={this.handleSelectedRoom} />
                 </ImageBackground>
-        );
+            : this.mapComponent();
     }
 }
