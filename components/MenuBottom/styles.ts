@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet} from 'react-native';
 
-const { height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     BottomMenu: {
@@ -33,9 +33,9 @@ export const styles = StyleSheet.create({
     defaultButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '15%',
-        height: '90%',
-        borderRadius: 200,
+        width: width * 0.155,
+        height: width * 0.155,
+        borderRadius: 100,
         marginLeft: '2%',
         marginRight: '2%',
         marginTop: '1%',
@@ -45,8 +45,8 @@ export const styles = StyleSheet.create({
     pressedButton: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '15%',
-        height: '90%',
+        width: width * 0.155,
+        height: width * 0.155,
         borderRadius: 100,
         marginLeft: '2%',
         marginRight: '2%',
