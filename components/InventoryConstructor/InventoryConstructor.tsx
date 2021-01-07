@@ -218,7 +218,6 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                     <Modal animationType='fade'
                         transparent={true}
                         visible={this.state.infoModalVisible}>
-                        {/* @ts-ignore */}
                             {this._modalInfoContainer}
                     </Modal>
 
