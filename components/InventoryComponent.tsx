@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
-import {InventoryConstructor } from '../InventoryConstructor/InventoryConstructor';
+import {InventoryConstructor } from './InventoryConstructor/InventoryConstructor';
 
 
-interface ShopItem {
+interface ItemInfo {
     title: string,
     desc: string,
     buffs: number,
@@ -17,7 +17,7 @@ export default class ShopComponent extends Component {
         super(props);
     }
 
-    data: ShopItem[] = [    {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
+    data: ItemInfo[] = [    {title: 'Шарик', desc: 'Шарик', buffs: 123, debuf: -10, price: 12},
                         {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
                         {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
                         {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
@@ -45,7 +45,7 @@ export default class ShopComponent extends Component {
                     }
                 }
                 bottomElemProps = {
-                    { text: 'Купить', 
+                    { text: 'Инфо', 
                       handler: () => { console.log(2 + 2); }
                     }
                 }
