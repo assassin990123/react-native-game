@@ -1,7 +1,8 @@
-import { ImageBackground, Image, View, Button, TouchableOpacity, Text, StyleSheet, Dimensions } from 'react-native';
+import { ImageBackground, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import React, { Component } from 'react';
 
 import BackgroundAudioController from '../../endpoints/BackgroundAudioController';
+import ButtonGroup from '../ShopAndInventoryGroup/Group';
 
 // View components.
 import MenuButton    from '../MenuBottom/MenuBottom';
@@ -80,7 +81,8 @@ export default class GameComponent extends Component {
         return this.state.roomName !== 'dirt' ?
                 <ImageBackground source={this.state.room} style = {{flex: 1}}>
                     <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
-                    <Image style={{left: 20}} source={require('./assets/sprites/AsunaDefault.png')}/>
+                    <ButtonGroup/>
+                    <Image style={{justifyContent: 'center', marginLeft: 'auto'}} source={require('./assets/sprites/AsunaDefault.png')}/>
                     <MenuButton onSelectRoom={this.handleSelectedRoom} />
                 </ImageBackground>
             : this.mapComponent();
