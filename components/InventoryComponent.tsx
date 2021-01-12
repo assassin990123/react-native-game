@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import {InventoryConstructor } from './InventoryConstructor/InventoryConstructor';
+import { InventoryConstructor } from './InventoryConstructor/InventoryConstructor';
 
 
 interface ItemInfo {
@@ -17,7 +17,7 @@ export default class ShopComponent extends Component {
         super(props);
     }
 
-    data: ItemInfo[] = [    {title: 'Шарик', desc: 'Шарик', buffs: 123, debuf: -10, price: 12},
+    data: ItemInfo[] = [{title: 'Шарик', desc: 'Шарик', buffs: 123, debuf: -10, price: 12},
                         {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
                         {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
                         {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},

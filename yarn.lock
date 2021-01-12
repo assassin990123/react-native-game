@@ -4757,10 +4757,10 @@ expo-av@^8.2.1:
     nullthrows "^1.1.0"
     prop-types "15.7.2"
 
-expo-brightness@~8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/expo-brightness/-/expo-brightness-8.1.0.tgz#89bcbbfb84bcecdf62ed5dd57651b0d5d6d9a3a9"
-  integrity sha512-4TZXtebiRLLFqrDWYZo/qBFV1wJjakuqgNb1WYXFSsIEf8qXMT8ypWw2p1t9o+la52id/AjdVNp8nopBBcyjOQ==
+expo-brightness@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/expo-brightness/-/expo-brightness-8.4.0.tgz#6ace4d69abf71614a0a4037b8613c37c5402467e"
+  integrity sha512-RjV1E0mU8urX1v2Y/z2NFkTVOh3NyEy8LxTNJtRlwaX102DDcrpJBSZLlhSNxd1cZUsl07TpvLYiIEzjraSzjw==
 
 expo-constants@~9.0.0:
   version "9.0.0"

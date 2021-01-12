@@ -9,6 +9,8 @@ export default class BackgroundAudioController {
     _playbackInstance: any;
     _isPlayingNow: boolean;
 
+    _sound: Audio.Sound;
+
     loadNewPlayback = async (played: boolean) => {
         if (this._playbackInstance != null) {
             await this._playbackInstance.unloadAsync()
@@ -25,16 +27,14 @@ export default class BackgroundAudioController {
             shouldPlay: played,
             rate: 1.0,
             shouldCorrectPitch: true,
-            volume: 1.0,
+            volume: 0.8,
             isMuted: false
         };
 
-        const { sound } = await Audio.Sound.createAsync(
-            source,
-            initialStatus
-        );
+        this._sound = new Audio.Sound();
+        await this._sound.loadAsync(source, initialStatus);
 
-        this._playbackInstance = sound;
+        this._playbackInstance = this._sound;
         this._playbackInstance.setIsLoopingAsync(true);
         this._playbackInstance.playAsync();
     }
@@ -60,6 +60,10 @@ export default class BackgroundAudioController {
     unloadBackgroundMusic = () => {
         this._playbackInstance.unloadAsync();
         this._isPlayingNow = false;
+    }
+
+    setPlaybackVolume(volume: number) {
+        this._sound.setVolumeAsync(volume);
     }
 
     isPlayingNow = () => {

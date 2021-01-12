@@ -13,3 +13,7 @@ export const clickAudioEffect = () => {
         console.error('[AudioEffect]: cant play audio effect!', err);
     }
 }
+
+export async function setAudioEffectVolume(volume: number) {
+    await clickButtonSound.setVolumeAsync(volume);
+}

@@ -85,7 +85,7 @@ export class InventoryConstructor extends Component<IInventoryProps> {
         this.setState({ infoModalVisible: visible });
     }
 
-    _renderTopElement(text: string): JSX.Element {
+    _renderTopElement(text: String): JSX.Element {
         if (this._topButtonData === undefined) {
             return (
                 <View style={{height: '60%', alignItems: 'center', justifyContent: 'center'}}>
@@ -131,14 +131,14 @@ export class InventoryConstructor extends Component<IInventoryProps> {
         );
     }
 
-    _modalWarningView(text: string): JSX.Element {
+    _modalWarningView(text: String): JSX.Element {
         return (
             <View style={styles.modalContainer}>
                 <View style={styles.modalView}>
                     <Text style={[styles.modalTitle, styles.modalPadding]}>Внимание!</Text>
 
                     <View style={[{justifyContent: 'center', alignItems: 'center'}, styles.modalPadding]}>
-                        <Text style={styles.modalText}>Вы собираетесь {text.toLocaleLowerCase()} {"\n"} выбранный предмет!</Text>
+                        <Text style={styles.modalText}>Вы собираетесь {text.toLocaleUpperCase()} {"\n"} выбранный предмет!</Text>
                         <Text style={styles.modalText}> Вы действительно хотите это сделать?</Text>
                     </View>
                     
@@ -211,8 +211,8 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                     <Modal animationType='fade'
                         transparent={true}
                         visible={this.state.warningModalVisible}>
-                        {/* @ts-ignore */}
-                        {this._modalWarningView(this._topButtonData === undefined ? this._bottomButtonData.text : this._topButtonData.text)}
+                        {/* @ts-ignore*/ }
+                        { this._modalWarningView(this._topButtonData === undefined ? this._bottomButtonData.text : this._topButtonData.text)}
                     </Modal>
 
                     <Modal animationType='fade'

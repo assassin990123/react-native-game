@@ -42,7 +42,7 @@ export default class GameComponent extends Component {
 
     _backgroundAudio: BackgroundAudioController;
 
-    componentDidMount() {
+    async componentDidMount() {
         this._backgroundAudio.setAudioMode();
 
         this._backgroundAudio.loadNewPlayback(true)
@@ -51,7 +51,7 @@ export default class GameComponent extends Component {
             });
     }
 
-    componentWillUnmount() {
+     componentWillUnmount() {
         this._backgroundAudio.unloadBackgroundMusic();
     }
 
@@ -65,7 +65,7 @@ export default class GameComponent extends Component {
     mapComponent() {
         return (
             <ImageBackground source={this.state.room} style = {{flex: 1}}>
-                <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
+                <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
                 <TouchableOpacity onPress={() => {
                     this.setState({room: this.previousState.room, roomName: this.previousState.roomName});
                 }}
@@ -80,7 +80,7 @@ export default class GameComponent extends Component {
     render() {
         return this.state.roomName !== 'dirt' ?
                 <ImageBackground source={this.state.room} style = {{flex: 1}}>
-                    <HeroStatusBar handler={(): void => console.log('helloooooooo')} />
+                    <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
                     <ButtonGroup/>
                     <Image style={{justifyContent: 'center', marginLeft: 'auto'}} source={require('./assets/sprites/AsunaDefault.png')}/>
                     <MenuButton onSelectRoom={this.handleSelectedRoom} />
