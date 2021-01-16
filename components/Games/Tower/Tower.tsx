@@ -46,8 +46,8 @@ export default class Tower extends Component {
                           systems  = {[ GameLoop ]}
                           entities = {{
                               block: {
-                                  elements: [[],[],[]], 
-                                  n: 7, 
+                                  elements: [[],[],[]],
+                                  n: 7,
                                   filled: false, 
                                   startPos: {x : 0,y : 0}, 
                                   ely: -1, 

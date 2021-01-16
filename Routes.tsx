@@ -22,8 +22,8 @@ const Routes = () => (
          <Scene key = "SignIn"               component = {RegistrationMenu}     hideNavBar = {true} title = "SignIn" />
          <Scene key = "CharacterMenu"        component = {CharacterMenu}        hideNavBar = {true} title = "HeroMenu" />
          <Scene key = "CharacterConstructor" component = {CreateCharacter}      hideNavBar = {true} title = "Construct" />
-         <Scene key = "CreateCharacter"      component = {CharacterConstructor} hideNavBar = {true} title = "Create" initial = {true}/>
-         <Scene key = "GameComponent"        component = {GameComponent}        hideNavBar = {true} title = "Game" />
+         <Scene key = "CreateCharacter"      component = {CharacterConstructor} hideNavBar = {true} title = "Create" />
+         <Scene key = "GameComponent"        component = {GameComponent}        hideNavBar = {true} title = "Game" initial = {true}/>
          <Scene key = "Shop"                 component = {ShopComponent}        hideNavBar = {true} title = "Shop"/>
          <Scene key = "Inventory"            component = {InventoryComponent}   hideNavBar = {true} title = "Inventory"  />
          <Scene key = "Darts"                component = {Darts}                hideNavBar = {true} title = "Darts" />

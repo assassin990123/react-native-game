@@ -1,15 +1,20 @@
-import { ImageBackground, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { Image, TouchableOpacity, Text, StyleSheet, Dimensions, View } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import React, { Component } from 'react';
 
 import BackgroundAudioController from '../../endpoints/BackgroundAudioController';
+import { clickAudioEffect } from "../../endpoints/AudioEffects";
 import ButtonGroup from '../ShopAndInventoryGroup/Group';
 
 // View components.
 import MenuButton    from '../MenuBottom/MenuBottom';
 import HeroStatusBar from '../HeroStatusBar/HeroStatusBar';
+import Tower from "../Games/Tower/Tower";
 
 
-const buttonStyle = StyleSheet.create({
+const { width, height } = Dimensions.get("screen");
+
+const style = StyleSheet.create({
     button: {
         position: 'absolute',
         alignSelf: 'center',
@@ -20,6 +25,15 @@ const buttonStyle = StyleSheet.create({
         backgroundColor: '#EE8AF0',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    view: {
+        flex: 1,
+        zIndex: -1
+    },
+    image: {
+        resizeMode: 'contain',
+        height: height * 0.8,
+        width: '100%'
     }
 });
 
@@ -64,27 +78,53 @@ export default class GameComponent extends Component {
 
     mapComponent() {
         return (
-            <ImageBackground source={this.state.room} style = {{flex: 1}}>
+            <View style={style.view}>
                 <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
+
+                {/* Background image. */}
+                <Image source={require('../../assets/rooms/Map.png')} style = {style.image} />
+
+                {/* Points. */}
+                <TouchableOpacity style={{position: 'absolute', top: height * 0.3, left: width * 0.2}} onPress={() => {
+                    Actions.Tower();
+                    clickAudioEffect();
+                }}>
+                    <Image source={require('./assets/sprites/point.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{position: 'absolute', top: height * 0.37, left: width * 0.755}} onPress={() => {
+                    Actions.Maze();
+                    clickAudioEffect();
+                }}>
+                    <Image source={require('./assets/sprites/point.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{position: 'absolute', top: height * 0.53, left: width * 0.4}} onPress={() => {
+                    Actions.Ducks();
+                    clickAudioEffect();
+                }}>
+                    <Image source={require('./assets/sprites/point.png')} />
+                </TouchableOpacity>
+
                 <TouchableOpacity onPress={() => {
+                    clickAudioEffect();
                     this.setState({room: this.previousState.room, roomName: this.previousState.roomName});
                 }}
-                                  style={buttonStyle.button}
+                                  style={style.button}
                                   activeOpacity={1}>
                     <Text style = {{ fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white' }}>Назад</Text>
                 </TouchableOpacity>
-            </ImageBackground>
+            </View>
         );
     }
 
     render() {
-        return this.state.roomName !== 'dirt' ?
-                <ImageBackground source={this.state.room} style = {{flex: 1}}>
-                    <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
-                    <ButtonGroup/>
-                    <Image style={{justifyContent: 'center', marginLeft: 'auto'}} source={require('./assets/sprites/AsunaDefault.png')}/>
-                    <MenuButton onSelectRoom={this.handleSelectedRoom} />
-                </ImageBackground>
-            : this.mapComponent();
+        // return this.state.roomName !== 'dirt' ?
+        //         <ImageBackground source={this.state.room} style = {{flex: 1}}>
+        //             <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
+        //             <ButtonGroup/>
+        //             <Image style={{justifyContent: 'center', marginLeft: 'auto'}} source={require('./assets/sprites/AsunaDefault.png')}/>
+        //             <MenuButton onSelectRoom={this.handleSelectedRoom} />
+        //         </ImageBackground>
+        //     : this.mapComponent();
+        return this.mapComponent();
     }
 }
