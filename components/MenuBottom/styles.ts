@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet} from 'react-native';
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('screen');
 
 export const styles = StyleSheet.create({
     BottomMenu: {
@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         width: '100%', 
         height: 77, 
         backgroundColor: '#EE8AF0', 
-        justifyContent: 'center', 
+        justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
         top: height - 77

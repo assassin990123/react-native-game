@@ -3,6 +3,12 @@ import { View, Image }      from 'react-native';
 
 import { Constants }        from '../Constants';
 
+/*
+*
+*    DONT TOUCH THIS!!!!
+*
+*/
+
 export default class Dart extends Component {
     props: any;
 
@@ -13,8 +19,8 @@ export default class Dart extends Component {
     }
 
     render() {
-        let dartList = this.props.elements.map((el:any, idx:any) => {
-            return  <Image 
+        let dartList = this.props.elements.map((el:any, idx: number) => {
+            return  <Image
                 key = {idx}
                 style={{
                     width: 2*Constants.PSEUDO_PIXEL,
@@ -25,10 +31,12 @@ export default class Dart extends Component {
                 }}
                 source={require('./assets/Dart.png')}
             />
-        })
+        });
 
         return(
-            <View> {dartList} </View>
+            <View>
+                {dartList}
+            </View>
         );
     }
 }

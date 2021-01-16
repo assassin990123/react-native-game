@@ -57,8 +57,8 @@ export default class BackgroundAudioController {
             });
     }
 
-    unloadBackgroundMusic = () => {
-        this._playbackInstance.unloadAsync();
+    unloadBackgroundMusic = async () => {
+        await this._playbackInstance.unloadAsync();
         this._isPlayingNow = false;
     }
 

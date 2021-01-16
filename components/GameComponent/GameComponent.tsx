@@ -1,4 +1,4 @@
-import { Image, TouchableOpacity, Text, StyleSheet, Dimensions, View } from 'react-native';
+import { Image, ImageBackground, TouchableOpacity, Text, StyleSheet, Dimensions, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import React, { Component } from 'react';
 
@@ -9,7 +9,8 @@ import ButtonGroup from '../ShopAndInventoryGroup/Group';
 // View components.
 import MenuButton    from '../MenuBottom/MenuBottom';
 import HeroStatusBar from '../HeroStatusBar/HeroStatusBar';
-import Tower from "../Games/Tower/Tower";
+
+import { styles } from "../ShopAndInventoryGroup/styles";
 
 
 const { width, height } = Dimensions.get("screen");
@@ -34,7 +35,7 @@ const style = StyleSheet.create({
         resizeMode: 'contain',
         height: height * 0.8,
         width: '100%'
-    }
+    },
 });
 
 export default class GameComponent extends Component {
@@ -46,12 +47,12 @@ export default class GameComponent extends Component {
 
     state = {
         room: require('../../assets/rooms/BedRoom.png'),
-        roomName: ''
+        roomName: 'home'
     }
 
     previousState = {
         room: require('../../assets/rooms/BedRoom.png'),
-        roomName: ''
+        roomName: 'home'
     }
 
     _backgroundAudio: BackgroundAudioController;
@@ -65,8 +66,8 @@ export default class GameComponent extends Component {
             });
     }
 
-     componentWillUnmount() {
-        this._backgroundAudio.unloadBackgroundMusic();
+     async componentWillUnmount() {
+        await this._backgroundAudio.unloadBackgroundMusic();
     }
 
     handleSelectedRoom = (selectedRoom: any, name: string) => {
@@ -91,12 +92,14 @@ export default class GameComponent extends Component {
                 }}>
                     <Image source={require('./assets/sprites/point.png')} />
                 </TouchableOpacity>
+
                 <TouchableOpacity style={{position: 'absolute', top: height * 0.37, left: width * 0.755}} onPress={() => {
                     Actions.Maze();
                     clickAudioEffect();
                 }}>
                     <Image source={require('./assets/sprites/point.png')} />
                 </TouchableOpacity>
+
                 <TouchableOpacity style={{position: 'absolute', top: height * 0.53, left: width * 0.4}} onPress={() => {
                     Actions.Ducks();
                     clickAudioEffect();
@@ -104,6 +107,14 @@ export default class GameComponent extends Component {
                     <Image source={require('./assets/sprites/point.png')} />
                 </TouchableOpacity>
 
+                <TouchableOpacity style={{position: 'absolute', top: height * 0.62, left: width * 0.49}} onPress={() => {
+                    Actions.Darts();
+                    clickAudioEffect();
+                }}>
+                    <Image source={require('./assets/sprites/point.png')} />
+                </TouchableOpacity>
+
+                { /* Back button. */ }
                 <TouchableOpacity onPress={() => {
                     clickAudioEffect();
                     this.setState({room: this.previousState.room, roomName: this.previousState.roomName});
@@ -112,19 +123,40 @@ export default class GameComponent extends Component {
                                   activeOpacity={1}>
                     <Text style = {{ fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white' }}>Назад</Text>
                 </TouchableOpacity>
+
             </View>
         );
     }
 
+    _interactiveGame(roomName: string): JSX.Element {
+        console.log(roomName);
+        return roomName !== 'home' ? <View/> :
+            (
+                <View style={[styles.container, { top: height * 0.82 }]}>
+                    <TouchableOpacity
+                        onPress={ () => {
+                            clickAudioEffect();
+                            Actions.Headphones();
+                        } }
+                        style={styles.button}
+                    >
+                        <Image source={require('./assets/sprites/headphones.png')} style={[styles.iconImage]}/>
+                    </TouchableOpacity>
+                </View>
+            );
+    }
+
     render() {
-        // return this.state.roomName !== 'dirt' ?
-        //         <ImageBackground source={this.state.room} style = {{flex: 1}}>
-        //             <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
-        //             <ButtonGroup/>
-        //             <Image style={{justifyContent: 'center', marginLeft: 'auto'}} source={require('./assets/sprites/AsunaDefault.png')}/>
-        //             <MenuButton onSelectRoom={this.handleSelectedRoom} />
-        //         </ImageBackground>
-        //     : this.mapComponent();
-        return this.mapComponent();
+        console.disableYellowBox = true; // Disable yellow screen warnings.
+
+        return this.state.roomName !== 'dirt' ?
+                <ImageBackground source={this.state.room} style = {{flex: 1}}>
+                    <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
+                    <ButtonGroup/>
+                    {this._interactiveGame(this.state.roomName)}
+                    <Image style={{justifyContent: 'center', marginLeft: 'auto'}} source={require('./assets/sprites/AsunaDefault.png')}/>
+                    <MenuButton onSelectRoom={this.handleSelectedRoom} />
+                </ImageBackground>
+            : this.mapComponent();
     }
 }
