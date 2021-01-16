@@ -62,6 +62,10 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         this._musicController.setPlaybackVolume(this.state.soundVolume);
     }
 
+    _pressedInner() {
+
+    }
+
     getCurrentColor = (currntStateNum: number) => {
         if (currntStateNum < 50) {
             return StyleSheet.create( { color: {backgroundColor: '#E23535'}} );
@@ -78,8 +82,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                    transparent={true}
                    visible={this.state.settingsModalVisible}
                    onRequestClose={() => {this.setState({settingsModalVisible: false})}}>
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalView}>
+                <TouchableOpacity style={styles.modalContainer} onPress={()=>{this.setState({ settingsModalVisible: false })}} activeOpacity={1}>
+                    <TouchableOpacity style={styles.modalView} activeOpacity={1}>
                         <Text style={[styles.modalTitle]}>Настройки</Text>
 
                         <View style={styles.modalSettingItem}>
@@ -184,8 +188,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         <TouchableOpacity style={styles.modalExitButton} onPress={() => { clickAudioEffect(); BackHandler.exitApp(); } }>
                             <Text style={styles.modalExitButtonText}>кароче типа выйти</Text>
                         </TouchableOpacity>
-                    </View>
-                </View>
+                    </TouchableOpacity>
+                </TouchableOpacity>
             </Modal>
         );
     }
@@ -196,8 +200,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                    transparent={true}
                    visible={this.state.statsModalVisible}
                    onRequestClose={() => {this.setState({statsModalVisible: false})}}>
-                <View style={styles.modalContainer}>
-                    <View style={[styles.modalView, {height: '87%'}]}>
+                <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPress={()=>{this.setState({ statsModalVisible: false })}}>
+                    <TouchableOpacity style={[styles.modalView, {height: '87%'}]} activeOpacity={1}>
                         <Text style={[styles.modalTitle]}>Состояние {"\n"} героя</Text>
 
                         <View style={{justifyContent: "center", alignItems: 'center'}}>{statsItems}</View>
@@ -205,8 +209,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         <TouchableOpacity style={styles.modalExitButton} onPress={() => { this.setState({statsModalVisible: false}); clickAudioEffect(); } }>
                             <Text style={styles.modalExitButtonText}>Назад</Text>
                         </TouchableOpacity>
-                    </View>
-                </View>
+                    </TouchableOpacity>
+                </TouchableOpacity>
             </Modal>
         );
     }

@@ -60,10 +60,7 @@ export default class GameComponent extends Component {
     async componentDidMount() {
         this._backgroundAudio.setAudioMode();
 
-        this._backgroundAudio.loadNewPlayback(true)
-            .then(() => {
-                console.log('Music is played!');
-            });
+        this._backgroundAudio.loadNewPlayback(true).then(() => { console.log('Music is played!'); });
     }
 
      async componentWillUnmount() {
