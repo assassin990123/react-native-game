@@ -62,10 +62,10 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         this._musicController.setPlaybackVolume(this.state.soundVolume);
     }
 
-    getCurrentColor = (currntStateNum: number) => {
-        if (currntStateNum < 50) {
+    getCurrentColor = (currentStateNum: number) => {
+        if (currentStateNum < 50) {
             return StyleSheet.create( { color: {backgroundColor: '#E23535'}} );
-        } else if (currntStateNum > 50 && currntStateNum < 80) {
+        } else if (currentStateNum > 50 && currentStateNum < 80) {
             return StyleSheet.create( { color: {backgroundColor: '#FCB712'}} );
         } else {
             return StyleSheet.create( { color: {backgroundColor: '#4EB734'}} );
