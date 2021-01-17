@@ -8,6 +8,7 @@ import { styles } from './styles';
 
 const { height } = Dimensions.get('screen');
 
+
 interface ItemInfo {
     title: string,
     desc:  string,
@@ -211,8 +212,10 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                     <Modal animationType='fade'
                         transparent={true}
                         visible={this.state.warningModalVisible}>
-                        {/* @ts-ignore*/ }
-                        { this._modalWarningView(this._topButtonData === undefined ? this._bottomButtonData.text : this._topButtonData.text)}
+                        {
+                            // @ts-ignore
+                            this._modalWarningView(this._topButtonData === undefined ? this._bottomButtonData.text : this._topButtonData.text)
+                        }
                     </Modal>
 
                     <Modal animationType='fade'
