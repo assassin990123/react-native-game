@@ -1,10 +1,16 @@
-import React, { Component }      from 'react';
-import { View, ImageBackground } from 'react-native';
-import { GameEngine }            from 'react-native-game-engine';
+import { View, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import { Actions }                                       from "react-native-router-flux";
+import React, { Component }                              from 'react';
 
+import { GameEngine }            from 'react-native-game-engine';
 import { Constants }             from '../Constants';
 import { GameLoop }              from './GameLoop';
 import Node                      from './Node';
+
+import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+
+import { style } from "../ButtonStyle";
+
 
 export default class Headphones extends Component {
     engine: any = null;
@@ -45,6 +51,7 @@ export default class Headphones extends Component {
                                         filled: false,
                                         el: -1,
                                         intersect: true ,
+                                        // @ts-ignore
                                         renderer: <Node/>
                                     },
                                     state: { win : false }
@@ -53,6 +60,14 @@ export default class Headphones extends Component {
                                 onEvent = {this.onEvent}
                                 running = {this.state.running}
                             />
+                            <TouchableOpacity onPress={() => {
+                                Actions.pop();
+                                clickAudioEffect();
+                            }}
+                                              style={style.button}
+                                              activeOpacity={1}>
+                                <Text style = {{ fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white' }}>Назад</Text>
+                            </TouchableOpacity>
                         </View>
                     </ImageBackground>
                 </View>

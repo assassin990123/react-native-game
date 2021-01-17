@@ -1,11 +1,17 @@
-import React, { Component }                         from 'react';
-import { View , TouchableOpacity, ImageBackground } from 'react-native';
-import { GameEngine }                               from 'react-native-game-engine';
+import React, { Component }                              from 'react';
+import { Actions }                                       from "react-native-router-flux";
+import { View, TouchableOpacity, ImageBackground, Text } from 'react-native';
+import { GameEngine }                                    from 'react-native-game-engine';
 
-import { Constants } from '../Constants';
-import { GameLoop }  from './GameLoop';
 import Aim           from './Aim';
 import Dart          from './Dart';
+import { GameLoop }  from './GameLoop';
+import { Constants } from '../Constants';
+
+import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+
+import { style } from "../ButtonStyle";
+
 
 export default class Darts extends Component {
     engine: any = null;
@@ -67,6 +73,14 @@ export default class Darts extends Component {
                                     />
                                 </ImageBackground>
                             </View>
+                            <TouchableOpacity onPress={() => {
+                                Actions.pop();
+                                clickAudioEffect();
+                            }}
+                                              style={style.button}
+                                              activeOpacity={1}>
+                                <Text style = {{ fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white' }}>Назад</Text>
+                            </TouchableOpacity>
                         </ImageBackground>
                     </TouchableOpacity>
                 </View>

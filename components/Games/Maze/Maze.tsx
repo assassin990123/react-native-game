@@ -1,12 +1,17 @@
-import React, {Component}        from 'react';
-import { View, ImageBackground } from 'react-native';
-import { GameEngine }            from 'react-native-game-engine';
+import { View, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import { GameEngine }                                    from 'react-native-game-engine';
+import { Actions }                                       from "react-native-router-flux";
+import React, {Component}                                from 'react';
 
 import { Constants } from '../Constants';
 import { GameLoop } from './GameLoop';
 import Finish from './Finish';
 import Walls from './Walls';
 import Hero from './Hero';
+
+import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+
+import { style } from "../ButtonStyle";
 
 
 interface IMazeGame {
@@ -71,6 +76,14 @@ export default class Maze extends Component<IMazeGame> {
                         onEvent  = {this.onEvent}
                         running = {this.state.running}
                       />
+                    <TouchableOpacity onPress={() => {
+                        Actions.pop();
+                        clickAudioEffect();
+                    }}
+                                      style={style.button}
+                                      activeOpacity={1}>
+                        <Text style = {{ fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white' }}>Назад</Text>
+                    </TouchableOpacity>
                 </View>        
             </ImageBackground>
         );

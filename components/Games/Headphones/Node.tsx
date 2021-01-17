@@ -35,7 +35,7 @@ export default class Node extends Component<Interface> {
 
         let el = this.props.elements;
         
-        let threadList = this.props.elements.map((hz: any, idx: any) => {
+        let threadList = this.props.elements.map((_: any, idx: any) => {
             if (idx != el.length - 1) {
                 let x1 = (el[idx].x * Constants.PSEUDO_PIXEL + Constants.PSEUDO_PIXEL * 1.5).toString();
                 let y1 = (el[idx].y * Constants.PSEUDO_PIXEL + Constants.PSEUDO_PIXEL * 1.5).toString();

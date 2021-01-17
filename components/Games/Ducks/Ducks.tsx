@@ -1,12 +1,18 @@
-import React, {Component}               from 'react';
-import { View, Alert, ImageBackground } from 'react-native';
-import { GameEngine }                   from 'react-native-game-engine';
+import { View, Alert, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import React, {Component}                                       from 'react';
+import { Actions }                                              from "react-native-router-flux";
 
+import { GameEngine }                   from 'react-native-game-engine';
 import { Constants }                    from '../Constants';
 import { GameLoop }                     from './GameLoop';
 import Projectile                       from './Projectile';
 import Slingshot                        from './Slingshot';
 import Duck                             from './Duck';
+
+import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+
+import { style } from "../ButtonStyle";
+
 
 export default class Ducks extends Component {
     boardSize: number;
@@ -88,6 +94,14 @@ export default class Ducks extends Component {
 
                                 onEvent = { this.onEvent }
                                 running = { this.state.running }/>
+                            <TouchableOpacity onPress={() => {
+                                Actions.pop();
+                                clickAudioEffect();
+                            }}
+                                              style={style.button}
+                                              activeOpacity={1}>
+                                <Text style = {{ fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white' }}>Назад</Text>
+                            </TouchableOpacity>
                         </View>
                     </ImageBackground>
                 </View>
