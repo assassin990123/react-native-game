@@ -9,7 +9,7 @@ import Finish from './Finish';
 import Walls from './Walls';
 import Hero from './Hero';
 
-import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
 

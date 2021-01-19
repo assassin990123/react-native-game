@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { TextInput, Text, View, TouchableOpacity, KeyboardAvoidingView, Image, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
-import { clickAudioEffect } from '../../endpoints/AudioEffects';
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
 
-import Pictures from '../../assets/hero_sprites/Pictures';
+import Pictures from 'assets/hero_sprites/Pictures';
 
 /*
 *

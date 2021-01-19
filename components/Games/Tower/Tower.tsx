@@ -9,7 +9,7 @@ import { GameLoop }  from './GameLoop';
 import Block from './Block';
 import Axis  from './Axis';
 
-import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from '../ButtonStyle';
 

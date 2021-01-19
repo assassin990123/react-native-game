@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Image, View, TouchableOpacity, Text, StyleSheet, Dimensions, Modal, BackHandler  } from 'react-native';
 import * as Brightness from 'expo-brightness';
 
-import BackgroundAudioController from '../../endpoints/BackgroundAudioController';
-import { clickAudioEffect, setAudioEffectVolume } from '../../endpoints/AudioEffects';
+import BackgroundAudioController from 'endpoints/BackgroundAudioController';
+import { clickAudioEffect, setAudioEffectVolume } from 'endpoints/AudioEffects';
 
 import {styles} from './styles';
 

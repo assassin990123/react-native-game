@@ -1,6 +1,6 @@
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../CharacterMenu/styles";
-import { clickAudioEffect } from "../../endpoints/AudioEffects";
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 import React, { Component } from "react";
 import { Actions } from "react-native-router-flux";
 

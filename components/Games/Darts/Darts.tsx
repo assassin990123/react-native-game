@@ -8,7 +8,7 @@ import Dart          from './Dart';
 import { GameLoop }  from './GameLoop';
 import { Constants } from '../Constants';
 
-import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
 

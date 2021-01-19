@@ -7,7 +7,7 @@ import { Constants }             from '../Constants';
 import { GameLoop }              from './GameLoop';
 import Node                      from './Node';
 
-import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
 import EndGameModal from "../EndGameModal";

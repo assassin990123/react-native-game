@@ -3,7 +3,7 @@ import { View, TouchableOpacity,  Image } from 'react-native';
 
 import { Actions } from 'react-native-router-flux';
 
-import { clickAudioEffect } from '../../endpoints/AudioEffects';
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
 

@@ -2,8 +2,8 @@ import { Image, ImageBackground, TouchableOpacity, Text, StyleSheet, Dimensions,
 import { Actions } from 'react-native-router-flux';
 import React, { Component } from 'react';
 
-import BackgroundAudioController from '../../endpoints/BackgroundAudioController';
-import { clickAudioEffect } from "../../endpoints/AudioEffects";
+import BackgroundAudioController from 'endpoints/BackgroundAudioController';
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 import ButtonGroup from '../ShopAndInventoryGroup/Group';
 
 // View components.

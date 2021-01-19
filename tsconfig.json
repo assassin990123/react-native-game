@@ -19,6 +19,7 @@
     , "preserveConstEnums": false
     , "allowUnreachableCode": false
     , "strictPropertyInitialization": false,
-    "target": "ES2020"
+    "target": "ES2020",
+    "baseUrl": "."
   }
 }

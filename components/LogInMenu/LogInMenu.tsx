@@ -5,7 +5,7 @@ import { TextInputMask } from 'react-native-masked-text';
 
 import * as WebBrowser from 'expo-web-browser';
 
-import { clickAudioEffect } from '../../endpoints/AudioEffects';
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
 

@@ -4,7 +4,7 @@ import { TextInput, Text, View, TouchableOpacity,  Image, Modal } from 'react-na
 import { Auth } from 'aws-amplify';
 
 import { TextInputMask } from 'react-native-masked-text';
-import { clickAudioEffect } from '../../endpoints/AudioEffects';
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
 

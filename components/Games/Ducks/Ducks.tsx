@@ -9,7 +9,7 @@ import Projectile                       from './Projectile';
 import Slingshot                        from './Slingshot';
 import Duck                             from './Duck';
 
-import { clickAudioEffect } from "../../../endpoints/AudioEffects";
+import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
 
