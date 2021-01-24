@@ -1,6 +1,6 @@
-import * as firebase from 'firebase';
+import firestore from './FirestoreInit';
+import { decrypt, encrypt } from "./AFG_API_KEYS/ApiKeys";
 
-import { firebaseConfig, encrypt, decrypt } from './AFG_API_KEYS/ApiKeys';
 
 /*
 *
@@ -9,9 +9,12 @@ import { firebaseConfig, encrypt, decrypt } from './AFG_API_KEYS/ApiKeys';
 */
 
 type User = {
-    hairColor: String,
-    eysColor:  String,
-    skinColor: String,
+    name:      String,
+    skinName:  String,
+    money:     Number,
+    inv: {
+        items_id: number[]
+    }
 };
 
 type UserData = {
@@ -19,33 +22,19 @@ type UserData = {
     userProps: User,
 };
 
-export default class FirestoreAPI {
-    private _firestore: firebase.firestore.Firestore;
-    private _defaultCollectionName: string = 'users_props';
 
+export default class FirestoreAPI {
+    private _defaultCollectionName: string = 'users_data';
     private _collectionName: string = '';
 
-    private state = {
-        isConnected: false
-    };
-
     private _defaultUserProps: User = {
-        hairColor: 'black',
-        eysColor:  'pink',
-        skinColor: 'white'
-    };
-
-
-    constructor() {
-        if ( !firebase.apps.length ) {
-            firebase.initializeApp(firebaseConfig);
-            this.state.isConnected = true;
-
-            this._firestore = firebase.firestore();
+        name: 'TestName',
+        skinName: 'test',
+        money: 0,
+        inv: {
+            items_id: [0, 1, 2]
         }
-    }
-
-    public isConnected = (): boolean => { return this.state.isConnected; }
+    };
 
     private _setCollectionName(collectionName?: String) {
         if (collectionName !== undefined)
@@ -55,23 +44,17 @@ export default class FirestoreAPI {
     }
 
     private _getUsers = async (collectionName?: String): Promise<UserData[] | undefined> => {
-        if ( !this.state.isConnected ) {
-            return undefined;
-        }
-
         this._setCollectionName(collectionName);
 
         let res: UserData[] = [];
 
-        await this._firestore.collection(this._collectionName).get()
+        await firestore.collection(this._collectionName).get()
             .then(
-                (snapshot: firebase.firestore.QuerySnapshot) => {
+                (snapshot) => {
                     snapshot.forEach((doc: any) => {
-                        const docData = doc.data();  // Save data.
+                        // const docData = doc.data();  // Save data.
 
-                        res.push({ id: decrypt(doc.id), userProps: { hairColor: docData.hairColor,
-                                                                     eysColor:  docData.eysColor,
-                                                                     skinColor: docData.skinColor } });
+                        res.push({ id: decrypt(doc.id), userProps: { name: "testName", skinName: "skinName", money: 0, inv: { items_id: [0, 1, 2] } } });
                 });
             })
             .catch((err: any) => {
@@ -83,28 +66,20 @@ export default class FirestoreAPI {
     }
 
     public getUserFields = async (userName: String, collectionName?: String): Promise<User | undefined> => {
-        if ( !this.state.isConnected ) {
-            return undefined;
-        }
-
         this._setCollectionName(collectionName);
 
-        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
+        const userPropsRef = firestore.collection(this._collectionName).doc(encrypt(userName));
 
-        return await userPropsRef.get().then((snapshot: firebase.firestore.DocumentSnapshot) => {
+        return await userPropsRef.get().then((snapshot) => {
             if (snapshot.exists) {
                 const snapData = snapshot.data();
 
                 if (snapData === undefined)
                     return undefined;
 
-                console.log({ hairColor: snapData.hairColor,
-                         eysColor:  snapData.eysColor,
-                         skinColor: snapData.skinColor });
+                console.log({ name: snapData.name, skinName: snapData.skinName, money:  snapData.money, inv: snapData.inv });
+                return { name: snapData.name, skinName: snapData.skinName, money:  snapData.money, inv: snapData.inv };
 
-                return { hairColor: snapData.hairColor,
-                         eysColor:  snapData.eysColor,
-                         skinColor: snapData.skinColor }
             } else {
                 console.warn('[fireStoreAPT] -> Warn: Document no exists');
                 return undefined;
@@ -118,7 +93,7 @@ export default class FirestoreAPI {
     public isUserExist = async (userName: string, collectionName?: string): Promise<boolean | undefined> => {
         this._setCollectionName(collectionName);
 
-        return await this._firestore.collection(this._collectionName)
+        return await firestore.collection(this._collectionName)
                                     .doc(encrypt(userName))
                                     .get().then(snapshot => {
                                         return snapshot.exists;
@@ -130,10 +105,6 @@ export default class FirestoreAPI {
     }
 
     public setUserFields = async (userName: string, newProps: Object, collectionName?: string): Promise<boolean | undefined> => {
-        if ( !this.state.isConnected ) {
-            return undefined;
-        }
-
         this._setCollectionName(collectionName);
 
         const _isUserExist = await this.isUserExist(userName);
@@ -143,23 +114,19 @@ export default class FirestoreAPI {
         else if (!_isUserExist)
             return false;
 
-        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
+        const userPropsRef = firestore.collection(this._collectionName).doc(encrypt(userName));
 
         for (let [key, value] of Object.entries(newProps)) {
-            userPropsRef.set( { [key]: value }, {merge: true} );
+            await userPropsRef.set( { [key]: value }, {merge: true} );
         }
 
         return true;
     };
 
     public createUser = async (userName: string, collectionName?: string): Promise<boolean | undefined> => {
-        if ( !this.state.isConnected ) {
-            return undefined;
-        }
-
         this._setCollectionName(collectionName);
 
-        const userPropsRef = this._firestore.collection(this._collectionName).doc(encrypt(userName));
+        const userPropsRef = firestore.collection(this._collectionName).doc(encrypt(userName));
 
         let _isUserExist = await this.isUserExist(decrypt(userName));
 
@@ -168,7 +135,7 @@ export default class FirestoreAPI {
         else if (_isUserExist)
             return false;
 
-        return await userPropsRef.get().then((snapshot) => {
+        return await userPropsRef.get().then(() => {
                 for (let [key, value] of Object.entries(this._defaultUserProps)) {
                     userPropsRef.set( { [key]: value }, {merge: true} );
                 }

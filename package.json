@@ -9,6 +9,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/netinfo": "^5.9.3",
     "aws-amplify": "^3.0.18",
     "expo": "^37.0.4",
