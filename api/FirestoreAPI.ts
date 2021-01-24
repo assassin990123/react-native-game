@@ -58,7 +58,7 @@ export default class FirestoreAPI {
                 });
             })
             .catch((err: any) => {
-                console.error('[fireStoreAPT] -> Error: cant get document', err);
+                console.error('[FireStoreAPI] -> Error: cant get document', err);
                 return undefined;
             });
 
