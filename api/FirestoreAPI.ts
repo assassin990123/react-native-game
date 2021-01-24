@@ -9,16 +9,19 @@ import { decrypt, encrypt } from "./AFG_API_KEYS/ApiKeys";
 */
 
 type User = {
-    name:      String,
-    skinName:  String,
-    money:     Number,
+    name:      string,
+    skinName:  string,
+    money:     number,
     inv: {
-        items_id: number[]
+        items_id: {
+           item_id: number,
+           count: number
+        }[]
     }
 };
 
 type UserData = {
-    id: String
+    id: string
     userProps: User,
 };
 
@@ -28,11 +31,13 @@ export default class FirestoreAPI {
     private _collectionName: string = '';
 
     private _defaultUserProps: User = {
-        name: 'TestName',
-        skinName: 'test',
+        name: '',
+        skinName: '',
         money: 0,
         inv: {
-            items_id: [0, 1, 2]
+            items_id: [{ item_id: 0, count: 0 },
+                        { item_id: 1, count: 1 },
+                        { item_id: 2, count: 2 }]
         }
     };
 
@@ -43,6 +48,7 @@ export default class FirestoreAPI {
             this._collectionName = this._defaultCollectionName;
     }
 
+    // @ts-ignore
     private _getUsers = async (collectionName?: String): Promise<UserData[] | undefined> => {
         this._setCollectionName(collectionName);
 
@@ -52,9 +58,16 @@ export default class FirestoreAPI {
             .then(
                 (snapshot) => {
                     snapshot.forEach((doc: any) => {
-                        // const docData = doc.data();  // Save data.
-
-                        res.push({ id: decrypt(doc.id), userProps: { name: "testName", skinName: "skinName", money: 0, inv: { items_id: [0, 1, 2] } } });
+                        res.push({ id: decrypt(doc.id), userProps: {
+                            name: "testName",
+                            skinName: "skinName",
+                            money: 0,
+                            inv: { items_id: [
+                                    { item_id: 0, count: 0 },
+                                    { item_id: 1, count: 1 },
+                                    { item_id: 2, count: 2 }
+                                    ]
+                            } } });
                 });
             })
             .catch((err: any) => {
