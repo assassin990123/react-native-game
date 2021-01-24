@@ -7,6 +7,9 @@ import { TextInputMask } from 'react-native-masked-text';
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
+import FirestoreAPI from 'api/FirestoreAPI';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 /*
 *
@@ -27,7 +30,9 @@ export default class RegistrationMenu extends Component {
         modalText: '',
 
         smsSent: false,
-      }
+    };
+
+    _db: FirestoreAPI = new FirestoreAPI();
 
     constructor(props: any) {
         super(props);
@@ -67,8 +72,23 @@ export default class RegistrationMenu extends Component {
     confirmSignUp = async() => {
         await Auth.confirmSignUp(this.state.username, 
                                  this.state.smsCode)
-            .then(()=>{console.log('successful confirm sing up'); Actions.CreateCharacter()})
-            .catch((error: Error) => {console.log('error confirming signing up',error); this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!')});
+            .then(() => {
+                console.log("[Auth] -> SingUp Success");
+
+                this._db.createUser(this.state.phone_number)
+                    .then(()=> console.log("[Firestore] -> User created!"))
+                    .catch(err => console.log(err));
+
+                AsyncStorage.setItem("phone_number", this.state.phone_number)
+                    .then(() => console.log("[AsyncStorage] -> Username saved in local store."))
+                    .catch(() => console.log("[AsyncStorage] -> Cant save user data in local store."));
+
+                Actions.CreateCharacter();
+            })
+            .catch((error: Error) => {
+                console.log("[Auth] -> SingUp error",error);
+                this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!');
+            });
     }
 
     openWarningModal = (message: string) => {

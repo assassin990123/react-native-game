@@ -9,6 +9,7 @@ import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
 
+
 /*
 *
     @brief: Authentication component.
@@ -16,6 +17,8 @@ import { styles } from './styles';
 */
 
 import { Auth } from 'aws-amplify';
+import AsyncStorage from "@react-native-community/async-storage";
+
 
 export default class LogInMenu extends Component {
     state = {
@@ -40,8 +43,19 @@ export default class LogInMenu extends Component {
     SingIn = async () => {
         await Auth.signIn(this.state.username, 
                           this.state.password)
-            .then(()=>{console.log('singin Succses');  Actions.CharacterMenu()})
-            .catch(error=>{console.log('signin error', error); this.openWarningModal('Не правильно введен \n номер телефона или пароль!');});
+            .then(() => {
+                console.log("[Auth] -> SingIn Success");
+
+                AsyncStorage.setItem("phone_number", this.state.username)
+                    .then(() => console.log("[AsyncStorage] -> Username saved in local store."))
+                    .catch(() => console.log("[AsyncStorage] -> Cant save user data in local store."));
+
+                Actions.CharacterMenu();
+            })
+            .catch(error => {
+                console.log("[Auth] -> SingIn error", error);
+                this.openWarningModal('Не правильно введен \n номер телефона или пароль!');
+            });
     }
 
     openWarningModal = (message: string) => {
