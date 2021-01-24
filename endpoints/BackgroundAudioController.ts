@@ -1,5 +1,7 @@
 import { Audio } from 'expo-av';
 
+const _sound: Audio.Sound = new Audio.Sound();
+
 export default class BackgroundAudioController {
     constructor() {
         this._playbackInstance = null;
@@ -9,13 +11,11 @@ export default class BackgroundAudioController {
     _playbackInstance: any;
     _isPlayingNow: boolean;
 
-    _sound: Audio.Sound;
-
     async loadNewPlayback(played: boolean) {
         if (this._playbackInstance != null) {
             await this._playbackInstance.unloadAsync()
                 .then(() => {
-                    console.log('[BackgroundAudioController]: Current BG music had unmounted!');
+                    console.log('[BackgroundAudioController] -> Current BG music had unmounted!');
                 });
 
             this._playbackInstance.setOnPlaybackStatusUpdate(null);
@@ -31,10 +31,10 @@ export default class BackgroundAudioController {
             isMuted: false
         };
 
-        this._sound = new Audio.Sound();
-        await this._sound.loadAsync(source, initialStatus);
+        // _sound = new Audio.Sound();
+        await _sound.loadAsync(source, initialStatus);
 
-        this._playbackInstance = this._sound;
+        this._playbackInstance = _sound;
         this._playbackInstance.setIsLoopingAsync(true);
         this._playbackInstance.playAsync();
     }
@@ -48,12 +48,12 @@ export default class BackgroundAudioController {
             interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
             playThroughEarpieceAndroid: false,
         }).then(() => {
-            console.log('[BackgroundAudioController]: Background music is played.');
+            console.log('[BackgroundAudioController] -> Background music is played.');
 
             this._isPlayingNow = true;
         })
             .catch((err: Error) => {
-                console.error('[BackgroundAudioController]: Background music cant be played.', err);
+                console.error('[BackgroundAudioController] -> Background music cant be played.', err);
             });
     }
 
@@ -63,7 +63,13 @@ export default class BackgroundAudioController {
     }
 
     setPlaybackVolume(volume: number) {
-        this._sound.setVolumeAsync(volume);
+        _sound.setVolumeAsync(volume)
+            .then(() => {
+                console.log("[BackgroundAudioController] -> Volume is set.");
+            })
+            .catch(err => {
+                console.error("[BackgroundAudioController] -> Cant set volume!", err);
+            });
     }
 
     isPlayingNow = () => {

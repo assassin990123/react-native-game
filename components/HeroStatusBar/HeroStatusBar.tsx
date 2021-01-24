@@ -59,7 +59,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             );
         }
 
-        this._musicController.setPlaybackVolume(this.state.soundVolume);
+        // this._musicController.setPlaybackVolume(this.state.soundVolume);
     }
 
     getCurrentColor(currentStateNum: number) {
@@ -225,8 +225,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         
         let statsItems: JSX.Element[] = [];
 
-        for (let [,value] of Object.entries(this.state._icons)) {
-            statsItems.push(<View style={{flexDirection: 'row', marginBottom: 30}}>
+        for (let [key, value] of Object.entries(this.state._icons)) {
+            statsItems.push(<View style={{flexDirection: 'row', marginBottom: 30}} key = {key}>
                                 <View style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color, {marginRight: 0}]}>
                                     <Image source={value.link} />
                                 </View>
@@ -237,8 +237,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                             </View>);
         }
 
-        statsItems.push(<View style={{flexDirection: 'row', marginBottom: 30}}>
-                                        <View style={[styles.iconStyleSubMenu, {marginRight: 0}]}>
+        statsItems.push(<View style={{flexDirection: 'row', marginBottom: 30}} key = {123}>
+                                        <View style={[styles.iconStyleSubMenu, {marginRight: 0}]} >
                                             <Image source={this.state._money.link} />
                                         </View>
                                         <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
@@ -247,7 +247,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                         </View>
                                     </View>);
 
-        statsItems.push(<View style={{flexDirection: 'row'}}>
+        statsItems.push(<View style={{flexDirection: 'row'}} key = {124}>
                                 <View style={[styles.iconStyleSubMenu, {marginRight: 0}]}>
                                     <Image source={require('./assets/lvl-icon.png')} />
                                 </View>
