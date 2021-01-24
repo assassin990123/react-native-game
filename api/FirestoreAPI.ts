@@ -90,7 +90,6 @@ export default class FirestoreAPI {
                 if (snapData === undefined)
                     return undefined;
 
-                console.log({ name: snapData.name, skinName: snapData.skinName, money:  snapData.money, inv: snapData.inv });
                 return { name: snapData.name, skinName: snapData.skinName, money:  snapData.money, inv: snapData.inv };
 
             } else {
