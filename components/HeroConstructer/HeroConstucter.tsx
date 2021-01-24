@@ -142,7 +142,7 @@ export default class HeroConstucter extends Component {
                     <View style={{width: '50%'}}>
                         <TouchableOpacity style={{width: '100%', justifyContent: 'center', alignItems:'center'}}
                                           onPress={() => { this.setDefaultSprite(); clickAudioEffect(); }}>
-                            <Image source={ this.state.currentSprite} style={{resizeMode: 'contain'}}/>
+                            <Image source={ this.state.currentSprite } style={{resizeMode: 'contain'}}/>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -189,8 +189,6 @@ export default class HeroConstucter extends Component {
                             Actions.GameComponent();
                             clickAudioEffect();
                         }}
-
-
 
                     style={styles.agreeButton}>
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Создать</Text>

@@ -130,7 +130,7 @@ export default class GameComponent extends Component {
     }
 
     _interactiveGame(roomName: string): JSX.Element {
-        console.log("[GameComponent] -> Current room := " + name);
+        console.log("[GameComponent] -> Current room := " + roomName);
         return roomName !== 'home' ? <View/> :
             (
                 <View style={[styles.container, { top: height * 0.82 }]}>
