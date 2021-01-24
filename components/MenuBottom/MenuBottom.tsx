@@ -40,13 +40,13 @@ export default class MenuBottom extends Component<MenuBottomProps> {
         return -1;
     }
 
-    async handleClick(icon: string): Promise<void> {
+    handleClick(icon: string): void {
         for (let [key, value] of Object.entries(this._assets)) {
             value.pressed = key === icon;
         }
         
-        await this._handlers[this.findIndex(icon)]();
-
+        this._handlers[this.findIndex(icon)]();
+        console.log("wat")
         clickAudioEffect();
         this.forceUpdate();
     };
@@ -61,7 +61,7 @@ export default class MenuBottom extends Component<MenuBottomProps> {
         let iconsArray: JSX.Element[] = [];
 
         for (let [key, value] of Object.entries(this._assets)) {
-            iconsArray.push(<TouchableOpacity key={key} onPress={() => {this.handleClick(key);}}
+            iconsArray.push(<TouchableOpacity key={key} onPress={() => {this.handleClick(key); }}
                                               style={value.pressed ? styles.pressedButton : styles.defaultButton}
                                               activeOpacity={1} >
                                     <Image source={value.link} key = {key}
