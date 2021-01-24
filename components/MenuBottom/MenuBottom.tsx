@@ -27,7 +27,7 @@ export default class MenuBottom extends Component<MenuBottomProps> {
 
     _handlers: any[] = [];
 
-    findIndex = (name: string): number => {
+    findIndex(name: string): number {
         let i: number = 0;
         for (let [key, ] of Object.entries(this._assets)) {
             if (key === name) {
@@ -40,7 +40,7 @@ export default class MenuBottom extends Component<MenuBottomProps> {
         return -1;
     }
 
-    handleClick = async (icon: string): Promise<void> => {
+    async handleClick(icon: string): Promise<void> {
         for (let [key, value] of Object.entries(this._assets)) {
             value.pressed = key === icon;
         }

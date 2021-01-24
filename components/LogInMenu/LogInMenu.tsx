@@ -32,15 +32,15 @@ export default class LogInMenu extends Component {
         super(props);
     }
 
-    fieldsSuccessful = () : boolean => {
+    fieldsSuccessful() : boolean  {
         return this.state.username.length !== 0 && this.state.password.length !== 0;
     }
 
-    onClickHandler = (viewId: String) => {
+    onClickHandler(viewId: String) {
         alert('Button pressed ' + viewId);
     }
 
-    SingIn = async () => {
+    async SingIn() {
         await Auth.signIn(this.state.username, 
                           this.state.password)
             .then(() => {
@@ -58,7 +58,7 @@ export default class LogInMenu extends Component {
             });
     }
 
-    openWarningModal = (message: string) => {
+    openWarningModal(message: string) {
         this.state.modalText = message;
         this.setState({modalVisible: true});
     }

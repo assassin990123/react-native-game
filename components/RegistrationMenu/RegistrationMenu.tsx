@@ -38,15 +38,15 @@ export default class RegistrationMenu extends Component {
         super(props);
     }
 
-    onClickHandler = (viewId: String) => {
+    onClickHandler(viewId: String) {
         alert('Button pressed ' + viewId);
     }
 
-    fieldsSuccessful = () : boolean => {
+    fieldsSuccessful() : boolean {
         return this.state.phone_number.length !== 0 && this.state.username.length !== 0 && this.state.password.length !== 0 && this.state.email.length !== 0;
     }
 
-    signUp = async () =>  {
+    async signUp() {
         const username:any = this.state.username
         const password:any = this.state.password
         const email:any = this.state.email
@@ -70,7 +70,7 @@ export default class RegistrationMenu extends Component {
           })
     }
 
-    confirmSignUp = async() => {
+    async confirmSignUp() {
         await Auth.confirmSignUp(this.state.username, 
                                  this.state.smsCode)
             .then(() => {
@@ -92,7 +92,7 @@ export default class RegistrationMenu extends Component {
             });
     }
 
-    openWarningModal = (message: string) => {
+    openWarningModal(message: string) {
         this.state.modalText = message;
         this.setState({modalVisible: true});
     }

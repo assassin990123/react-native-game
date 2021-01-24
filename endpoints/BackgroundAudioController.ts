@@ -11,7 +11,7 @@ export default class BackgroundAudioController {
 
     _sound: Audio.Sound;
 
-    loadNewPlayback = async (played: boolean) => {
+    async loadNewPlayback(played: boolean) {
         if (this._playbackInstance != null) {
             await this._playbackInstance.unloadAsync()
                 .then(() => {
@@ -39,7 +39,7 @@ export default class BackgroundAudioController {
         this._playbackInstance.playAsync();
     }
 
-    setAudioMode = () => {
+    setAudioMode() {
         Audio.setAudioModeAsync({
             allowsRecordingIOS: false,
             interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -57,7 +57,7 @@ export default class BackgroundAudioController {
             });
     }
 
-    unloadBackgroundMusic = async () => {
+    async unloadBackgroundMusic() {
         await this._playbackInstance.unloadAsync();
         this._isPlayingNow = false;
     }

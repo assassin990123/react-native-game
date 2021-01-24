@@ -49,7 +49,7 @@ export default class FirestoreAPI {
     }
 
     // @ts-ignore
-    private _getUsers = async (collectionName?: String): Promise<UserData[] | undefined> => {
+    private async _getUsers (collectionName?: String): Promise<UserData[] | undefined> {
         this._setCollectionName(collectionName);
 
         let res: UserData[] = [];
@@ -78,7 +78,7 @@ export default class FirestoreAPI {
         return res;
     }
 
-    public getUserFields = async (userName: String, collectionName?: String): Promise<User | undefined> => {
+    public async getUserFields(userName: String, collectionName?: String): Promise<User | undefined> {
         this._setCollectionName(collectionName);
 
         const userPropsRef = firestore.collection(this._collectionName).doc(encrypt(userName));
@@ -102,7 +102,7 @@ export default class FirestoreAPI {
         });
     };
 
-    public isUserExist = async (userName: string, collectionName?: string): Promise<boolean | undefined> => {
+    public async isUserExist(userName: string, collectionName?: string): Promise<boolean | undefined> {
         this._setCollectionName(collectionName);
 
         return await firestore.collection(this._collectionName)
@@ -116,7 +116,7 @@ export default class FirestoreAPI {
                                     });
     }
 
-    public setUserFields = async (userName: string, newProps: Object, collectionName?: string): Promise<boolean | undefined> => {
+    public async setUserFields(userName: string, newProps: Object, collectionName?: string): Promise<boolean | undefined> {
         this._setCollectionName(collectionName);
 
         const _isUserExist = await this.isUserExist(userName);
@@ -135,7 +135,7 @@ export default class FirestoreAPI {
         return true;
     };
 
-    public createUser = async (userName: string, collectionName?: string): Promise<boolean | undefined> => {
+    public async createUser(userName: string, collectionName?: string): Promise<boolean | undefined> {
         this._setCollectionName(collectionName);
 
         const userPropsRef = firestore.collection(this._collectionName).doc(encrypt(userName));

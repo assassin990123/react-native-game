@@ -19,7 +19,7 @@ export default class CreationCharacterMenu extends Component {
         }
     }
 
-    onClickHandler = (viewId: String) => {
+    onClickHandler(viewId: String) {
         alert('Button pressed ' + viewId);
     }
 

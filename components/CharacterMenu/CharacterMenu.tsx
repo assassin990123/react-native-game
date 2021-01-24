@@ -24,11 +24,11 @@ export default class CharacterMenu extends Component {
 
     _db: FirestoreAPI = new FirestoreAPI();
 
-    setModalVisible = (visible: Boolean) => {
+    setModalVisible(visible: Boolean) {
         this.setState({ modalVisible: visible });
     }
 
-    onClickHandler = (viewId: String) => {
+    onClickHandler(viewId: String) {
         alert('Button pressed ' + viewId);
     }
 

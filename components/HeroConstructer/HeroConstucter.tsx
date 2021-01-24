@@ -37,11 +37,11 @@ export default class HeroConstucter extends Component {
         characterName: '',
     };
 
-    onClickHandler = (viewId: String) => {
+    onClickHandler(viewId: String) {
         alert('Button pressed ' + viewId);
     }
 
-    setDefaultSprite = () => {
+    setDefaultSprite() {
         switch (this.state.currentSpriteName) {
             case 'titanda': {
                 this.state.currentSpriteName = 'asuna';
@@ -56,7 +56,7 @@ export default class HeroConstucter extends Component {
         this.setState({currentSprite: Pictures.get(`${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)});
     };
 
-    setSkinColor = () => {
+    setSkinColor() {
         switch (this.state.skinColor) {
             case 'white': {
                 this.state.skinColor = 'alt';
@@ -71,7 +71,7 @@ export default class HeroConstucter extends Component {
         this.setState({currentSprite: Pictures.get(`${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)});
     }
 
-    setHairColor = () => {
+    setHairColor() {
         switch (this.state.hairColor) {
             case 'black': {
                 this.state.hairColor = 'purple';
@@ -86,7 +86,7 @@ export default class HeroConstucter extends Component {
         this.setState({currentSprite: Pictures.get(`${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)});
     }
 
-    setEysColor = () => {
+    setEysColor() {
         switch (this.state.eysColor) {
             case 'purple': {
                 this.state.eysColor = 'green';

@@ -71,7 +71,7 @@ export default class GameComponent extends Component {
         await this._backgroundAudio.unloadBackgroundMusic();
     }
 
-    handleSelectedRoom = (selectedRoom: any, name: string) => {
+    handleSelectedRoom(selectedRoom: any, name: string) {
         this.previousState = this.state;
 
         this.setState({room: selectedRoom, roomName: name});
