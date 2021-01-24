@@ -51,6 +51,7 @@ export default class RegistrationMenu extends Component {
         const password:any = this.state.password
         const email:any = this.state.email
         const phone_number:any = this.state.phone_number
+
         await Auth.signUp({
             username,
             password,

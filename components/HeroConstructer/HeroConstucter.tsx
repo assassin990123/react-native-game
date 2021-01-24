@@ -6,7 +6,9 @@ import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
 
+import AsyncStorage from '@react-native-community/async-storage';
 import Pictures from 'assets/hero_sprites/Pictures';
+import FirestoreAPI from 'api/FirestoreAPI';
 
 /*
 *
@@ -23,6 +25,8 @@ export default class HeroConstucter extends Component {
         super(props);
     }
 
+    _db: FirestoreAPI = new FirestoreAPI();
+
     state = {
         skinColor: 'white',
         hairColor: 'black',
@@ -30,7 +34,7 @@ export default class HeroConstucter extends Component {
 
         currentSpriteName: 'titanda',
         currentSprite: Pictures.get('titanda_white_black_green'),
-        characterName: String,
+        characterName: '',
     };
 
     onClickHandler = (viewId: String) => {
@@ -143,8 +147,53 @@ export default class HeroConstucter extends Component {
                     </View>
                 </View>
                 <View style={{position: 'absolute', top: width * 1.5, width: '100%', height: '100%'}}> 
-                        <TouchableOpacity  onPress={() => { Actions.GameComponent(); clickAudioEffect(); }}
-                                           style={styles.agreeButton}> 
+                        <TouchableOpacity  onPress={() => {
+                            AsyncStorage.setItem("spriteName", `${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)
+                                .then(() => {
+                                    console.log("Sprite name saved");
+                                })
+                                .catch(() => console.log("Cant save sprite"));
+
+                            AsyncStorage.setItem("heroName", this.state.characterName)
+                                .then(() => {
+                                    console.log("[AsyncStorage] -> Hero name updated.");
+                                })
+                                .catch((err: Error) => {
+                                    console.error("[AsyncStorage] -> Cant set hero name!", err);
+                                });
+
+                            AsyncStorage.getItem("phone_number")
+                                .then(key => {
+                                    if (key !== null) {
+                                        this._db.setUserFields(key, { skinName: `${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}` })
+                                            .then(() => {
+                                                console.log("[Firestore] -> User skin name updated!");
+                                            })
+                                            .catch(err => {
+                                                console.error("[Firestore] -> Cant update user skin name!", err);
+                                            });
+
+                                        this._db.setUserFields(key, { name: this.state.characterName })
+                                            .then(() => {
+                                                console.log(this.state.characterName + "123123123");
+                                                console.log("[Firestore] -> Hero name updated!");
+                                            })
+                                            .catch(err => {
+                                                console.error("[Firestore] -> Cant update hero name!", err);
+                                            });
+                                    }
+                                })
+                                .catch((err: Error) => {
+                                    console.error("[AsyncStorage] -> Cant get username!", err);
+                                });
+
+                            Actions.GameComponent();
+                            clickAudioEffect();
+                        }}
+
+
+
+                    style={styles.agreeButton}>
                             <Text style={{color: 'white', fontFamily: 'Montserrat-Medium', fontSize: 17}}>Создать</Text>
                         </TouchableOpacity>
                     </View>
