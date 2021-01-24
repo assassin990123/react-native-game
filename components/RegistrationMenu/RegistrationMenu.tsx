@@ -59,9 +59,9 @@ export default class RegistrationMenu extends Component {
                 email,
                 phone_number
             }
-        }).then(()=>console.log('signup successful'))
+        }).then(() => console.log("[Auth] -> SignUp successful"))
           .catch((error: Error) => {
-              console.log('signup error', error);
+              console.error("[Auth] -> SignUp error", error);
               if (error.name === "UsernameExistsException") {
                   this.openWarningModal('На данный номер \n уже зарегестрирован пользователь!');
               } else {
@@ -78,16 +78,16 @@ export default class RegistrationMenu extends Component {
 
                 this._db.createUser(this.state.phone_number)
                     .then(()=> console.log("[Firestore] -> User created!"))
-                    .catch(err => console.log(err));
+                    .catch(err => console.error("[Firestore] -> Cant create user!", err));
 
-                AsyncStorage.setItem("phone_number", this.state.phone_number)
+                AsyncStorage.setItem("phoneNumber", this.state.phone_number)
                     .then(() => console.log("[AsyncStorage] -> Username saved in local store."))
                     .catch(() => console.log("[AsyncStorage] -> Cant save user data in local store."));
 
                 Actions.CreateCharacter();
             })
             .catch((error: Error) => {
-                console.log("[Auth] -> SingUp error",error);
+                console.log("[Auth] -> SingUp error", error);
                 this.openWarningModal('Ошибка соединения или \n неправильно введен \n код подтверждения!');
             });
     }

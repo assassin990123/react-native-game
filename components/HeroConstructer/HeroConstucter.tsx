@@ -162,7 +162,7 @@ export default class HeroConstucter extends Component {
                                     console.error("[AsyncStorage] -> Cant set hero name!", err);
                                 });
 
-                            AsyncStorage.getItem("phone_number")
+                            AsyncStorage.getItem("phoneNumber")
                                 .then(key => {
                                     if (key !== null) {
                                         this._db.setUserFields(key, { skinName: `${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}` })
@@ -175,7 +175,6 @@ export default class HeroConstucter extends Component {
 
                                         this._db.setUserFields(key, { name: this.state.characterName })
                                             .then(() => {
-                                                console.log(this.state.characterName + "123123123");
                                                 console.log("[Firestore] -> Hero name updated!");
                                             })
                                             .catch(err => {

@@ -99,7 +99,7 @@ export default class CharacterMenu extends Component {
 
                 <TouchableOpacity style = {styles.playButton}
                                     onPress = { () => {
-                                        AsyncStorage.getItem("phone_number")
+                                        AsyncStorage.getItem("phoneNumber")
                                             .then(key => {
                                                 if (key !== null) {
                                                     this._db.getUserFields(key)

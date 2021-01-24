@@ -37,10 +37,8 @@ export default class Headphones extends Component {
     }
 
     onEvent(e: any) {
-        console.log(e.type);
         if (e.type === "game-over") {
-            console.log("Game Over");
-            alert("Game Over");
+            console.log("[Headphones game] -> Game Over");
             this.setState({
                 running: false,
                 win: true
@@ -53,11 +51,10 @@ export default class Headphones extends Component {
     }
 
     componentWillUnmount() {
-        console.log(this.state.entities.state.win)
+        console.log(this.state.entities.state.win);
     }
 
     render() {
-        console.log(123);
         return (
             <View>
                 <View>

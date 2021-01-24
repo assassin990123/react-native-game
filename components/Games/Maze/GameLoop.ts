@@ -51,15 +51,13 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
 
           
             wall.filled = true;
-            console.log("OK");
         }
         
-        let start = touches.find((x: any) => x.type === "start");
+        // let start = touches.find((x: any) => x.type === "start");
     
-        if (start){
-            console.log("ok");
-            
-        }
+        // if (start){
+        //     console.log("ok");
+        // }
 
         let move = touches.find((x: any) => x.type === "move");
     
@@ -70,7 +68,6 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
     
         for (let i = 0; i < wall.elements.length; i++){
             if (distance(hero.position.x,hero.position.y,wall.elements[i].x,wall.elements[i].y) < 0.7 + 5){
-                console.log("!!!");
                 hero.position.x = hero.startPos.x;
                 hero.position.y = hero.startPos.y;
             }
@@ -78,7 +75,7 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
     
         if ( distance(hero.position.x,hero.position.y,finish.position.x, finish.position.y) < 0.7 + 5 ){
             state.win = true;
-            console.log("You win!");
+            console.log("[Maze game] -> You win!");
         }
     
         

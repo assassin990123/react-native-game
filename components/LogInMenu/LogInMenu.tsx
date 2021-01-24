@@ -46,7 +46,7 @@ export default class LogInMenu extends Component {
             .then(() => {
                 console.log("[Auth] -> SingIn Success");
 
-                AsyncStorage.setItem("phone_number", this.state.username)
+                AsyncStorage.setItem("phoneNumber", this.state.username)
                     .then(() => console.log("[AsyncStorage] -> Username saved in local store."))
                     .catch(() => console.log("[AsyncStorage] -> Cant save user data in local store."));
 

@@ -95,7 +95,7 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
         }
 
         if (!win) {
-            console.log("You win!");
+            console.log("[Tower game] -> You win!");
             state.win = true;
         }
     }

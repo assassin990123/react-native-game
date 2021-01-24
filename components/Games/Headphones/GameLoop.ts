@@ -118,8 +118,8 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
 			if (!unintersect) {
 				state.win = true;
 				entities.update();
-				console.log(entities);
-				console.log("You win!");
+
+				console.log("[Headphones game] -> You win!");
 			}
 		}
 

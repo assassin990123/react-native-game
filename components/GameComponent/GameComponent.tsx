@@ -64,7 +64,7 @@ export default class GameComponent extends Component {
     async componentDidMount() {
         this._backgroundAudio.setAudioMode();
 
-        this._backgroundAudio.loadNewPlayback(true).then(() => { console.log('Music is played!'); });
+        this._backgroundAudio.loadNewPlayback(true).then(() => { console.log('[BG Music] -> Music is played!'); });
     }
 
      async componentWillUnmount() {
@@ -75,7 +75,7 @@ export default class GameComponent extends Component {
         this.previousState = this.state;
 
         this.setState({room: selectedRoom, roomName: name});
-        console.log(name);
+        console.log("[GameComponent] -> Current room := " + name);
     }
 
     mapComponent() {
@@ -130,7 +130,7 @@ export default class GameComponent extends Component {
     }
 
     _interactiveGame(roomName: string): JSX.Element {
-        console.log(roomName);
+        console.log("[GameComponent] -> Current room := " + name);
         return roomName !== 'home' ? <View/> :
             (
                 <View style={[styles.container, { top: height * 0.82 }]}>
@@ -150,11 +150,10 @@ export default class GameComponent extends Component {
     render() {
         if (this.state.spriteName.length === 0) {
             AsyncStorage.getItem("spriteName").then(key => {
+                console.log("[AsyncStorage] -> Sprite name loaded.")
                 this.setState({ spriteName: key });
-            }).catch(() => console.log("OPS"));
+            }).catch(err => console.error("[AsyncStorage] -> Cant load sprite name!", err));
         }
-
-        console.log("from state " + this.state.spriteName);
 
         return this.state.roomName !== 'dirt' ?
                 <ImageBackground source={this.state.room} style = {{flex: 1}}>

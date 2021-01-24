@@ -114,7 +114,9 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
             if (projectile.hited){
                 points.score += 10;
             }
-            console.log(points.score);
+
+            console.log("[Ducks game] -> Score := " + points.score);
+
             if (projectile.amount !== 1){
                 projectile.position.x = 25;
                 projectile.position.y = 75;

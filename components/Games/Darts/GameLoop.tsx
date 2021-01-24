@@ -71,7 +71,7 @@ export const GameLoop = (entities:any, {events}:any) => {
                 points.score += 10;
             }
 
-            console.log(points.score);
+            console.log("[Dart game] -> Score := " + points.score);
             
             aim.state = 0;
             aim.position[0] = 25;
