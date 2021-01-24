@@ -150,9 +150,9 @@ export default class HeroConstucter extends Component {
                         <TouchableOpacity  onPress={() => {
                             AsyncStorage.setItem("spriteName", `${this.state.currentSpriteName}_${this.state.skinColor}_${this.state.hairColor}_${this.state.eysColor}`)
                                 .then(() => {
-                                    console.log("Sprite name saved");
+                                    console.log("[AsyncStorage] -> Sprite name saved");
                                 })
-                                .catch(() => console.log("Cant save sprite"));
+                                .catch(() => console.log("[AsyncStorage] -> Cant save sprite"));
 
                             AsyncStorage.setItem("heroName", this.state.characterName)
                                 .then(() => {

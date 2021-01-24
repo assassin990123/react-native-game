@@ -5,6 +5,8 @@ import { Actions } from 'react-native-router-flux';
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
+import AsyncStorage from "@react-native-community/async-storage";
+import FirestoreAPI from "api/FirestoreAPI";
 
 const DescriptionText: string = 'some text';
 const CharacterName: string ='Name';
@@ -19,6 +21,8 @@ export default class CharacterMenu extends Component {
         password: '',
         modalVisible: false
     };
+
+    _db: FirestoreAPI = new FirestoreAPI();
 
     setModalVisible = (visible: Boolean) => {
         this.setState({ modalVisible: visible });
@@ -93,8 +97,31 @@ export default class CharacterMenu extends Component {
                     <Text>{DescriptionText}</Text>
                 </View>  
 
-                <TouchableOpacity style   = {styles.playButton}
-                                    onPress = { () => { Actions.GameComponent(); clickAudioEffect(); } }>
+                <TouchableOpacity style = {styles.playButton}
+                                    onPress = { () => {
+                                        AsyncStorage.getItem("phone_number")
+                                            .then(key => {
+                                                if (key !== null) {
+                                                    this._db.getUserFields(key)
+                                                        .then(data => {
+                                                            if (data !== undefined) {
+                                                                AsyncStorage.setItem("spriteName", data.skinName)
+                                                                    .then(() => {
+                                                                        console.log("[AsyncStorage] -> Sprite name saved");
+                                                                    })
+                                                                    .catch(() => console.log("[AsyncStorage] -> Cant save sprite"));
+                                                            }
+                                                        })
+                                                        .catch();
+                                                }
+                                            })
+                                            .catch((err: Error) => {
+                                                console.error("[AsyncStorage] -> Cant get username!", err);
+                                            });
+
+                                        Actions.GameComponent();
+                                        clickAudioEffect();
+                                    } }>
                     <Text style = {styles.buttonsText}>Играть!</Text>
                 </TouchableOpacity>
                     

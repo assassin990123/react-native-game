@@ -6,6 +6,9 @@ import BackgroundAudioController from 'endpoints/BackgroundAudioController';
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 import ButtonGroup from '../ShopAndInventoryGroup/Group';
 
+import Pictures from 'assets/hero_sprites/Pictures';
+import AsyncStorage from '@react-native-community/async-storage';
+
 // View components.
 import MenuButton    from '../MenuBottom/MenuBottom';
 import HeroStatusBar from '../HeroStatusBar/HeroStatusBar';
@@ -47,7 +50,8 @@ export default class GameComponent extends Component {
 
     state = {
         room: require('../../assets/rooms/BedRoom.png'),
-        roomName: 'home'
+        roomName: 'home',
+        spriteName: ''
     }
 
     previousState = {
@@ -144,14 +148,20 @@ export default class GameComponent extends Component {
     }
 
     render() {
-        console.disableYellowBox = true; // Disable yellow screen warnings.
+        if (this.state.spriteName.length === 0) {
+            AsyncStorage.getItem("spriteName").then(key => {
+                this.setState({ spriteName: key });
+            }).catch(() => console.log("OPS"));
+        }
+
+        console.log("from state " + this.state.spriteName);
 
         return this.state.roomName !== 'dirt' ?
                 <ImageBackground source={this.state.room} style = {{flex: 1}}>
                     <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
                     <ButtonGroup/>
                     {this._interactiveGame(this.state.roomName)}
-                    <Image style={{justifyContent: 'center', marginLeft: 'auto'}} source={require('./assets/sprites/AsunaDefault.png')}/>
+                    <Image style={{justifyContent: 'center', marginLeft: 'auto', marginTop: 20}} source={Pictures.get(this.state.spriteName)}/>
                     <MenuButton onSelectRoom={this.handleSelectedRoom} />
                 </ImageBackground>
             : this.mapComponent();
