@@ -2,6 +2,7 @@ import firestore from './FirestoreInit';
 import FirestoreAPI from "api/FirestoreAPI";
 import { decrypt, encrypt } from "./AFG_API_KEYS/ApiKeys";
 import * as firebase from "firebase";
+import Firestore from "./FirestoreInit";
 
 /*
  *
@@ -19,12 +20,12 @@ export type ShopItem = {
     room: string,
 
     buff?: {
-        needBuffName: string,
-        buffScale: number,
+        needBuffName?: string,
+        buffScale?: number,
     },
     debuff?: {
-        needDebuffName: string,
-        debuffScale: number
+        needDebuffName?: string,
+        debuffScale?: number
     }
 };
 
@@ -40,6 +41,14 @@ export default class ShopItemsAPI extends FirestoreAPI {
 
     constructor() {
         super();
+    }
+
+    async getShopItems (): Promise<ShopItem[]> {
+        const shopItemsRef = firestore.collection(this._shopCollectionName).doc(this._itemsDocName);
+
+        return await shopItemsRef.get().then((data) => {
+            return Object(data.data());
+        });
     }
 
     async initShopItems(): Promise<boolean | undefined> {
