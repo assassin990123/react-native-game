@@ -1,6 +1,10 @@
-import firestore from './FirestoreInit';
+import * as firebase from "firebase";
+import "firebase/firestore";
+
+import Firestore from './FirestoreInit';
 import { decrypt, encrypt } from "./AFG_API_KEYS/ApiKeys";
 
+import { ShopItem } from 'api/ShopItemsAPI';
 
 /*
 *
@@ -8,15 +12,13 @@ import { decrypt, encrypt } from "./AFG_API_KEYS/ApiKeys";
 *
 */
 
+
 type User = {
     name:      string,
     skinName:  string,
     money:     number,
     inv: {
-        items_id: {
-           item_id: number,
-           count: number
-        }[]
+        items: ShopItem[]
     }
 };
 
@@ -35,9 +37,7 @@ export default class FirestoreAPI {
         skinName: '',
         money: 0,
         inv: {
-            items_id: [{ item_id: 0, count: 0 },
-                        { item_id: 1, count: 1 },
-                        { item_id: 2, count: 2 }]
+            items: []
         }
     };
 
@@ -49,25 +49,24 @@ export default class FirestoreAPI {
     }
 
     // @ts-ignore
-    private async _getUsers (collectionName?: String): Promise<UserData[] | undefined> {
+    async _getUsers (collectionName?: String): Promise<UserData[] | undefined> {
         this._setCollectionName(collectionName);
 
         let res: UserData[] = [];
 
-        await firestore.collection(this._collectionName).get()
+        await Firestore.collection(this._collectionName).get()
             .then(
                 (snapshot) => {
                     snapshot.forEach((doc: any) => {
-                        res.push({ id: decrypt(doc.id), userProps: {
-                            name: "testName",
-                            skinName: "skinName",
-                            money: 0,
-                            inv: { items_id: [
-                                    { item_id: 0, count: 0 },
-                                    { item_id: 1, count: 1 },
-                                    { item_id: 2, count: 2 }
-                                    ]
-                            } } });
+                        res.push({
+                            id: decrypt(doc.id),
+                            userProps: {
+                                name: doc.name,
+                                skinName: doc.skinName,
+                                money: doc.money,
+                                inv: doc.inv
+                            }
+                        });
                 });
             })
             .catch((err: any) => {
@@ -81,14 +80,15 @@ export default class FirestoreAPI {
     public async getUserFields(userName: String, collectionName?: String): Promise<User | undefined> {
         this._setCollectionName(collectionName);
 
-        const userPropsRef = firestore.collection(this._collectionName).doc(encrypt(userName));
+        const userPropsRef = Firestore.collection(this._collectionName).doc(encrypt(userName));
 
         return await userPropsRef.get().then((snapshot) => {
             if (snapshot.exists) {
-                const snapData = snapshot.data();
+                const snapData = Object(snapshot.data());
 
-                if (snapData === undefined)
+                if (snapData === undefined) {
                     return undefined;
+                }
 
                 return { name: snapData.name, skinName: snapData.skinName, money:  snapData.money, inv: snapData.inv };
 
@@ -105,7 +105,7 @@ export default class FirestoreAPI {
     public async isUserExist(userName: string, collectionName?: string): Promise<boolean | undefined> {
         this._setCollectionName(collectionName);
 
-        return await firestore.collection(this._collectionName)
+        return await Firestore.collection(this._collectionName)
                                     .doc(encrypt(userName))
                                     .get().then(snapshot => {
                                         return snapshot.exists;
@@ -126,8 +126,7 @@ export default class FirestoreAPI {
         else if (!_isUserExist)
             return false;
 
-        const userPropsRef = firestore.collection(this._collectionName).doc(encrypt(userName));
-
+        const userPropsRef = Firestore.collection(this._collectionName).doc(encrypt(userName));
         for (let [key, value] of Object.entries(newProps)) {
             await userPropsRef.set( { [key]: value }, {merge: true} );
         }
@@ -138,7 +137,7 @@ export default class FirestoreAPI {
     public async createUser(userName: string, collectionName?: string): Promise<boolean | undefined> {
         this._setCollectionName(collectionName);
 
-        const userPropsRef = firestore.collection(this._collectionName).doc(encrypt(userName));
+        const userPropsRef = Firestore.collection(this._collectionName).doc(encrypt(userName));
 
         let _isUserExist = await this.isUserExist(decrypt(userName));
 
