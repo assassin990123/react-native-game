@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import {InventoryConstructor } from './InventoryConstructor/InventoryConstructor';
-import ShopItemsAPI from "../api/ShopItemsAPI";
+import ShopItemsAPI from "api/ShopItemsAPI";
 
 
 interface ItemInfo {
@@ -38,7 +38,6 @@ export default class ShopComponent extends Component {
     api: ShopItemsAPI = new ShopItemsAPI();
 
     render() {
-        console.log("UPDATE");
         return (
             <InventoryConstructor
                 bottomElemProps = {
