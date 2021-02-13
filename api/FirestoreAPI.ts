@@ -14,9 +14,14 @@ import { ShopItem } from 'api/ShopItemsAPI';
 
 
 type User = {
-    name:      string,
-    skinName:  string,
-    money:     number,
+    name:        string,
+    skinName:    string,
+    money:       number,
+    eatPoints:   number,
+    clearPoints: number,
+    moodPoints:  number,
+    sleepPoints: number,
+
     inv: {
         items: ShopItem[]
     }
@@ -36,6 +41,10 @@ export default class FirestoreAPI {
         name: '',
         skinName: '',
         money: 0,
+        eatPoints: 100,
+        clearPoints: 100,
+        moodPoints:  100,
+        sleepPoints: 100,
         inv: {
             items: []
         }
@@ -61,10 +70,14 @@ export default class FirestoreAPI {
                         res.push({
                             id: decrypt(doc.id),
                             userProps: {
-                                name: doc.name,
-                                skinName: doc.skinName,
-                                money: doc.money,
-                                inv: doc.inv
+                                eatPoints:   doc.eatPoints,
+                                clearPoints: doc.clearPoints,
+                                moodPoints:  doc.moodPoints,
+                                sleepPoints: doc.sleepPoints,
+                                name:        doc.name,
+                                skinName:    doc.skinName,
+                                money:       doc.money,
+                                inv:         doc.inv
                             }
                         });
                 });
@@ -90,7 +103,15 @@ export default class FirestoreAPI {
                     return undefined;
                 }
 
-                return { name: snapData.name, skinName: snapData.skinName, money:  snapData.money, inv: snapData.inv };
+                return { name:        snapData.name,
+                         skinName:    snapData.skinName,
+                         money:       snapData.money,
+                         inv:         snapData.inv,
+                         eatPoints:   snapData.eatPoints,
+                         clearPoints: snapData.clearPoints,
+                         moodPoints:  snapData.moodPoints,
+                         sleepPoints: snapData.sleepPoints,
+                };
 
             } else {
                 console.warn('[fireStoreAPT] -> Warn: Document no exists');
