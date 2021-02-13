@@ -6,12 +6,19 @@ import BackgroundAudioController from 'endpoints/BackgroundAudioController';
 import { clickAudioEffect, setAudioEffectVolume } from 'endpoints/AudioEffects';
 
 import {styles} from './styles';
+import AsyncStorage from "@react-native-community/async-storage";
+import FirestoreAPI from "api/FirestoreAPI";
 
 /*
 *
     @brief: Status bar to display characters needs, such as sleep, food, lvl and etc.
 *
 */
+
+declare global { let timerInst: NodeJS.Timeout | null }
+timerInst = null;
+
+console.log(timerInst + "   TEST");
 
 interface IHeroStatusBar {
     handler: Function,
@@ -24,7 +31,54 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         props.handler();
 
         this._musicController = props.musicController;
+
+        this.firestore = new FirestoreAPI();
+
+        this.firestore.getUserFields("+79991774634")
+            .then(async (data) => {
+                if (data == undefined) {
+                    return;
+                }
+
+                await AsyncStorage.setItem("eatPoints", String(data.eatPoints));
+                await AsyncStorage.setItem("clearPoints", String(data.clearPoints));
+                await AsyncStorage.setItem("moodPoints", String(data.moodPoints));
+                await AsyncStorage.setItem("sleepPoints", String(data.sleepPoints));
+
+                this.setState({_icons: {...this.state._icons, satiety: {...this.state._icons.satiety, currentState: data.eatPoints }}});
+
+                console.log(await AsyncStorage.getItem("eatPoints"));
+            });
+
+        AsyncStorage.getItem("timerStarted")
+            .then(res => {
+                if (res == null || timerInst == null) { // FIXME: FIX THIS
+                    console.log("YEAS");
+                    timerInst = setInterval(async () => {
+                        AsyncStorage.getItem("eatPoints")
+                            .then((eatPoint) => {
+                               // @ts-ignore
+                               AsyncStorage.setItem("eatPoints", String(+eatPoint - 10));
+                               AsyncStorage.getItem("eatPoints").then(res => console.log(res));
+
+                               // @ts-ignore
+                               this.setState({_icons: {...this.state._icons, satiety: {...this.state._icons.satiety, currentState: +eatPoint - 10}}});
+
+                               const _firestore = new FirestoreAPI();
+                               // @ts-ignore
+                               _firestore.setUserFields("+79991774634", {eatPoints: +eatPoint - 10});
+                            });
+                        AsyncStorage.setItem("timerStarted3", "True").then(() => console.log("Timer Started"));
+                    }, 1 * 60 * 1000);
+                }
+            });
+
+        AsyncStorage.getItem("timerStarted3")
+            .then(res => console.log(res));
     }
+
+
+    firestore: FirestoreAPI;
 
     _musicController: BackgroundAudioController;
     _defaultBrightness: number;
@@ -32,7 +86,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
     state = {
         _icons: {
-            satietly:  { link: require('./assets/satiety.png'),   currentState: 100,  name: 'Голод' },
+            satiety:   { link: require('./assets/satiety.png'),    currentState: 100,  name: 'Голод' },
             sleep:     { link: require('./assets/sleep.png'),     currentState: 100,  name: 'Бодрость' },
             cleanness: { link: require('./assets/cleanness.png'), currentState: 100,  name: 'Чистота' },
             mood:      { link: require('./assets/mood.png'),      currentState: 100,  name: 'Настроение' },
@@ -63,7 +117,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     }
 
     getCurrentColor(currentStateNum: number) {
-        if (currentStateNum < 50) {
+        if (currentStateNum <= 50) {
             return StyleSheet.create( { color: {backgroundColor: '#E23535'}} );
         } else if (currentStateNum > 50 && currentStateNum < 80) {
             return StyleSheet.create( { color: {backgroundColor: '#FCB712'}} );
