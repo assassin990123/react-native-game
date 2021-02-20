@@ -16,10 +16,10 @@ export default class EventTimersManager {
 
             console.log("[EventTimersManager] -> CREATE HERO PROPS TIMERS !!!");
 
-            EventTimersManager.clearTimer = setInterval(()=>{clearCallback(); console.log("CLEAR TIMER!")}, 2 * 10 * 1000);
-            EventTimersManager.sleepTimer = setInterval(()=>{sleepCallback(); console.log("SLEEP TIMER!")}, 5 * 10 * 1000);
-            EventTimersManager.moodTimer  = setInterval(()=>{moodCallback(); console.log("MOOD TIMER!")},  3 * 10 * 1000);
-            EventTimersManager.eatTimer   = setInterval(()=>{eatCallback(); console.log("EAT TIMER!")},   4 * 10 * 1000);
+            EventTimersManager.clearTimer = setInterval(()=>{clearCallback(); console.log("CLEAR TIMER!")}, 1 * 60 * 1000);
+            EventTimersManager.sleepTimer = setInterval(()=>{sleepCallback(); console.log("SLEEP TIMER!")}, 5 * 60 * 1000);
+            EventTimersManager.moodTimer  = setInterval(()=>{moodCallback(); console.log("MOOD TIMER!")},   3 * 60 * 1000);
+            EventTimersManager.eatTimer   = setInterval(()=>{eatCallback(); console.log("EAT TIMER!")},     4 * 60 * 1000);
         }
     }
 }

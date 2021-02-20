@@ -27,22 +27,24 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     firestore: FirestoreAPI;
 
     _musicController: BackgroundAudioController;
-    _defaultBrightness: number;
+    static _defaultBrightness: number;
     _currentBrightness: number;
 
-    state = {
+    static instance?: HeroStatusBar = undefined;
+
+    static state = {
         _icons: {
-            satiety: { link: require('./assets/satiety.png'), currentState: 100, name: 'Голод' },
-            sleep: { link: require('./assets/sleep.png'), currentState: 100, name: 'Бодрость' },
-            cleanness: { link: require('./assets/cleanness.png'), currentState: 100, name: 'Чистота' },
-            mood: { link: require('./assets/mood.png'), currentState: 100, name: 'Настроение' },
+            satiety: { link: require('./assets/satiety.png'), currentState: 100, name: 'Голод', id: 0 },
+            sleep: { link: require('./assets/sleep.png'), currentState: 100, name: 'Бодрость', id: 1 },
+            cleanness: { link: require('./assets/cleanness.png'), currentState: 100, name: 'Чистота', id: 2 },
+            mood: { link: require('./assets/mood.png'), currentState: 100, name: 'Настроение', id: 3 },
         },
 
         _money: { link: require('./assets/money.png'), currentState: 0, name: 'Монетки' },
 
         settingsModalVisible: false,
         statsModalVisible: false,
-        currentBrightness: this._defaultBrightness,
+        currentBrightness: HeroStatusBar._defaultBrightness,
         soundVolume: 1.0,
         effectsVolume: 1.0,
         level: { number: 1, exp: 1000 }
@@ -51,6 +53,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     constructor(props: any) {
         super(props);
         props.handler();
+
+        HeroStatusBar.instance = this;
 
         this._musicController = props.musicController;
 
@@ -67,16 +71,16 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                 await AsyncStorage.setItem("moodPoints", String(data.moodPoints));
                 await AsyncStorage.setItem("sleepPoints", String(data.sleepPoints));
 
-                this.setState({
+                HeroStatusBar.instance?.setState({
                     _icons: {
-                        ...this.state._icons, satiety: {
-                            ...this.state._icons.satiety, currentState: data.eatPoints
+                        ...HeroStatusBar.state._icons, satiety: {
+                            ...HeroStatusBar.state._icons.satiety, currentState: data.eatPoints
                         }, sleep: {
-                            ...this.state._icons.sleep, currentState: data.sleepPoints
+                            ...HeroStatusBar.state._icons.sleep, currentState: data.sleepPoints
                         }, cleanness: {
-                            ...this.state._icons.cleanness, currentState: data.clearPoints
+                            ...HeroStatusBar.state._icons.cleanness, currentState: data.clearPoints
                         }, mood: {
-                            ...this.state._icons.mood, currentState: data.moodPoints
+                            ...HeroStatusBar.state._icons.mood, currentState: data.moodPoints
                         },
                     }
                 });
@@ -84,22 +88,17 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
         EventTimersManager.initTimers(async() => {
             AsyncStorage.getItem("clearPoints")
-                .then((cleanPoint) => {
-                    console.log("clear Point now -> " + cleanPoint);
+                .then((clearPoint) => {
+                    console.log("clear Point now -> " + clearPoint);
 
-                    if (cleanPoint != null && +cleanPoint > 0) {
-                        AsyncStorage.setItem("clearPoints", String(+cleanPoint - 10));
+                    if (clearPoint != null && +clearPoint > 0) {
+                        AsyncStorage.setItem("clearPoints", String(+clearPoint - 10));
                         AsyncStorage.getItem("clearPoints").then(res => console.log(res));
 
-                        this.setState({
-                            _icons: {
-                                ...this.state._icons,
-                                cleanness: { ...this.state._icons.cleanness, currentState: +cleanPoint - 10 }
-                            }
-                        });
+                        HeroStatusBar.state._icons.cleanness.currentState = +clearPoint - 10;
+                        HeroStatusBar.instance?.forceUpdate();
 
-                        // const _firestore = new FirestoreAPI();
-                        this.firestore.setUserFields("+79991774634", { clearPoints: +cleanPoint - 10 });
+                        this.firestore.setUserFields("+79991774634", { clearPoints: +clearPoint - 10 });
                     }
                 });
         }, async() => {
@@ -111,12 +110,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         AsyncStorage.setItem("sleepPoints", String(+sleepPoints - 10));
                         AsyncStorage.getItem("sleepPoints").then(res => console.log(res));
 
-                        this.setState({
-                            _icons: {
-                                ...this.state._icons,
-                                sleep: { ...this.state._icons.sleep, currentState: +sleepPoints - 10 }
-                            }
-                        });
+                        HeroStatusBar.state._icons.sleep.currentState = +sleepPoints - 10;
+                        HeroStatusBar.instance?.forceUpdate();
 
                         this.firestore.setUserFields("+79991774634", { sleepPoints: +sleepPoints - 10 });
                     }
@@ -130,12 +125,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         AsyncStorage.setItem("moodPoints", String(+moodPoints - 10));
                         AsyncStorage.getItem("moodPoints").then(res => console.log(res));
 
-                        this.setState({
-                            _icons: {
-                                ...this.state._icons,
-                                mood: { ...this.state._icons.mood, currentState: +moodPoints - 10 }
-                            }
-                        });
+                        HeroStatusBar.state._icons.mood.currentState = +moodPoints - 10;
+                        HeroStatusBar.instance?.forceUpdate();
 
                         this.firestore.setUserFields("+79991774634", { moodPoints: +moodPoints - 10 });
                     }
@@ -149,12 +140,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         AsyncStorage.setItem("eatPoints", String(+eatPoint - 10));
                         AsyncStorage.getItem("eatPoints").then(res => console.log(res));
 
-                        this.setState({
-                            _icons: {
-                                ...this.state._icons,
-                                satiety: { ...this.state._icons.satiety, currentState: +eatPoint - 10 }
-                            }
-                        });
+                        HeroStatusBar.state._icons.satiety.currentState = +eatPoint - 10;
+                        HeroStatusBar.instance?.forceUpdate();
 
                         this.firestore.setUserFields("+79991774634", { eatPoints: +eatPoint - 10 });
                     }
@@ -166,7 +153,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         const { status } = await Brightness.requestPermissionsAsync();
         if(status === 'granted') {
             Brightness.getSystemBrightnessAsync().then(res => {
-                this._defaultBrightness = res;
+                HeroStatusBar._defaultBrightness = res;
                 this._currentBrightness = res;
             });
         }
@@ -185,7 +172,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     _settingsModal(): JSX.Element {
         return (<Modal animationType='fade'
                        transparent={true}
-                       visible={this.state.settingsModalVisible}
+                       visible={HeroStatusBar.state.settingsModalVisible}
                        onRequestClose={() => {
                            this.setState({ settingsModalVisible: false })
                        }}>
@@ -242,7 +229,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         }}>
                             <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
                                 // DONT TOUCH IF STATEMENT
-                                let volume = this.state.effectsVolume;
+                                let volume = HeroStatusBar.state.effectsVolume;
                                 if(volume >= 0.01 && volume <= 1.1) {
                                     volume = parseFloat((volume - 0.1).toFixed(1));
                                     this.setState({ effectsVolume: volume });
@@ -251,10 +238,10 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
                                 clickAudioEffect();
                             }} children={<Image source={require('./assets/modalFiles/arrow-left.png')}/>}/>
-                            <Text style={styles.modalSettingNumber}>{this.state.effectsVolume * 100}</Text>
+                            <Text style={styles.modalSettingNumber}>{HeroStatusBar.state.effectsVolume * 100}</Text>
                             <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
                                 // DONT TOUCH IF STATEMENT
-                                let volume = this.state.effectsVolume;
+                                let volume = HeroStatusBar.state.effectsVolume;
                                 if(volume >= 0 && volume <= 0.9) {
                                     volume = parseFloat((volume + 0.1).toFixed(1));
                                     this.setState({ effectsVolume: volume });
@@ -275,7 +262,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         }}>
                             <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
                                 // DONT TOUCH IF STATEMENT
-                                let volume = this.state.soundVolume;
+                                let volume = HeroStatusBar.state.soundVolume;
                                 if(volume >= 0.01 && volume <= 1.1) {
                                     volume = parseFloat((volume - 0.1).toFixed(1));
                                     this.setState({ soundVolume: volume });
@@ -284,10 +271,10 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
                                 clickAudioEffect();
                             }} children={<Image source={require('./assets/modalFiles/arrow-left.png')}/>}/>
-                            <Text style={styles.modalSettingNumber}>{this.state.soundVolume * 100}</Text>
+                            <Text style={styles.modalSettingNumber}>{HeroStatusBar.state.soundVolume * 100}</Text>
                             <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
                                 // DONT TOUCH IF STATEMENT
-                                let volume = this.state.soundVolume;
+                                let volume = HeroStatusBar.state.soundVolume;
                                 if(volume >= 0 && volume <= 0.9) {
                                     volume = parseFloat((volume + 0.1).toFixed(1));
                                     this.setState({ soundVolume: volume });
@@ -313,7 +300,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     _statsModal(statsItems: JSX.Element[]): JSX.Element {
         return (<Modal animationType='fade'
                        transparent={true}
-                       visible={this.state.statsModalVisible}
+                       visible={HeroStatusBar.state.statsModalVisible}
                        onRequestClose={() => {
                            this.setState({ statsModalVisible: false })
                        }}>
@@ -339,9 +326,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     render(): JSX.Element {
         let statusBarItems: JSX.Element[] = [];
 
-        for(let [key, value] of Object.entries(this.state._icons)) {
-            statusBarItems.push(<TouchableOpacity onPress={() => {
-            }}
+        for(let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
+            statusBarItems.push(<TouchableOpacity onPress={() => {}}
                                                   style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color]}
                                                   activeOpacity={1}
                                                   key={key}>
@@ -351,7 +337,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
         let statsItems: JSX.Element[] = [];
 
-        for(let [key, value] of Object.entries(this.state._icons)) {
+        for(let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
             statsItems.push(<View style={{ flexDirection: 'row', marginBottom: 30 }} key={key}>
                 <View
                     style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color, { marginRight: 0 }]}>
@@ -366,11 +352,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
         statsItems.push(<View style={{ flexDirection: 'row', marginBottom: 30 }} key={123}>
             <View style={[styles.iconStyleSubMenu, { marginRight: 0 }]}>
-                <Image source={this.state._money.link}/>
+                <Image source={HeroStatusBar.state._money.link}/>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                <Text style={styles.modalStatePropName}>{this.state._money.name}: </Text>
-                <Text style={styles.modalStatePropNumber}>{this.state._money.currentState}</Text>
+                <Text style={styles.modalStatePropName}>{HeroStatusBar.state._money.name}: </Text>
+                <Text style={styles.modalStatePropNumber}>{HeroStatusBar.state._money.currentState}</Text>
             </View>
         </View>);
 
@@ -379,8 +365,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                 <Image source={require('./assets/lvl-icon.png')}/>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                <Text style={styles.modalStatePropName}>Уровень {this.state.level.number}: </Text>
-                <Text style={styles.modalStatePropNumber}>{this.state.level.exp} exp</Text>
+                <Text style={styles.modalStatePropName}>Уровень {HeroStatusBar.state.level.number}: </Text>
+                <Text style={styles.modalStatePropNumber}>{HeroStatusBar.state.level.exp} exp</Text>
             </View>
         </View>);
 
@@ -394,7 +380,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                     this.setState({ statsModalVisible: true });
                     clickAudioEffect();
                 }}>
-                    <Text style={styles.levelText}>{this.state.level.number}</Text>
+                    <Text style={styles.levelText}>{HeroStatusBar.state.level.number}</Text>
                 </TouchableOpacity>
 
                 <View style={[styles.StatusBarSubMenu, styles.defaultMargin]}>
