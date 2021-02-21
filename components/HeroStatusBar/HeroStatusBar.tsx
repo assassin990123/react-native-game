@@ -174,10 +174,12 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                        transparent = {true}
                        visible = {HeroStatusBar.state.settingsModalVisible}
                        onRequestClose = {() => {
-                           this.setState({ settingsModalVisible: false })
+                           HeroStatusBar.state.settingsModalVisible = false;
+                           HeroStatusBar.instance?.forceUpdate();
                        }}>
             <TouchableOpacity style = {styles.modalContainer} onPress = {() => {
-                this.setState({ settingsModalVisible: false })
+                HeroStatusBar.state.settingsModalVisible = false;
+                HeroStatusBar.instance?.forceUpdate();
             }} activeOpacity = {1}>
                 <TouchableOpacity style = {styles.modalView} activeOpacity = {1}>
                     <Text style = {[styles.modalTitle]}>Настройки</Text>
@@ -196,13 +198,12 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                     if (this._currentBrightness >= 0.01 && this._currentBrightness <= 1.1) {
                                         this._currentBrightness = parseFloat((this._currentBrightness - 0.1).toFixed(1));
                                         await Brightness.setSystemBrightnessAsync(this._currentBrightness);
-                                        this.setState({ currentBrightness: this._currentBrightness });
+                                        HeroStatusBar.instance?.setState({ currentBrightness: this._currentBrightness });
                                     }
                                 }
                                 clickAudioEffect();
                             }}
-                                              children = {<Image
-                                                  source = {require('./assets/modalFiles/arrow-left.png')} />} />
+                                              children = {<Image source = {require('./assets/modalFiles/arrow-left.png')} />} />
 
                             <Text style = {styles.modalSettingNumber}>{~~(this._currentBrightness * 100)}</Text>
                             <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
@@ -212,7 +213,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                     if (this._currentBrightness >= 0 && this._currentBrightness <= 0.9) {
                                         this._currentBrightness = parseFloat((this._currentBrightness + 0.1).toFixed(1));
                                         await Brightness.setSystemBrightnessAsync(this._currentBrightness);
-                                        this.setState({ currentBrightness: this._currentBrightness });
+                                        HeroStatusBar.instance?.setState({ currentBrightness: this._currentBrightness });
                                     }
                                 }
                                 clickAudioEffect();
@@ -232,7 +233,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 let volume = HeroStatusBar.state.effectsVolume;
                                 if (volume >= 0.01 && volume <= 1.1) {
                                     volume = parseFloat((volume - 0.1).toFixed(1));
-                                    this.setState({ effectsVolume: volume });
+                                    HeroStatusBar.state.effectsVolume = volume;
+                                    HeroStatusBar.instance?.forceUpdate();
                                     await setAudioEffectVolume(volume);
                                 }
 
@@ -244,7 +246,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 let volume = HeroStatusBar.state.effectsVolume;
                                 if (volume >= 0 && volume <= 0.9) {
                                     volume = parseFloat((volume + 0.1).toFixed(1));
-                                    this.setState({ effectsVolume: volume });
+                                    HeroStatusBar.state.effectsVolume = volume;
+                                    HeroStatusBar.instance?.forceUpdate();
                                     await setAudioEffectVolume(volume);
                                 }
 
@@ -265,8 +268,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 let volume = HeroStatusBar.state.soundVolume;
                                 if (volume >= 0.01 && volume <= 1.1) {
                                     volume = parseFloat((volume - 0.1).toFixed(1));
-                                    this.setState({ soundVolume: volume });
-                                    this._musicController.setPlaybackVolume(volume);
+                                    HeroStatusBar.state.soundVolume = volume;
+                                    HeroStatusBar.instance?.forceUpdate();
+                                    HeroStatusBar.instance?._musicController.setPlaybackVolume(volume);
                                 }
 
                                 clickAudioEffect();
@@ -277,8 +281,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 let volume = HeroStatusBar.state.soundVolume;
                                 if (volume >= 0 && volume <= 0.9) {
                                     volume = parseFloat((volume + 0.1).toFixed(1));
-                                    this.setState({ soundVolume: volume });
-                                    this._musicController.setPlaybackVolume(volume);
+                                    HeroStatusBar.state.soundVolume = volume;
+                                    HeroStatusBar.instance?.forceUpdate();
+                                    HeroStatusBar.instance?._musicController.setPlaybackVolume(volume);
                                 }
 
                                 clickAudioEffect();
@@ -302,10 +307,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                        transparent = {true}
                        visible = {HeroStatusBar.state.statsModalVisible}
                        onRequestClose = {() => {
-                           this.setState({ statsModalVisible: false })
+                           HeroStatusBar.instance?.setState({ statsModalVisible: false })
                        }}>
             <TouchableOpacity style = {styles.modalContainer} activeOpacity = {1} onPress = {() => {
-                this.setState({ statsModalVisible: false })
+                HeroStatusBar.state.statsModalVisible = false;
+                HeroStatusBar.instance?.forceUpdate();
             }}>
                 <TouchableOpacity style = {[styles.modalView, { height: '87%' }]} activeOpacity = {1}>
                     <Text style = {[styles.modalTitle]}>Состояние {"\n"} героя</Text>
@@ -313,8 +319,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                     <View style = {{ justifyContent: "center", alignItems: 'center' }}>{statsItems}</View>
 
                     <TouchableOpacity style = {styles.modalExitButton} onPress = {() => {
-                        this.setState({ statsModalVisible: false });
                         clickAudioEffect();
+                        HeroStatusBar.state.statsModalVisible = false;
+                        HeroStatusBar.instance?.forceUpdate();
                     }}>
                         <Text style = {styles.modalExitButtonText}>Назад</Text>
                     </TouchableOpacity>
@@ -378,8 +385,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
             <View style = {styles.StatusBar}>
                 <TouchableOpacity style = {[styles.iconStyle, styles.defaultMargin]} onPress = {() => {
-                    this.setState({ statsModalVisible: true });
                     clickAudioEffect();
+                    HeroStatusBar.state.statsModalVisible = true;
+                    HeroStatusBar.instance?.forceUpdate();
                 }}>
                     <Text style = {styles.levelText}>{HeroStatusBar.state.level.number}</Text>
                 </TouchableOpacity>
@@ -389,7 +397,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                 </View>
 
                 <TouchableOpacity style = {[styles.iconStyle, styles.defaultMargin]} onPress = {() => {
-                    this.setState({ settingsModalVisible: true });
+                    clickAudioEffect();
+                    HeroStatusBar.state.settingsModalVisible = true;
+                    HeroStatusBar.instance?.forceUpdate();
                 }}>
                     <Image source = {require('./assets/settings.png')} />
                 </TouchableOpacity>
