@@ -18,7 +18,8 @@ export default class Headphones extends Component {
     state = {
         running: true, entities: {
             node: {
-                elements: [], length: 15, filled: false, el: -1, intersect: true, // @ts-ignore
+                elements: [], length: 15, filled: false, el: -1, intersect: true,
+                // @ts-ignore
                 renderer: <Node />
             }, state: { win: false }, update: () => {
                 this.setState({ entities: { state: { win: true } } });
