@@ -48,6 +48,7 @@ export default class GameComponent extends Component {
         this._backgroundAudio = new BackgroundAudioController();
     }
 
+
     state = {
         room: require('../../assets/rooms/BedRoom.png'),
         roomName: 'home',

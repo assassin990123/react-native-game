@@ -62,7 +62,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
         this.firestore.getUserFields("+79991774634")
             .then(async(data) => {
-                if(data == undefined) {
+                if (data == undefined) {
                     return;
                 }
 
@@ -151,7 +151,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
     async componentDidMount() {
         const { status } = await Brightness.requestPermissionsAsync();
-        if(status === 'granted') {
+        if (status === 'granted') {
             Brightness.getSystemBrightnessAsync().then(res => {
                 HeroStatusBar._defaultBrightness = res;
                 this._currentBrightness = res;
@@ -160,9 +160,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     }
 
     getCurrentColor(currentStateNum: number) {
-        if(currentStateNum <= 50) {
+        if (currentStateNum <= 50) {
             return StyleSheet.create({ color: { backgroundColor: '#E23535' } });
-        } else if(currentStateNum > 50 && currentStateNum < 80) {
+        } else if (currentStateNum > 50 && currentStateNum < 80) {
             return StyleSheet.create({ color: { backgroundColor: '#FCB712' } });
         } else {
             return StyleSheet.create({ color: { backgroundColor: '#4EB734' } });
@@ -170,30 +170,30 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     };
 
     _settingsModal(): JSX.Element {
-        return (<Modal animationType='fade'
-                       transparent={true}
-                       visible={HeroStatusBar.state.settingsModalVisible}
-                       onRequestClose={() => {
+        return (<Modal animationType = 'fade'
+                       transparent = {true}
+                       visible = {HeroStatusBar.state.settingsModalVisible}
+                       onRequestClose = {() => {
                            this.setState({ settingsModalVisible: false })
                        }}>
-            <TouchableOpacity style={styles.modalContainer} onPress={() => {
+            <TouchableOpacity style = {styles.modalContainer} onPress = {() => {
                 this.setState({ settingsModalVisible: false })
-            }} activeOpacity={1}>
-                <TouchableOpacity style={styles.modalView} activeOpacity={1}>
-                    <Text style={[styles.modalTitle]}>Настройки</Text>
+            }} activeOpacity = {1}>
+                <TouchableOpacity style = {styles.modalView} activeOpacity = {1}>
+                    <Text style = {[styles.modalTitle]}>Настройки</Text>
 
-                    <View style={styles.modalSettingItem}>
-                        <View style={styles.modalSettingsTitleBox}>
-                            <Text style={[styles.modalSettingsTitle]}>Яркость</Text>
+                    <View style = {styles.modalSettingItem}>
+                        <View style = {styles.modalSettingsTitleBox}>
+                            <Text style = {[styles.modalSettingsTitle]}>Яркость</Text>
                         </View>
-                        <View style={{
+                        <View style = {{
                             flexDirection: 'row', height: '50%', justifyContent: 'center', alignItems: 'center'
                         }}>
-                            <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
+                            <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 const { status } = await Brightness.requestPermissionsAsync();
-                                if(status === 'granted') {
+                                if (status === 'granted') {
                                     // DONT TOUCH IF STATEMENT
-                                    if(this._currentBrightness >= 0.01 && this._currentBrightness <= 1.1) {
+                                    if (this._currentBrightness >= 0.01 && this._currentBrightness <= 1.1) {
                                         this._currentBrightness = parseFloat((this._currentBrightness - 0.1).toFixed(1));
                                         await Brightness.setSystemBrightnessAsync(this._currentBrightness);
                                         this.setState({ currentBrightness: this._currentBrightness });
@@ -201,96 +201,96 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 }
                                 clickAudioEffect();
                             }}
-                                              children={<Image
-                                                  source={require('./assets/modalFiles/arrow-left.png')}/>}/>
+                                              children = {<Image
+                                                  source = {require('./assets/modalFiles/arrow-left.png')} />} />
 
-                            <Text style={styles.modalSettingNumber}>{~~(this._currentBrightness * 100)}</Text>
-                            <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
+                            <Text style = {styles.modalSettingNumber}>{~~(this._currentBrightness * 100)}</Text>
+                            <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 const { status } = await Brightness.requestPermissionsAsync();
-                                if(status === 'granted') {
+                                if (status === 'granted') {
                                     // DONT TOUCH IF STATEMENT
-                                    if(this._currentBrightness >= 0 && this._currentBrightness <= 0.9) {
+                                    if (this._currentBrightness >= 0 && this._currentBrightness <= 0.9) {
                                         this._currentBrightness = parseFloat((this._currentBrightness + 0.1).toFixed(1));
                                         await Brightness.setSystemBrightnessAsync(this._currentBrightness);
                                         this.setState({ currentBrightness: this._currentBrightness });
                                     }
                                 }
                                 clickAudioEffect();
-                            }} children={<Image source={require('./assets/modalFiles/arrow-right.png')}/>}/>
+                            }} children = {<Image source = {require('./assets/modalFiles/arrow-right.png')} />} />
                         </View>
                     </View>
 
-                    <View style={styles.modalSettingItem}>
-                        <View style={styles.modalSettingsTitleBox}>
-                            <Text style={[styles.modalSettingsTitle]}>Громкость эффектов</Text>
+                    <View style = {styles.modalSettingItem}>
+                        <View style = {styles.modalSettingsTitleBox}>
+                            <Text style = {[styles.modalSettingsTitle]}>Громкость эффектов</Text>
                         </View>
-                        <View style={{
+                        <View style = {{
                             flexDirection: 'row', height: '50%', justifyContent: 'center', alignItems: 'center'
                         }}>
-                            <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
+                            <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 // DONT TOUCH IF STATEMENT
                                 let volume = HeroStatusBar.state.effectsVolume;
-                                if(volume >= 0.01 && volume <= 1.1) {
+                                if (volume >= 0.01 && volume <= 1.1) {
                                     volume = parseFloat((volume - 0.1).toFixed(1));
                                     this.setState({ effectsVolume: volume });
                                     await setAudioEffectVolume(volume);
                                 }
 
                                 clickAudioEffect();
-                            }} children={<Image source={require('./assets/modalFiles/arrow-left.png')}/>}/>
-                            <Text style={styles.modalSettingNumber}>{HeroStatusBar.state.effectsVolume * 100}</Text>
-                            <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
+                            }} children = {<Image source = {require('./assets/modalFiles/arrow-left.png')} />} />
+                            <Text style = {styles.modalSettingNumber}>{HeroStatusBar.state.effectsVolume * 100}</Text>
+                            <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 // DONT TOUCH IF STATEMENT
                                 let volume = HeroStatusBar.state.effectsVolume;
-                                if(volume >= 0 && volume <= 0.9) {
+                                if (volume >= 0 && volume <= 0.9) {
                                     volume = parseFloat((volume + 0.1).toFixed(1));
                                     this.setState({ effectsVolume: volume });
                                     await setAudioEffectVolume(volume);
                                 }
 
                                 clickAudioEffect();
-                            }} children={<Image source={require('./assets/modalFiles/arrow-right.png')}/>}/>
+                            }} children = {<Image source = {require('./assets/modalFiles/arrow-right.png')} />} />
                         </View>
                     </View>
 
-                    <View style={styles.modalSettingItem}>
-                        <View style={styles.modalSettingsTitleBox}>
-                            <Text style={[styles.modalSettingsTitle]}>Громкость музыки</Text>
+                    <View style = {styles.modalSettingItem}>
+                        <View style = {styles.modalSettingsTitleBox}>
+                            <Text style = {[styles.modalSettingsTitle]}>Громкость музыки</Text>
                         </View>
-                        <View style={{
+                        <View style = {{
                             flexDirection: 'row', height: '50%', justifyContent: 'center', alignItems: 'center'
                         }}>
-                            <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
+                            <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 // DONT TOUCH IF STATEMENT
                                 let volume = HeroStatusBar.state.soundVolume;
-                                if(volume >= 0.01 && volume <= 1.1) {
+                                if (volume >= 0.01 && volume <= 1.1) {
                                     volume = parseFloat((volume - 0.1).toFixed(1));
                                     this.setState({ soundVolume: volume });
                                     this._musicController.setPlaybackVolume(volume);
                                 }
 
                                 clickAudioEffect();
-                            }} children={<Image source={require('./assets/modalFiles/arrow-left.png')}/>}/>
-                            <Text style={styles.modalSettingNumber}>{HeroStatusBar.state.soundVolume * 100}</Text>
-                            <TouchableOpacity style={styles.modalSettingArrow} onPress={async() => {
+                            }} children = {<Image source = {require('./assets/modalFiles/arrow-left.png')} />} />
+                            <Text style = {styles.modalSettingNumber}>{HeroStatusBar.state.soundVolume * 100}</Text>
+                            <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 // DONT TOUCH IF STATEMENT
                                 let volume = HeroStatusBar.state.soundVolume;
-                                if(volume >= 0 && volume <= 0.9) {
+                                if (volume >= 0 && volume <= 0.9) {
                                     volume = parseFloat((volume + 0.1).toFixed(1));
                                     this.setState({ soundVolume: volume });
                                     this._musicController.setPlaybackVolume(volume);
                                 }
 
                                 clickAudioEffect();
-                            }} children={<Image source={require('./assets/modalFiles/arrow-right.png')}/>}/>
+                            }} children = {<Image source = {require('./assets/modalFiles/arrow-right.png')} />} />
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.modalExitButton} onPress={() => {
+                    <TouchableOpacity style = {styles.modalExitButton} onPress = {() => {
                         clickAudioEffect();
                         BackHandler.exitApp();
                     }}>
-                        <Text style={styles.modalExitButtonText}>кароче типа выйти</Text>
+                        <Text style = {styles.modalExitButtonText}>кароче типа выйти</Text>
                     </TouchableOpacity>
                 </TouchableOpacity>
             </TouchableOpacity>
@@ -298,25 +298,25 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     }
 
     _statsModal(statsItems: JSX.Element[]): JSX.Element {
-        return (<Modal animationType='fade'
-                       transparent={true}
-                       visible={HeroStatusBar.state.statsModalVisible}
-                       onRequestClose={() => {
+        return (<Modal animationType = 'fade'
+                       transparent = {true}
+                       visible = {HeroStatusBar.state.statsModalVisible}
+                       onRequestClose = {() => {
                            this.setState({ statsModalVisible: false })
                        }}>
-            <TouchableOpacity style={styles.modalContainer} activeOpacity={1} onPress={() => {
+            <TouchableOpacity style = {styles.modalContainer} activeOpacity = {1} onPress = {() => {
                 this.setState({ statsModalVisible: false })
             }}>
-                <TouchableOpacity style={[styles.modalView, { height: '87%' }]} activeOpacity={1}>
-                    <Text style={[styles.modalTitle]}>Состояние {"\n"} героя</Text>
+                <TouchableOpacity style = {[styles.modalView, { height: '87%' }]} activeOpacity = {1}>
+                    <Text style = {[styles.modalTitle]}>Состояние {"\n"} героя</Text>
 
-                    <View style={{ justifyContent: "center", alignItems: 'center' }}>{statsItems}</View>
+                    <View style = {{ justifyContent: "center", alignItems: 'center' }}>{statsItems}</View>
 
-                    <TouchableOpacity style={styles.modalExitButton} onPress={() => {
+                    <TouchableOpacity style = {styles.modalExitButton} onPress = {() => {
                         this.setState({ statsModalVisible: false });
                         clickAudioEffect();
                     }}>
-                        <Text style={styles.modalExitButtonText}>Назад</Text>
+                        <Text style = {styles.modalExitButtonText}>Назад</Text>
                     </TouchableOpacity>
                 </TouchableOpacity>
             </TouchableOpacity>
@@ -326,71 +326,72 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     render(): JSX.Element {
         let statusBarItems: JSX.Element[] = [];
 
-        for(let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
-            statusBarItems.push(<TouchableOpacity onPress={() => {}}
-                                                  style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color]}
-                                                  activeOpacity={1}
-                                                  key={key}>
-                <Image source={value.link}/>
+        for (let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
+            statusBarItems.push(<TouchableOpacity onPress = {() => {
+            }}
+                                                  style = {[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color]}
+                                                  activeOpacity = {1}
+                                                  key = {key}>
+                <Image source = {value.link} />
             </TouchableOpacity>);
         }
 
         let statsItems: JSX.Element[] = [];
 
-        for(let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
-            statsItems.push(<View style={{ flexDirection: 'row', marginBottom: 30 }} key={key}>
+        for (let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
+            statsItems.push(<View style = {{ flexDirection: 'row', marginBottom: 30 }} key = {key}>
                 <View
-                    style={[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color, { marginRight: 0 }]}>
-                    <Image source={value.link}/>
+                    style = {[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color, { marginRight: 0 }]}>
+                    <Image source = {value.link} />
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                    <Text style={styles.modalStatePropName}>{value.name}: </Text>
-                    <Text style={styles.modalStatePropNumber}>{value.currentState}%</Text>
+                <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                    <Text style = {styles.modalStatePropName}>{value.name}: </Text>
+                    <Text style = {styles.modalStatePropNumber}>{value.currentState}%</Text>
                 </View>
             </View>);
         }
 
-        statsItems.push(<View style={{ flexDirection: 'row', marginBottom: 30 }} key={123}>
-            <View style={[styles.iconStyleSubMenu, { marginRight: 0 }]}>
-                <Image source={HeroStatusBar.state._money.link}/>
+        statsItems.push(<View style = {{ flexDirection: 'row', marginBottom: 30 }} key = {123}>
+            <View style = {[styles.iconStyleSubMenu, { marginRight: 0 }]}>
+                <Image source = {HeroStatusBar.state._money.link} />
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                <Text style={styles.modalStatePropName}>{HeroStatusBar.state._money.name}: </Text>
-                <Text style={styles.modalStatePropNumber}>{HeroStatusBar.state._money.currentState}</Text>
+            <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                <Text style = {styles.modalStatePropName}>{HeroStatusBar.state._money.name}: </Text>
+                <Text style = {styles.modalStatePropNumber}>{HeroStatusBar.state._money.currentState}</Text>
             </View>
         </View>);
 
-        statsItems.push(<View style={{ flexDirection: 'row' }} key={124}>
-            <View style={[styles.iconStyleSubMenu, { marginRight: 0 }]}>
-                <Image source={require('./assets/lvl-icon.png')}/>
+        statsItems.push(<View style = {{ flexDirection: 'row' }} key = {124}>
+            <View style = {[styles.iconStyleSubMenu, { marginRight: 0 }]}>
+                <Image source = {require('./assets/lvl-icon.png')} />
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
-                <Text style={styles.modalStatePropName}>Уровень {HeroStatusBar.state.level.number}: </Text>
-                <Text style={styles.modalStatePropNumber}>{HeroStatusBar.state.level.exp} exp</Text>
+            <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                <Text style = {styles.modalStatePropName}>Уровень {HeroStatusBar.state.level.number}: </Text>
+                <Text style = {styles.modalStatePropNumber}>{HeroStatusBar.state.level.exp} exp</Text>
             </View>
         </View>);
 
         return (<View
-            style={Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null}>
+            style = {Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null}>
             {this._settingsModal()}
             {this._statsModal(statsItems)}
 
-            <View style={styles.StatusBar}>
-                <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]} onPress={() => {
+            <View style = {styles.StatusBar}>
+                <TouchableOpacity style = {[styles.iconStyle, styles.defaultMargin]} onPress = {() => {
                     this.setState({ statsModalVisible: true });
                     clickAudioEffect();
                 }}>
-                    <Text style={styles.levelText}>{HeroStatusBar.state.level.number}</Text>
+                    <Text style = {styles.levelText}>{HeroStatusBar.state.level.number}</Text>
                 </TouchableOpacity>
 
-                <View style={[styles.StatusBarSubMenu, styles.defaultMargin]}>
+                <View style = {[styles.StatusBarSubMenu, styles.defaultMargin]}>
                     {statusBarItems}
                 </View>
 
-                <TouchableOpacity style={[styles.iconStyle, styles.defaultMargin]} onPress={() => {
+                <TouchableOpacity style = {[styles.iconStyle, styles.defaultMargin]} onPress = {() => {
                     this.setState({ settingsModalVisible: true });
                 }}>
-                    <Image source={require('./assets/settings.png')}/>
+                    <Image source = {require('./assets/settings.png')} />
                 </TouchableOpacity>
             </View>
         </View>);

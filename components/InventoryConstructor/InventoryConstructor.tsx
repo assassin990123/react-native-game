@@ -9,7 +9,7 @@ import { styles } from './styles';
 const { height } = Dimensions.get('screen');
 
 
-interface ItemInfo {
+interface ItemInfo { // TODO: extend this [add buff/debuff name].
     title: string,
     desc:  string,
     buffs: number,
