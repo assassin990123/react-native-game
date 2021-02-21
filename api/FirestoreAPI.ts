@@ -13,7 +13,14 @@ import { ShopItem } from 'api/ShopItemsAPI';
 
 
 type User = {
-    name: string, skinName: string, money: number, eatPoints: number, clearPoints: number, moodPoints: number, sleepPoints: number,
+    name: string,
+    skinName: string,
+    money: number,
+    eatPoints: number,
+    clearPoints: number,
+    moodPoints: number,
+    sleepPoints: number,
+    xp: number,
 
     inv: {
         items: ShopItem[]
@@ -31,7 +38,7 @@ export default class FirestoreAPI {
     private _collectionName: string = '';
 
     private _defaultUserProps: User = {
-        name: '', skinName: '', money: 0, eatPoints: 100, clearPoints: 100, moodPoints: 100, sleepPoints: 100, inv: {
+        name: '', skinName: '', money: 0, xp: 0, eatPoints: 100, clearPoints: 100, moodPoints: 100, sleepPoints: 100, inv: {
             items: []
         }
     };
@@ -58,7 +65,8 @@ export default class FirestoreAPI {
                             name: doc.name,
                             skinName: doc.skinName,
                             money: doc.money,
-                            inv: doc.inv
+                            inv: doc.inv,
+                            xp: doc.xp
                         }
                     });
                 });
@@ -93,6 +101,7 @@ export default class FirestoreAPI {
                     clearPoints: snapData.clearPoints,
                     moodPoints: snapData.moodPoints,
                     sleepPoints: snapData.sleepPoints,
+                    xp: snapData.xp
                 };
 
             } else {
