@@ -12,6 +12,7 @@ import Duck                             from './Duck';
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
+import EndGameModal from "../EndGameModal";
 
 
 export default class Ducks extends Component {
@@ -20,7 +21,10 @@ export default class Ducks extends Component {
     props:     any;
 
     state = {
-       running: true,
+        running: true,
+        win: false,
+        scorePoints: 0,
+        update: (points: number) => { this.setState({...this.state, win: true, scorePoints: points}); }
     }
 
     constructor(props: any) {
@@ -44,9 +48,17 @@ export default class Ducks extends Component {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
+    componentWillUnmount() {
+        console.log(`[Ducks game] -> Score := ${this.state.scorePoints}`);
+        console.log(`[Ducks game] -> Finish [${this.state.win}]`);
+    }
+
     render() {
         return (
             <View>
+                <View>
+                    <EndGameModal money={0} xp={this.state.scorePoints} win={this.state.win} />
+                </View>
                 <View>
                     <ImageBackground source={require('./assets/Back.png')} style={{width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>
                         <View style = {{justifyContent: "center", width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>
@@ -89,7 +101,8 @@ export default class Ducks extends Component {
                                         },
                                         renderer:  <Duck/>
                                     },
-                                    points: { score: 0, counting: true }
+                                    points: { score: 0, counting: true },
+                                    state: this.state
                                 }}
 
                                 onEvent = { this.onEvent }

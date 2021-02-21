@@ -1,71 +1,89 @@
-import React, { Component }                              from 'react';
-import { Actions }                                       from "react-native-router-flux";
+import React, { Component } from 'react';
+import { Actions } from "react-native-router-flux";
 import { View, TouchableOpacity, ImageBackground, Text } from 'react-native';
-import { GameEngine }                                    from 'react-native-game-engine';
+import { GameEngine } from 'react-native-game-engine';
 
-import Aim           from './Aim';
-import Dart          from './Dart';
-import { GameLoop }  from './GameLoop';
+import Aim from './Aim';
+import Dart from './Dart';
+import { GameLoop } from './GameLoop';
 import { Constants } from '../Constants';
 
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
+import EndGameModal from "../EndGameModal";
 
 
 export default class Darts extends Component {
     engine: any = null;
 
     state = {
-        running: true
+        running: true, win: false, scorePoints: 0, update: (points: number) => {
+            this.setState({ ...this.state, win: true, scorePoints: points });
+        }
     }
 
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
     }
 
-    onEvent(e:any) {
+    onEvent(e: any) {
         if (e.type === "game-over") {
             alert("Game Over");
             this.setState({
-                running: false
+                running: false, win: true
             });
         }
     }
 
-    randomBetween(min:any, max:any) {
-        return Math.floor(Math.random() *  (max - min + 1) + min);
+    randomBetween(min: any, max: any) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    componentWillUnmount() {
+        console.log(`[Dart game] -> Score := ${this.state.scorePoints}`);
+        console.log(`[Dart game] -> Finish [${this.state.win}]`);
     }
 
     render() {
-        return (
-            <View>
+        return (<View>
                 <View>
-                    <TouchableOpacity onPress={() => { this.engine.dispatch({type: 'next-state'})}} activeOpacity = {1}>
-                        <ImageBackground source={require('./assets/Back.png')} style={{width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>
-                            <View style = {{justifyContent: "center"}}>
-                                <ImageBackground source={require('./assets/Board.png')} style={{flexDirection: 'column', width: Constants.MIN_SIDE *0.9, height: Constants.MIN_SIDE *0.9, left: Constants.MIN_SIDE * 0.05, top: Constants.MAX_HEIGHT * 0.2 }}>
+                    <EndGameModal money = {100} xp = {this.state.scorePoints} win = {this.state.win} />
+                </View>
+                <View>
+                    <TouchableOpacity onPress = {() => {
+                        this.engine.dispatch({ type: 'next-state' })
+                    }} activeOpacity = {1}>
+                        <ImageBackground source = {require('./assets/Back.png')}
+                                         style = {{ width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT }}>
+                            <View style = {{ justifyContent: "center" }}>
+                                <ImageBackground source = {require('./assets/Board.png')} style = {{
+                                    flexDirection: 'column',
+                                    width: Constants.MIN_SIDE * 0.9,
+                                    height: Constants.MIN_SIDE * 0.9,
+                                    left: Constants.MIN_SIDE * 0.05,
+                                    top: Constants.MAX_HEIGHT * 0.2
+                                }}>
                                     <GameEngine
-                                        ref = {(ref) => {this.engine = ref}}
-                                        systems = {[ GameLoop ]}
+                                        ref = {(ref) => {
+                                            this.engine = ref
+                                        }}
+                                        systems = {[GameLoop]}
                                         entities = {{
                                             aim: {
-                                                position: [25,25],
+                                                position: [25, 25],
                                                 speed: 1,
                                                 xDirection: true,
                                                 yDirection: true,
                                                 state: 0,
                                                 size: Constants.DART_SIZE,
                                                 renderState: false,
-                                                renderer: <Aim/>},
-                                            points: {
-                                                score: 0,
-                                                counting: true
-                                            },
-                                            dart: {
-                                                elements: [],
-                                                renderer: <Dart/>
-                                            }
+                                                renderer: <Aim />
+                                            }, points: {
+                                                score: 0, counting: true
+                                            }, dart: {
+                                                elements: [], renderer: <Dart />
+                                            }, state: this.state
                                         }}
 
                                         onEvent = {this.onEvent}
@@ -73,18 +91,21 @@ export default class Darts extends Component {
                                     />
                                 </ImageBackground>
                             </View>
-                            <TouchableOpacity onPress={() => {
+                            <TouchableOpacity onPress = {() => {
                                 Actions.pop();
                                 clickAudioEffect();
                             }}
-                                              style={style.button}
-                                              activeOpacity={1}>
-                                <Text style = {{ fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white' }}>Назад</Text>
+                                              style = {style.button}
+                                              activeOpacity = {1}>
+                                <Text style = {{
+                                    fontFamily: 'Montserrat-SemiBold',
+                                    fontSize: 20,
+                                    color: 'white'
+                                }}>Назад</Text>
                             </TouchableOpacity>
                         </ImageBackground>
                     </TouchableOpacity>
                 </View>
-            </View>
-        );
+            </View>);
     }
 }

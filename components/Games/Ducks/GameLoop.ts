@@ -15,6 +15,13 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
     const duck = entities.duck;
     const points = entities.points;
 
+    let state = entities.state;
+
+    if (projectile.amount == 0) {
+        state.win = true;
+        state.update(points.score);
+    }
+
     if (projectile.amount !== 0){
         let startPos =  projectile.startPos;
         let endPos =  projectile.endPos;
@@ -115,7 +122,7 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
                 points.score += 10;
             }
 
-            console.log("[Ducks game] -> Score := " + points.score);
+            // console.log("[Ducks game] -> Score := " + points.score);
 
             if (projectile.amount !== 1){
                 projectile.position.x = 25;
