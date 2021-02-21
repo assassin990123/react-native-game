@@ -93,7 +93,6 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
                     if (clearPoint != null && +clearPoint > 0) {
                         AsyncStorage.setItem("clearPoints", String(+clearPoint - 5));
-                        AsyncStorage.getItem("clearPoints").then(res => console.log(res));
 
                         HeroStatusBar.state._icons.cleanness.currentState = +clearPoint - 5;
                         HeroStatusBar.instance?.forceUpdate();
@@ -108,7 +107,6 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
                     if (sleepPoints != null && +sleepPoints > 0) {
                         AsyncStorage.setItem("sleepPoints", String(+sleepPoints - 5));
-                        AsyncStorage.getItem("sleepPoints").then(res => console.log(res));
 
                         HeroStatusBar.state._icons.sleep.currentState = +sleepPoints - 5;
                         HeroStatusBar.instance?.forceUpdate();
@@ -123,7 +121,6 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
                     if (moodPoints != null && +moodPoints > 0) {
                         AsyncStorage.setItem("moodPoints", String(+moodPoints - 5));
-                        AsyncStorage.getItem("moodPoints").then(res => console.log(res));
 
                         HeroStatusBar.state._icons.mood.currentState = +moodPoints - 5;
                         HeroStatusBar.instance?.forceUpdate();
@@ -138,7 +135,6 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
                     if (eatPoint != null && +eatPoint > 0) {
                         AsyncStorage.setItem("eatPoints", String(+eatPoint - 5));
-                        AsyncStorage.getItem("eatPoints").then(res => console.log(res));
 
                         HeroStatusBar.state._icons.satiety.currentState = +eatPoint - 5;
                         HeroStatusBar.instance?.forceUpdate();
