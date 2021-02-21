@@ -18,8 +18,7 @@ export default class Headphones extends Component {
     state = {
         running: true, entities: {
             node: {
-                elements: [], length: 15, filled: false, el: -1, intersect: true,
-                // @ts-ignore
+                elements: [], length: 15, filled: false, el: -1, intersect: true, // @ts-ignore
                 renderer: <Node />
             }, state: { win: false }, update: () => {
                 this.setState({ entities: { state: { win: true } } });
@@ -50,41 +49,39 @@ export default class Headphones extends Component {
 
     render() {
         return (<View>
-                <View>
-                    <EndGameModal xp = {100} money = {100} win = {this.state.entities.state.win} />
-                </View>
-                <View>
-                    <ImageBackground source = {require('./assets/Back.png')}
-                                     style = {{ width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT }}>
-                        <View style = {{
-                            justifyContent: "center",
-                            width: Constants.MAX_WIDTH,
-                            height: Constants.MAX_HEIGHT
-                        }}>
-                            <GameEngine
-                                ref = {(ref) => {
-                                    this.engine = ref
-                                }}
-                                systems = {[GameLoop]}
-                                entities = {this.state.entities}
-                                onEvent = {this.onEvent}
-                                running = {this.state.running}
-                            />
-                            <TouchableOpacity onPress = {() => {
-                                Actions.pop();
-                                clickAudioEffect();
+            <View>
+                <EndGameModal xp = {Math.ceil(50 / 10)}
+                              money = {Math.ceil(50 / 10)}
+                              win = {this.state.entities.state.win} />
+            </View>
+            <View>
+                <ImageBackground source = {require('./assets/Back.png')}
+                                 style = {{ width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT }}>
+                    <View style = {{
+                        justifyContent: "center", width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT
+                    }}>
+                        <GameEngine
+                            ref = {(ref) => {
+                                this.engine = ref
                             }}
-                                              style = {style.button}
-                                              activeOpacity = {1}>
-                                <Text style = {{
-                                    fontFamily: 'Montserrat-SemiBold',
-                                    fontSize: 20,
-                                    color: 'white'
-                                }}>Назад</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </ImageBackground>
-                </View>
-            </View>);
+                            systems = {[GameLoop]}
+                            entities = {this.state.entities}
+                            onEvent = {this.onEvent}
+                            running = {this.state.running}
+                        />
+                        <TouchableOpacity onPress = {() => {
+                            Actions.pop();
+                            clickAudioEffect();
+                        }}
+                                          style = {style.button}
+                                          activeOpacity = {1}>
+                            <Text style = {{
+                                fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white'
+                            }}>Назад</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+            </View>
+        </View>);
     }
 }

@@ -57,7 +57,7 @@ export default class Ducks extends Component {
         return (
             <View>
                 <View>
-                    <EndGameModal money={0} xp={this.state.scorePoints} win={this.state.win} />
+                    <EndGameModal money={Math.ceil(10 * this.state.scorePoints / 16)} xp={Math.ceil(10 * this.state.scorePoints / 16)} win={this.state.win} />
                 </View>
                 <View>
                     <ImageBackground source={require('./assets/Back.png')} style={{width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT}}>

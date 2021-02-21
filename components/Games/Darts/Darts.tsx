@@ -48,7 +48,7 @@ export default class Darts extends Component {
     render() {
         return (<View>
                 <View>
-                    <EndGameModal money = {100} xp = {this.state.scorePoints} win = {this.state.win} />
+                    <EndGameModal money = {Math.ceil(10 * this.state.scorePoints / 14)} xp = {Math.ceil(10 * this.state.scorePoints / 14)} win = {this.state.win} />
                 </View>
                 <View>
                     <TouchableOpacity onPress = {() => {

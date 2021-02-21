@@ -83,9 +83,9 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
             }
         }
 
-        if ( !win) {
+        if (!win) {
             state.win = true;
-            state.update(20);
+            state.update(100);
         }
     }
 

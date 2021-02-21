@@ -52,48 +52,49 @@ export default class Tower extends Component {
 
     render() {
         return (<View>
-                <View>
-                    <EndGameModal money = {0} xp = {this.state.scorePoints} win = {this.state.win} />
-                </View>
-                <ImageBackground source = {require('./Back.png')}
-                                 style = {{ width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT }}>
-                    <View style = {{
-                        justifyContent: "center", width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT
-                    }}>
-                        <GameEngine
-                            ref = {(ref) => {
-                                this.engine = ref
-                            }}
-                            systems = {[GameLoop]}
-                            entities = {{
-                                block: {
-                                    elements: [[], [], []],
-                                    n: 2,
-                                    filled: false,
-                                    startPos: { x: 0, y: 0 },
-                                    ely: -1,
-                                    elx: -1,
-                                    renderer: <Block />
-                                },
-
-                                axis: { renderer: <Axis /> }, state: this.state
-                            }}
-                            onEvent = {this.onEvent}
-                            running = {this.state.running}
-                        />
-                        <TouchableOpacity onPress = {() => {
-                            Actions.pop();
-                            clickAudioEffect();
+            <View>
+                <EndGameModal money = {Math.ceil(10 * this.state.scorePoints / 5)}
+                              xp = {Math.ceil(10 * this.state.scorePoints / 5)} win = {this.state.win} />
+            </View>
+            <ImageBackground source = {require('./Back.png')}
+                             style = {{ width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT }}>
+                <View style = {{
+                    justifyContent: "center", width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT
+                }}>
+                    <GameEngine
+                        ref = {(ref) => {
+                            this.engine = ref
                         }}
-                                          style = {style.button}
-                                          activeOpacity = {1}>
-                            <Text style = {{
-                                fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white'
-                            }}>Назад</Text>
-                        </TouchableOpacity>
-                    </View>
-                </ImageBackground>
-            </View>);
+                        systems = {[GameLoop]}
+                        entities = {{
+                            block: {
+                                elements: [[], [], []],
+                                n: 7,
+                                filled: false,
+                                startPos: { x: 0, y: 0 },
+                                ely: -1,
+                                elx: -1,
+                                renderer: <Block />
+                            },
+
+                            axis: { renderer: <Axis /> }, state: this.state
+                        }}
+                        onEvent = {this.onEvent}
+                        running = {this.state.running}
+                    />
+                    <TouchableOpacity onPress = {() => {
+                        Actions.pop();
+                        clickAudioEffect();
+                    }}
+                                      style = {style.button}
+                                      activeOpacity = {1}>
+                        <Text style = {{
+                            fontFamily: 'Montserrat-SemiBold', fontSize: 20, color: 'white'
+                        }}>Назад</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
+        </View>);
     }
 }
   

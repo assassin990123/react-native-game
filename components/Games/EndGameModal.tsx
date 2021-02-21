@@ -3,6 +3,8 @@ import { styles } from "../CharacterMenu/styles";
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 import React, { Component } from "react";
 import { Actions } from "react-native-router-flux";
+import AsyncStorage from "@react-native-community/async-storage";
+import FirestoreAPI from "../../api/FirestoreAPI";
 
 
 interface Data {
@@ -12,13 +14,34 @@ interface Data {
 }
 
 export default class EndGameModal extends Component<Data> {
-    constructor(props: any) {
-        super(props);
-    }
-
     state = {
         modalVisible: true
     };
+
+    firestore: FirestoreAPI;
+
+    constructor(props: any) {
+        super(props);
+
+        this.firestore = new FirestoreAPI();
+    }
+
+
+    _addPointsForWinning(xpValue: number, money: number) {
+        this.firestore.getUserFields("+79991774634")
+            .then(async data => {
+                if (data == undefined) {
+                    console.warn("[EndGameModal] -> Cant get user fields from db!");
+                    return;
+                }
+
+                await AsyncStorage.setItem("xp", (data.xp + xpValue).toString());
+                await AsyncStorage.setItem("money", (data.money + money).toString());
+
+                await this.firestore.setUserFields("+79991774634", {money: data.money + money});
+                await this.firestore.setUserFields("+79991774634", {xp: data.xp + xpValue});
+            });
+    }
 
     render() {
         return (
@@ -39,6 +62,8 @@ export default class EndGameModal extends Component<Data> {
                                 style={[{backgroundColor: '#128949'}, styles.modalButton]}
                                 onPress={() => {
                                     this.setState({modalVisible: false});
+                                    this._addPointsForWinning(this.props.xp, this.props.money);
+
                                     clickAudioEffect();
                                     Actions.pop();
                                 }}

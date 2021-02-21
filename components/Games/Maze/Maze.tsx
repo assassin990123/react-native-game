@@ -58,7 +58,7 @@ export default class Maze extends Component<IMazeGame> {
     render() {
         return (<View>
                 <View>
-                    <EndGameModal money = {0} xp = {this.state.scorePoints} win = {this.state.win} />
+                    <EndGameModal money = {Math.ceil(8 * this.state.scorePoints / 10)} xp = {Math.ceil(8 * this.state.scorePoints / 10)} win = {this.state.win} />
                 </View>
                 <ImageBackground source = {require('./assets/Back.png')}
                                  style = {{ width: Constants.MAX_WIDTH, height: Constants.MAX_HEIGHT }}>

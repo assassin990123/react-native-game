@@ -67,7 +67,7 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
 
         if (distance(hero.position.x, hero.position.y, finish.position.x, finish.position.y) < 0.7 + 5) {
             state.win = true;
-            state.score = 10;
+            state.score = 50;
             state.update(state.score);
         }
     }
