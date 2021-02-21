@@ -40,6 +40,18 @@ export default class EndGameModal extends Component<Data> {
 
                 await this.firestore.setUserFields("+79991774634", {money: data.money + money});
                 await this.firestore.setUserFields("+79991774634", {xp: data.xp + xpValue});
+
+                AsyncStorage.getItem("moodPoints")
+                    .then((moodPoints) => {
+                        console.log("mood Point now grow -> " + moodPoints);
+
+                        if (moodPoints != null && +moodPoints < 100) {
+                            let _additionalVal: number = (100 - +moodPoints < 10) ? (100 - +moodPoints) : 10;
+
+                            AsyncStorage.setItem("moodPoints", String(+moodPoints + _additionalVal));
+                            this.firestore.setUserFields("+79991774634", { moodPoints: +moodPoints + _additionalVal });
+                        }
+                    });
             });
     }
 
