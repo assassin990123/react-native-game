@@ -6,11 +6,20 @@ import ShopItemsAPI from 'api/ShopItemsAPI';
 
 interface ItemInfo {
     id: number,
-    title: string,
-    desc: string,
-    buffs: number,
-    debuf: number,
-    price: number
+
+    name: string,
+    price: number,
+    disc: string,
+    room: string,
+
+    buff: {
+        needBuffName: string,
+        buffScale: number,
+    },
+    debuff: {
+        needDebuffName: string,
+        debuffScale: number
+    }
 }
 
 
@@ -29,7 +38,16 @@ export default class ShopComponent extends Component {
         await this.api.getShopItems().then(res => {
             for (let key in res) {
                 const val = res[key];
-                this.data.push({ id: val.id, title: val.name, desc: val.disc, price: val.price, buffs: 0, debuf: 0 });
+
+                this.data.push({
+                    id: val.id,
+                    name: val.name,
+                    disc: val.disc,
+                    price: val.price,
+                    room: val.room,
+                    buff: { needBuffName: val.buff.needBuffName, buffScale: val.buff.buffScale },
+                    debuff: { needDebuffName: val.debuff.needDebuffName, debuffScale: val.debuff.debuffScale }
+                });
             }
         });
 

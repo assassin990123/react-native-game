@@ -9,13 +9,22 @@ import { styles } from './styles';
 const { height } = Dimensions.get('screen');
 
 
-interface ItemInfo { // TODO: extend this [add buff/debuff name].
+interface ItemInfo {
     id: number,
-    title: string,
-    desc:  string,
-    buffs: number,
-    debuf: number, 
-    price: number
+
+    name: string,
+    price: number,
+    disc: string,
+    room: string,
+
+    buff: {
+        needBuffName: string,
+        buffScale: number,
+    },
+    debuff: {
+        needDebuffName: string,
+        debuffScale: number
+    }
 }
 
 
@@ -177,11 +186,11 @@ export class InventoryConstructor extends Component<IInventoryProps> {
             <View style={styles.modalContainer}>
                 <View style={styles.modalContainer}>
                     <View style={[styles.modalView, {height: '35%'}]}>
-                        <Text style={[styles.modalTitle]}>{itemInfo.title.toLocaleUpperCase()}</Text>
+                        <Text style={[styles.modalTitle]}>{itemInfo.name.toLocaleUpperCase()}</Text>
                 
                         <View style={{flexDirection: 'row', marginBottom: 30}}>
                             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
-                                <Text style={{textAlign: 'center'}}>{itemInfo.desc}</Text>
+                                <Text style={{textAlign: 'center'}}>{itemInfo.disc}</Text>
                             </View>
                         </View>
                             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
@@ -190,12 +199,12 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                             </View>
                             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
                                 <Text style={styles.modalStatePropName}>Бафы: </Text>
-                                <Text style={styles.modalStatePropNumber}>{itemInfo.buffs.toString()}</Text>
+                                <Text style={styles.modalStatePropNumber}>{itemInfo.buff.buffScale.toString()}</Text>
                             </View>
 
                             <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: "center"}}>
                                 <Text style={styles.modalStatePropName}>Дебафы: </Text>
-                                <Text style={styles.modalStatePropNumber}>{itemInfo.debuf.toString()}</Text>
+                                <Text style={styles.modalStatePropNumber}>{itemInfo.debuff?.debuffScale.toString()}</Text>
                             </View>
                         
                         <TouchableOpacity style={[styles.modalExitButton, {height: '25%'}]} onPress={() => { this.setState({infoModalVisible: false}); clickAudioEffect(); } }>
@@ -209,7 +218,7 @@ export class InventoryConstructor extends Component<IInventoryProps> {
 
     render() {
         return (
-            <ImageBackground source={require('./assets/background.png')} style={styles.container}> 
+            <ImageBackground source={require('./assets/background.png')} style={styles.container}>
                 <View style={[styles.selector, Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null]}>
                     <Modal animationType='fade'
                         transparent={true}
@@ -252,14 +261,14 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                         data={this.data}
                         contentContainerStyle={styles.listView}
                         showsVerticalScrollIndicator={false}
-                        renderItem={({item}) => <View style={{flexDirection: 'row', width: '95%', height: height * 0.13, marginTop: 15, backgroundColor: '#F57CFF', borderRadius: 10}}> 
+                        renderItem={({item}) => <View style={{flexDirection: 'row', width: '95%', height: height * 0.13, marginTop: 15, backgroundColor: '#F57CFF', borderRadius: 10}}>
                                     <View style={{width: '20%', alignItems: 'center', justifyContent: 'center'}}>
                                         <Image source={require('./assets/balloon.png')}/>
                                     </View>
-                                    <View style={{width: '50%', justifyContent: 'center'}}> 
-                                        <Text style={styles.titleText}>{item.title}</Text>
-                                        <Text style={styles.descriprionText}>{item.desc}</Text>
-                                        <Text style={styles.effectsText}>{`-${item.debuf} чистота +${item.buffs} настроение`}</Text>
+                                    <View style={{width: '50%', justifyContent: 'center'}}>
+                                        <Text style={styles.titleText}>{item.name}</Text>
+                                        <Text style={styles.descriprionText}>{item.disc}</Text>
+                                        <Text style={styles.effectsText}>{`-${item.debuff.debuffScale} ${item.debuff.needDebuffName} +${item.buff.buffScale} ${item.buff.needBuffName}`}</Text>
                                     </View>
                                     <View style={{width: '30%'}}>
                                         { this._renderTopElement(item.price.toString()) }

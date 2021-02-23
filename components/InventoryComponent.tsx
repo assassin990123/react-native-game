@@ -1,55 +1,89 @@
 import React, { Component } from "react";
 
 import { InventoryConstructor } from './InventoryConstructor/InventoryConstructor';
+import FirestoreAPI from '../api/FirestoreAPI';
 
 
-interface ItemInfo {
-    title: string,
-    desc: string,
-    buffs: number,
-    debuf: number, 
-    price: number
+type ItemInfo = {
+    id: number,
+
+    name: string,
+    price: number,
+    disc: string,
+    room: string,
+
+    buff: {
+        needBuffName: string,
+        buffScale: number,
+    },
+    debuff: {
+        needDebuffName: string,
+        debuffScale: number
+    }
 }
 
 
-export default class ShopComponent extends Component {
+export default class InvComponent extends Component {
+    _firestore: FirestoreAPI;
+    _data: ItemInfo[];
+
+    state = {
+        data: []
+    };
+
     constructor(props: any) {
         super(props);
+
+        this._firestore = new FirestoreAPI();
+        this._data = [];
+
+        this._loadInvData();
     }
 
-    data: ItemInfo[] = [{title: 'Шарик', desc: 'Шарик', buffs: 123, debuf: -10, price: 12},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шаasdasdрик', desc: 'Шasdsadарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'Шарик', desc: 'Шарик', buffs: 10, debuf: 10, price: 10},
-                        {title: 'gfhjfghj', desc: 'Шарfhjghfjик', buffs: 10, debuf: 10, price: 10}, ];
+    _loadInvData() {
+        this._firestore.getUserFields('+79991774634').then((res) => {
+            if (res == undefined) {
+                return;
+            }
+
+            for (let obj of res.inv.items) {
+                // @ts-ignore
+                const item = obj.item;
+
+                this._data.push({
+                    id: item.id,
+                    name: item.name,
+                    disc: item.disc,
+                    price: item.price,
+                    room: item.room,
+                    buff: { needBuffName: item.buff.needBuffName, buffScale: item.buff.buffScale },
+                    debuff: { needDebuffName: item.debuff.needDebuffName, debuffScale: item.debuff.debuffScale }
+                } as ItemInfo);
+
+                this.setState({data: this._data});
+            }
+
+            for (let obj of this._data) {
+                console.log(obj);
+            }
+        });
+    }
 
     render() {
         return (
             <InventoryConstructor 
                 topElemProps = {
                     {
-                        text: 'Уничтожить',
+                        text: 'Применить',
                         handler: () => { console.log(123); }
                     }
                 }
                 bottomElemProps = {
                     { text: 'Инфо', 
-                      handler: () => { console.log(2 + 2); }
+                      handler: () => { }
                     }
                 }
-                data = { this.data }
+                data = { this._data }
             />
         );
     }
