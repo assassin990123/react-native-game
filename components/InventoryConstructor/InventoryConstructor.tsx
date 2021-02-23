@@ -10,6 +10,7 @@ const { height } = Dimensions.get('screen');
 
 
 interface ItemInfo { // TODO: extend this [add buff/debuff name].
+    id: number,
     title: string,
     desc:  string,
     buffs: number,
@@ -17,9 +18,10 @@ interface ItemInfo { // TODO: extend this [add buff/debuff name].
     price: number
 }
 
+
 export type ButtonProps = {
     text?: string,
-    handler?: () => void;
+    handler?: (id?: number) => void;
 };
 
 export interface IInventoryProps {
@@ -122,7 +124,7 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                                 }
                                 
                                 if (this._bottomButtonData.handler !== undefined){
-                                    this._bottomButtonData.handler();
+                                    this._bottomButtonData.handler(itemInfo.id);
                                 }
                                 
                                 clickAudioEffect();
