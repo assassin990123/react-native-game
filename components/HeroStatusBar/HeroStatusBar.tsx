@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Image, View, TouchableOpacity, Text, StyleSheet, Dimensions, Modal, BackHandler } from 'react-native';
 import * as Brightness from 'expo-brightness';
 
@@ -6,10 +6,10 @@ import BackgroundAudioController from 'endpoints/BackgroundAudioController';
 import { clickAudioEffect, setAudioEffectVolume } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
-import AsyncStorage from "@react-native-community/async-storage";
-import FirestoreAPI from "api/FirestoreAPI";
+import AsyncStorage from '@react-native-community/async-storage';
+import FirestoreAPI from 'api/FirestoreAPI';
 
-import EventTimersManager from "endpoints/EventTimersManager";
+import EventTimersManager from 'endpoints/EventTimersManager';
 
 /*
  *
@@ -47,7 +47,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         currentBrightness: HeroStatusBar._defaultBrightness,
         soundVolume: 1.0,
         effectsVolume: 1.0,
-        level: { number: 1, exp: 1000 }
+        level: { number: 0, exp: 0 }
     };
 
     constructor(props: any) {
@@ -57,22 +57,20 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         HeroStatusBar.instance = this;
 
         this._musicController = props.musicController;
-
         this.firestore = new FirestoreAPI();
 
-        this.firestore.getUserFields("+79991774634")
+        this.firestore.getUserFields('+79991774634')
             .then(async(data) => {
-                if (data == undefined) {
+                if ( data == undefined ) {
                     return;
                 }
 
-                await AsyncStorage.setItem("eatPoints", String(data.eatPoints));
-                await AsyncStorage.setItem("clearPoints", String(data.clearPoints));
-                await AsyncStorage.setItem("moodPoints", String(data.moodPoints));
-                await AsyncStorage.setItem("sleepPoints", String(data.sleepPoints));
+                await AsyncStorage.setItem('eatPoints', String(data.eatPoints));
+                await AsyncStorage.setItem('clearPoints', String(data.clearPoints));
+                await AsyncStorage.setItem('moodPoints', String(data.moodPoints));
+                await AsyncStorage.setItem('sleepPoints', String(data.sleepPoints));
 
-                HeroStatusBar.instance?.setState({
-                    _icons: {
+                HeroStatusBar.state._icons = {
                         ...HeroStatusBar.state._icons, satiety: {
                             ...HeroStatusBar.state._icons.satiety, currentState: data.eatPoints
                         }, sleep: {
@@ -82,72 +80,77 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         }, mood: {
                             ...HeroStatusBar.state._icons.mood, currentState: data.moodPoints
                         },
-                    }
-                });
+                };
+
+                HeroStatusBar.state._money = { ...HeroStatusBar.state._money, currentState: data.money };
+                HeroStatusBar.state.level  = { number: Math.ceil(data.xp / 1000), exp: data.xp };
+
+                await AsyncStorage.setItem('xp', (data.xp).toString());
+                await AsyncStorage.setItem('money', (data.money).toString());
             });
 
         EventTimersManager.initTimers(async() => {
-            AsyncStorage.getItem("clearPoints")
-                .then((clearPoint) => {
-                    console.log("clear Point now -> " + clearPoint);
+            AsyncStorage.getItem('clearPoints')
+                        .then((clearPoint) => {
+                            console.log('clear Point now -> ' + clearPoint);
 
-                    if (clearPoint != null && +clearPoint > 0) {
-                        AsyncStorage.setItem("clearPoints", String(+clearPoint - 5));
+                            if ( clearPoint != null && +clearPoint > 0 ) {
+                                AsyncStorage.setItem('clearPoints', String(+clearPoint - 5));
 
-                        HeroStatusBar.state._icons.cleanness.currentState = +clearPoint - 5;
-                        HeroStatusBar.instance?.forceUpdate();
+                                HeroStatusBar.state._icons.cleanness.currentState = +clearPoint - 5;
+                                HeroStatusBar.instance?.forceUpdate();
 
-                        this.firestore.setUserFields("+79991774634", { clearPoints: +clearPoint - 5 });
-                    }
-                });
+                                this.firestore.setUserFields('+79991774634', { clearPoints: +clearPoint - 5 });
+                            }
+                        });
         }, async() => {
-            AsyncStorage.getItem("sleepPoints")
-                .then((sleepPoints) => {
-                    console.log("sleep Point now -> " + sleepPoints);
+            AsyncStorage.getItem('sleepPoints')
+                        .then((sleepPoints) => {
+                            console.log('sleep Point now -> ' + sleepPoints);
 
-                    if (sleepPoints != null && +sleepPoints > 0) {
-                        AsyncStorage.setItem("sleepPoints", String(+sleepPoints - 5));
+                            if ( sleepPoints != null && +sleepPoints > 0 ) {
+                                AsyncStorage.setItem('sleepPoints', String(+sleepPoints - 5));
 
-                        HeroStatusBar.state._icons.sleep.currentState = +sleepPoints - 5;
-                        HeroStatusBar.instance?.forceUpdate();
+                                HeroStatusBar.state._icons.sleep.currentState = +sleepPoints - 5;
+                                HeroStatusBar.instance?.forceUpdate();
 
-                        this.firestore.setUserFields("+79991774634", { sleepPoints: +sleepPoints - 5 });
-                    }
-                });
+                                this.firestore.setUserFields('+79991774634', { sleepPoints: +sleepPoints - 5 });
+                            }
+                        });
         }, async() => {
-            AsyncStorage.getItem("moodPoints")
-                .then((moodPoints) => {
-                    console.log("mood Point now -> " + moodPoints);
+            AsyncStorage.getItem('moodPoints')
+                        .then((moodPoints) => {
+                            console.log('mood Point now -> ' + moodPoints);
 
-                    if (moodPoints != null && +moodPoints > 0) {
-                        AsyncStorage.setItem("moodPoints", String(+moodPoints - 5));
+                            if ( moodPoints != null && +moodPoints > 0 ) {
+                                AsyncStorage.setItem('moodPoints', String(+moodPoints - 5));
 
-                        HeroStatusBar.state._icons.mood.currentState = +moodPoints - 5;
-                        HeroStatusBar.instance?.forceUpdate();
+                                HeroStatusBar.state._icons.mood.currentState = +moodPoints - 5;
+                                HeroStatusBar.instance?.forceUpdate();
 
-                        this.firestore.setUserFields("+79991774634", { moodPoints: +moodPoints - 5 });
-                    }
-                });
+                                this.firestore.setUserFields('+79991774634', { moodPoints: +moodPoints - 5 });
+                            }
+                        });
         }, async() => {
-            AsyncStorage.getItem("eatPoints")
-                .then((eatPoint) => {
-                    console.log("eat Point now -> " + eatPoint);
+            AsyncStorage.getItem('eatPoints')
+                        .then((eatPoint) => {
+                            console.log('eat Point now -> ' + eatPoint);
 
-                    if (eatPoint != null && +eatPoint > 0) {
-                        AsyncStorage.setItem("eatPoints", String(+eatPoint - 5));
+                            if ( eatPoint != null && +eatPoint > 0 ) {
+                                AsyncStorage.setItem('eatPoints', String(+eatPoint - 5));
 
-                        HeroStatusBar.state._icons.satiety.currentState = +eatPoint - 5;
-                        HeroStatusBar.instance?.forceUpdate();
+                                HeroStatusBar.state._icons.satiety.currentState = +eatPoint - 5;
+                                HeroStatusBar.instance?.forceUpdate();
 
-                        this.firestore.setUserFields("+79991774634", { eatPoints: +eatPoint - 5 });
-                    }
-                });
+                                this.firestore.setUserFields('+79991774634', { eatPoints: +eatPoint - 5 });
+                            }
+                        });
         });
     }
 
     async componentDidMount() {
         const { status } = await Brightness.requestPermissionsAsync();
-        if (status === 'granted') {
+        if ( status === 'granted' ) {
             Brightness.getSystemBrightnessAsync().then(res => {
                 HeroStatusBar._defaultBrightness = res;
                 this._currentBrightness = res;
@@ -156,11 +159,13 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     }
 
     getCurrentColor(currentStateNum: number) {
-        if (currentStateNum <= 50) {
+        if ( currentStateNum <= 50 ) {
             return StyleSheet.create({ color: { backgroundColor: '#E23535' } });
-        } else if (currentStateNum > 50 && currentStateNum < 80) {
+        }
+        else if ( currentStateNum > 50 && currentStateNum < 80 ) {
             return StyleSheet.create({ color: { backgroundColor: '#FCB712' } });
-        } else {
+        }
+        else {
             return StyleSheet.create({ color: { backgroundColor: '#4EB734' } });
         }
     };
@@ -189,9 +194,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         }}>
                             <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 const { status } = await Brightness.requestPermissionsAsync();
-                                if (status === 'granted') {
+                                if ( status === 'granted' ) {
                                     // DONT TOUCH IF STATEMENT
-                                    if (this._currentBrightness >= 0.01 && this._currentBrightness <= 1.1) {
+                                    if ( this._currentBrightness >= 0.01 && this._currentBrightness <= 1.1 ) {
                                         this._currentBrightness = parseFloat((this._currentBrightness - 0.1).toFixed(1));
                                         await Brightness.setSystemBrightnessAsync(this._currentBrightness);
                                         HeroStatusBar.instance?.setState({ currentBrightness: this._currentBrightness });
@@ -199,14 +204,15 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 }
                                 clickAudioEffect();
                             }}
-                                              children = {<Image source = {require('./assets/modalFiles/arrow-left.png')} />} />
+                                              children = {<Image
+                                                  source = {require('./assets/modalFiles/arrow-left.png')} />} />
 
                             <Text style = {styles.modalSettingNumber}>{~~(this._currentBrightness * 100)}</Text>
                             <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 const { status } = await Brightness.requestPermissionsAsync();
-                                if (status === 'granted') {
+                                if ( status === 'granted' ) {
                                     // DONT TOUCH IF STATEMENT
-                                    if (this._currentBrightness >= 0 && this._currentBrightness <= 0.9) {
+                                    if ( this._currentBrightness >= 0 && this._currentBrightness <= 0.9 ) {
                                         this._currentBrightness = parseFloat((this._currentBrightness + 0.1).toFixed(1));
                                         await Brightness.setSystemBrightnessAsync(this._currentBrightness);
                                         HeroStatusBar.instance?.setState({ currentBrightness: this._currentBrightness });
@@ -227,7 +233,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                             <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 // DONT TOUCH IF STATEMENT
                                 let volume = HeroStatusBar.state.effectsVolume;
-                                if (volume >= 0.01 && volume <= 1.1) {
+                                if ( volume >= 0.01 && volume <= 1.1 ) {
                                     volume = parseFloat((volume - 0.1).toFixed(1));
                                     HeroStatusBar.state.effectsVolume = volume;
                                     HeroStatusBar.instance?.forceUpdate();
@@ -240,7 +246,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                             <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 // DONT TOUCH IF STATEMENT
                                 let volume = HeroStatusBar.state.effectsVolume;
-                                if (volume >= 0 && volume <= 0.9) {
+                                if ( volume >= 0 && volume <= 0.9 ) {
                                     volume = parseFloat((volume + 0.1).toFixed(1));
                                     HeroStatusBar.state.effectsVolume = volume;
                                     HeroStatusBar.instance?.forceUpdate();
@@ -262,7 +268,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                             <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 // DONT TOUCH IF STATEMENT
                                 let volume = HeroStatusBar.state.soundVolume;
-                                if (volume >= 0.01 && volume <= 1.1) {
+                                if ( volume >= 0.01 && volume <= 1.1 ) {
                                     volume = parseFloat((volume - 0.1).toFixed(1));
                                     HeroStatusBar.state.soundVolume = volume;
                                     HeroStatusBar.instance?.forceUpdate();
@@ -275,7 +281,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                             <TouchableOpacity style = {styles.modalSettingArrow} onPress = {async() => {
                                 // DONT TOUCH IF STATEMENT
                                 let volume = HeroStatusBar.state.soundVolume;
-                                if (volume >= 0 && volume <= 0.9) {
+                                if ( volume >= 0 && volume <= 0.9 ) {
                                     volume = parseFloat((volume + 0.1).toFixed(1));
                                     HeroStatusBar.state.soundVolume = volume;
                                     HeroStatusBar.instance?.forceUpdate();
@@ -310,9 +316,9 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                 HeroStatusBar.instance?.forceUpdate();
             }}>
                 <TouchableOpacity style = {[styles.modalView, { height: '87%' }]} activeOpacity = {1}>
-                    <Text style = {[styles.modalTitle]}>Состояние {"\n"} героя</Text>
+                    <Text style = {[styles.modalTitle]}>Состояние {'\n'} героя</Text>
 
-                    <View style = {{ justifyContent: "center", alignItems: 'center' }}>{statsItems}</View>
+                    <View style = {{ justifyContent: 'center', alignItems: 'center' }}>{statsItems}</View>
 
                     <TouchableOpacity style = {styles.modalExitButton} onPress = {() => {
                         clickAudioEffect();
@@ -347,7 +353,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                     style = {[styles.iconStyleSubMenu, this.getCurrentColor(value.currentState).color, { marginRight: 0 }]}>
                     <Image source = {value.link} />
                 </View>
-                <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+                <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style = {styles.modalStatePropName}>{value.name}: </Text>
                     <Text style = {styles.modalStatePropNumber}>{value.currentState}%</Text>
                 </View>
@@ -358,7 +364,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             <View style = {[styles.iconStyleSubMenu, { marginRight: 0 }]}>
                 <Image source = {HeroStatusBar.state._money.link} />
             </View>
-            <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+            <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style = {styles.modalStatePropName}>{HeroStatusBar.state._money.name}: </Text>
                 <Text style = {styles.modalStatePropNumber}>{HeroStatusBar.state._money.currentState}</Text>
             </View>
@@ -368,7 +374,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             <View style = {[styles.iconStyleSubMenu, { marginRight: 0 }]}>
                 <Image source = {require('./assets/lvl-icon.png')} />
             </View>
-            <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: "center" }}>
+            <View style = {{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <Text style = {styles.modalStatePropName}>Уровень {HeroStatusBar.state.level.number}: </Text>
                 <Text style = {styles.modalStatePropNumber}>{HeroStatusBar.state.level.exp} exp</Text>
             </View>
