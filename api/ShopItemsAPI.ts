@@ -16,20 +16,44 @@ export type ShopItem = {
     disc: string,
     room: string,
 
-    buff?: {
-        needBuffName?: string,
-        buffScale?: number,
+    buff: {
+        needBuffName: string,
+        buffScale: number,
     },
-    debuff?: {
-        needDebuffName?: string,
-        debuffScale?: number
+    debuff: {
+        needDebuffName: string,
+        debuffScale: number
     }
 };
 
 const data: ShopItem[] = [
-    { id: 0, name: '123', price: 10, disc: 'POSOSI OK1??7?', room: '123' },
-    { id: 1, name: '123', price: 10, disc: 'POSOSI OK2??7?', room: '123' },
-    { id: 2, name: '123', price: 10, disc: 'POSOSI OK3??7?', room: '123' },
+    {
+        id: 0,
+        name: '123',
+        price: 10,
+        disc: 'POSOSI OK1??7?',
+        room: '123',
+        buff: { needBuffName: 'настроение', buffScale: 6 },
+        debuff: { needDebuffName: 'еда', debuffScale: 3 }
+    },
+    {
+        id: 1,
+        name: '123',
+        price: 10,
+        disc: 'POSOSI OK2??7?',
+        room: '123',
+        buff: { needBuffName: 'еда', buffScale: 10 },
+        debuff: { needDebuffName: 'чистота', debuffScale: 2 }
+    },
+    {
+        id: 2,
+        name: '123',
+        price: 10,
+        disc: 'POSOSI OK3??7?',
+        room: '123',
+        buff: { needBuffName: 'чистота', buffScale: 12 },
+        debuff: { needDebuffName: 'настроение', debuffScale: 5 }
+    },
 ];
 
 export default class ShopItemsAPI extends FirestoreAPI {
@@ -51,13 +75,14 @@ export default class ShopItemsAPI extends FirestoreAPI {
     async initShopItems(): Promise<boolean | undefined> {
         const shopItemsRef = firestore.collection(this._shopCollectionName).doc(this._itemsDocName);
 
-        return await shopItemsRef.get().then(() => {
-            for (let [key, value] of Object.entries(data)) {
-                shopItemsRef.set({ [key]: value }, { merge: true });
-            }
+        return await shopItemsRef.get()
+                                 .then(() => {
+                                     for (let [key, value] of Object.entries(data)) {
+                                         shopItemsRef.set({ [key]: value }, { merge: true });
+                                     }
 
-            return true;
-        })
+                                     return true;
+                                 })
                                  .catch((err: any) => {
                                      console.error('[fireStoreAPT] -> Error: cant get document', err);
                                      return undefined;

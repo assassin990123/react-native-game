@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 import { InventoryConstructor } from './InventoryConstructor/InventoryConstructor';
-import FirestoreAPI from '../api/FirestoreAPI';
+import FirestoreAPI from 'api/FirestoreAPI';
 
 
 type ItemInfo = {
@@ -42,7 +42,7 @@ export default class InvComponent extends Component {
 
     _loadInvData() {
         this._firestore.getUserFields('+79991774634').then((res) => {
-            if (res == undefined) {
+            if ( res == undefined ) {
                 return;
             }
 
@@ -60,30 +60,30 @@ export default class InvComponent extends Component {
                     debuff: { needDebuffName: item.debuff.needDebuffName, debuffScale: item.debuff.debuffScale }
                 } as ItemInfo);
 
-                this.setState({data: this._data});
-            }
-
-            for (let obj of this._data) {
-                console.log(obj);
+                this.setState({ data: this._data });
             }
         });
     }
 
     render() {
         return (
-            <InventoryConstructor 
+            <InventoryConstructor
                 topElemProps = {
                     {
                         text: 'Применить',
-                        handler: () => { console.log(123); }
+                        handler: () => {
+                            console.log(123);
+                        }
                     }
                 }
                 bottomElemProps = {
-                    { text: 'Инфо', 
-                      handler: () => { }
+                    {
+                        text: 'Инфо',
+                        handler: () => {
+                        }
                     }
                 }
-                data = { this._data }
+                data = {this._data}
             />
         );
     }
