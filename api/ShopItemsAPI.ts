@@ -1,5 +1,6 @@
 import firestore from './FirestoreInit';
 import FirestoreAPI from 'api/FirestoreAPI';
+import AsyncStorage from "@react-native-community/async-storage";
 
 /*
  *
@@ -117,8 +118,16 @@ export default class ShopItemsAPI extends FirestoreAPI {
         });
 
         if ( await this.isValidId(itemId) ) {
-            this._getItemDataByID(itemId).then(item => {
-                super.setUserFields('+79991774634', { inv: { items: invRes.concat([{ item: item }]) } }, 'users_data').then();
+            this._getItemDataByID(itemId).then(async item => {
+                const data = await super.getUserFields('+79991774634');
+                if (data == null) {
+                    return;
+                }
+
+                if (data.money >= item.price) {
+                    await super.setUserFields('+79991774634', { inv: { items: invRes.concat([{ item: item }]) }, money: data.money - item.price }, 'users_data');
+                    await AsyncStorage.setItem('money', (data.money - item.price).toString());
+                }
             });
 
             return true;
