@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { InventoryConstructor } from './InventoryConstructor/InventoryConstructor';
 import FirestoreAPI from 'api/FirestoreAPI';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 type ItemInfo = {
@@ -37,11 +38,22 @@ export default class InvComponent extends Component {
         this._firestore = new FirestoreAPI();
         this._data = [];
 
-        this._loadInvData();
+        this._loadInvData()
+            .then(() => {
+                console.log('[InventoryComponent] -> Data loaded!');
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }
 
-    _loadInvData() {
-        this._firestore.getUserFields('+79991774634').then((res) => {
+    async _loadInvData() {
+        const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+        if (phoneNumber == null) {
+            return;
+        }
+
+        this._firestore.getUserFields(phoneNumber).then((res) => {
             if ( res == undefined ) {
                 return;
             }
@@ -71,8 +83,8 @@ export default class InvComponent extends Component {
                 topElemProps = {
                     {
                         text: 'Применить',
-                        handler: () => {
-                            console.log(123);
+                        handler: () => { // TODO:  handler: (id?: number)
+                            console.log(123 + " KEKW");
                         }
                     }
                 }

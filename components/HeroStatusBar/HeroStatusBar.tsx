@@ -59,18 +59,23 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         this._musicController = props.musicController;
         this.firestore = new FirestoreAPI();
 
-        this.firestore.getUserFields('+79991774634')
-            .then(async(data) => {
-                if ( data == undefined ) {
-                    return;
-                }
+        AsyncStorage.getItem('phoneNumber').then((phoneNumber) => {
+            if (phoneNumber == null) {
+                return;
+            }
 
-                await AsyncStorage.setItem('eatPoints', String(data.eatPoints));
-                await AsyncStorage.setItem('clearPoints', String(data.clearPoints));
-                await AsyncStorage.setItem('moodPoints', String(data.moodPoints));
-                await AsyncStorage.setItem('sleepPoints', String(data.sleepPoints));
+            this.firestore.getUserFields(phoneNumber)
+                .then(async (data) => {
+                    if ( data == undefined ) {
+                        return;
+                    }
 
-                HeroStatusBar.state._icons = {
+                    await AsyncStorage.setItem('eatPoints', String(data.eatPoints));
+                    await AsyncStorage.setItem('clearPoints', String(data.clearPoints));
+                    await AsyncStorage.setItem('moodPoints', String(data.moodPoints));
+                    await AsyncStorage.setItem('sleepPoints', String(data.sleepPoints));
+
+                    HeroStatusBar.state._icons = {
                         ...HeroStatusBar.state._icons, satiety: {
                             ...HeroStatusBar.state._icons.satiety, currentState: data.eatPoints
                         }, sleep: {
@@ -80,69 +85,82 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         }, mood: {
                             ...HeroStatusBar.state._icons.mood, currentState: data.moodPoints
                         },
-                };
+                    };
 
-                HeroStatusBar.state._money = { ...HeroStatusBar.state._money, currentState: data.money };
-                HeroStatusBar.state.level  = { number: Math.ceil(data.xp / 1000), exp: data.xp };
+                    HeroStatusBar.state._money = { ...HeroStatusBar.state._money, currentState: data.money };
+                    HeroStatusBar.state.level  = { number: Math.ceil(data.xp / 1000), exp: data.xp };
 
-                await AsyncStorage.setItem('xp', (data.xp).toString());
-                await AsyncStorage.setItem('money', (data.money).toString());
-            });
+                    await AsyncStorage.setItem('xp', (data.xp).toString());
+                    await AsyncStorage.setItem('money', (data.money).toString());
+                });
+        });
 
         EventTimersManager.initTimers(async() => {
             AsyncStorage.getItem('clearPoints')
-                        .then((clearPoint) => {
+                        .then(async (clearPoint) => {
                             console.log('clear Point now -> ' + clearPoint);
 
                             if ( clearPoint != null && +clearPoint > 0 ) {
-                                AsyncStorage.setItem('clearPoints', String(+clearPoint - 5));
+                                await AsyncStorage.setItem('clearPoints', String(+clearPoint - 5));
 
                                 HeroStatusBar.state._icons.cleanness.currentState = +clearPoint - 5;
                                 HeroStatusBar.instance?.forceUpdate();
 
-                                this.firestore.setUserFields('+79991774634', { clearPoints: +clearPoint - 5 });
+                                const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+                                if (phoneNumber != null) {
+                                    await this.firestore.setUserFields(phoneNumber, { clearPoints: +clearPoint - 5 });
+                                }
                             }
                         });
         }, async() => {
             AsyncStorage.getItem('sleepPoints')
-                        .then((sleepPoints) => {
+                        .then(async (sleepPoints) => {
                             console.log('sleep Point now -> ' + sleepPoints);
 
                             if ( sleepPoints != null && +sleepPoints > 0 ) {
-                                AsyncStorage.setItem('sleepPoints', String(+sleepPoints - 5));
+                                await AsyncStorage.setItem('sleepPoints', String(+sleepPoints - 5));
 
                                 HeroStatusBar.state._icons.sleep.currentState = +sleepPoints - 5;
                                 HeroStatusBar.instance?.forceUpdate();
 
-                                this.firestore.setUserFields('+79991774634', { sleepPoints: +sleepPoints - 5 });
+                                const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+                                if (phoneNumber) {
+                                    await this.firestore.setUserFields(phoneNumber, { sleepPoints: +sleepPoints - 5 });
+                                }
                             }
                         });
         }, async() => {
             AsyncStorage.getItem('moodPoints')
-                        .then((moodPoints) => {
+                        .then(async (moodPoints) => {
                             console.log('mood Point now -> ' + moodPoints);
 
                             if ( moodPoints != null && +moodPoints > 0 ) {
-                                AsyncStorage.setItem('moodPoints', String(+moodPoints - 5));
+                                await AsyncStorage.setItem('moodPoints', String(+moodPoints - 5));
 
                                 HeroStatusBar.state._icons.mood.currentState = +moodPoints - 5;
                                 HeroStatusBar.instance?.forceUpdate();
 
-                                this.firestore.setUserFields('+79991774634', { moodPoints: +moodPoints - 5 });
+                                const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+                                if (phoneNumber) {
+                                    await this.firestore.setUserFields(phoneNumber, { moodPoints: +moodPoints - 5 });
+                                }
                             }
                         });
         }, async() => {
             AsyncStorage.getItem('eatPoints')
-                        .then((eatPoint) => {
+                        .then(async (eatPoint) => {
                             console.log('eat Point now -> ' + eatPoint);
 
                             if ( eatPoint != null && +eatPoint > 0 ) {
-                                AsyncStorage.setItem('eatPoints', String(+eatPoint - 5));
+                                await AsyncStorage.setItem('eatPoints', String(+eatPoint - 5));
 
                                 HeroStatusBar.state._icons.satiety.currentState = +eatPoint - 5;
                                 HeroStatusBar.instance?.forceUpdate();
 
-                                this.firestore.setUserFields('+79991774634', { eatPoints: +eatPoint - 5 });
+                                const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+                                if (phoneNumber) {
+                                    await this.firestore.setUserFields(phoneNumber, { eatPoints: +eatPoint - 5 });
+                                }
                             }
                         });
         });

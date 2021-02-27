@@ -164,4 +164,6 @@ export default class FirestoreAPI {
                 return undefined;
             });
     }
+
+    // TODO: delete PROPS from db....
 }

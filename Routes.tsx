@@ -15,19 +15,24 @@ import Darts                from './components/Games/Darts/Darts';
 import Tower                from './components/Games/Tower/Tower';
 import Maze                 from './components/Games/Maze/Maze';
 
-console.disableYellowBox = true; // Disable yellow screen warnings.
+import AsyncStorage from "@react-native-community/async-storage";
+
+
+console.disableYellowBox = true;
+
+AsyncStorage.setItem("phoneNumber", '+79991774634').then( () => console.log("[AsyncStorage] -> Set debug phone number") );
 
 const Routes = () => (
    <Router>
       <Scene key = "root">
-         <Scene key = "LogIn"                component = {LogInMenu}            hideNavBar = {true} title = "LogIn" initial = {true} />
+         <Scene key = "LogIn"                component = {LogInMenu}            hideNavBar = {true} title = "LogIn" initial = {true}/>
          <Scene key = "SignIn"               component = {RegistrationMenu}     hideNavBar = {true} title = "SignIn" />
          <Scene key = "CharacterMenu"        component = {CharacterMenu}        hideNavBar = {true} title = "HeroMenu" />
          <Scene key = "CharacterConstructor" component = {CreateCharacter}      hideNavBar = {true} title = "Construct" />
          <Scene key = "CreateCharacter"      component = {CharacterConstructor} hideNavBar = {true} title = "Create"  />
          <Scene key = "GameComponent"        component = {GameComponent}        hideNavBar = {true} title = "Game" />
-         <Scene key = "Shop"                 component = {ShopComponent}        hideNavBar = {true} title = "Shop"/>
-         <Scene key = "Inventory"            component = {InventoryComponent}   hideNavBar = {true} title = "Inventory"  />
+         <Scene key = "Shop"                 component = {ShopComponent}        hideNavBar = {true} title = "Shop" />
+         <Scene key = "Inventory"            component = {InventoryComponent}   hideNavBar = {true} title = "Inventory" />
          <Scene key = "Darts"                component = {Darts}                hideNavBar = {true} title = "Darts" />
          <Scene key = "Ducks"                component = {Ducks}                hideNavBar = {true} title = "Ducks" />
          <Scene key = "Headphones"           component = {Headphones}           hideNavBar = {true} title = "Headphones"/>

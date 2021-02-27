@@ -27,8 +27,13 @@ export default class EndGameModal extends Component<Data> {
     }
 
 
-    _addPointsForWinning(xpValue: number, money: number) {
-        this.firestore.getUserFields("+79991774634")
+    async _addPointsForWinning(xpValue: number, money: number) {
+        const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+        if (phoneNumber == null){
+            return;
+        }
+
+        this.firestore.getUserFields(phoneNumber)
             .then(async data => {
                 if (data == undefined) {
                     console.warn("[EndGameModal] -> Cant get user fields from db!");
@@ -38,8 +43,8 @@ export default class EndGameModal extends Component<Data> {
                 await AsyncStorage.setItem("xp", (data.xp + xpValue).toString());
                 await AsyncStorage.setItem("money", (data.money + money).toString());
 
-                await this.firestore.setUserFields("+79991774634", {money: data.money + money});
-                await this.firestore.setUserFields("+79991774634", {xp: data.xp + xpValue});
+                await this.firestore.setUserFields(phoneNumber, {money: data.money + money});
+                await this.firestore.setUserFields(phoneNumber, {xp: data.xp + xpValue});
 
                 AsyncStorage.getItem("moodPoints")
                     .then((moodPoints) => {
@@ -49,7 +54,7 @@ export default class EndGameModal extends Component<Data> {
                             let _additionalVal: number = (100 - +moodPoints < 10) ? (100 - +moodPoints) : 10;
 
                             AsyncStorage.setItem("moodPoints", String(+moodPoints + _additionalVal));
-                            this.firestore.setUserFields("+79991774634", { moodPoints: +moodPoints + _additionalVal });
+                            this.firestore.setUserFields(phoneNumber, { moodPoints: +moodPoints + _additionalVal });
                         }
                     });
             });
@@ -74,7 +79,8 @@ export default class EndGameModal extends Component<Data> {
                                 style={[{backgroundColor: '#128949'}, styles.modalButton]}
                                 onPress={() => {
                                     this.setState({modalVisible: false});
-                                    this._addPointsForWinning(this.props.xp, this.props.money);
+                                    this._addPointsForWinning(this.props.xp, this.props.money)
+                                        .then(() => { console.log("[Games] -> add point for winning!") });
 
                                     clickAudioEffect();
                                     Actions.pop();

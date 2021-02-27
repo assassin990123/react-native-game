@@ -109,7 +109,12 @@ export default class ShopItemsAPI extends FirestoreAPI {
     }
 
     public async buyItem(itemId: number): Promise<boolean | undefined> {
-        let res = await super.getUserFields('+79991774634');
+        const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+        if (phoneNumber == null) {
+            return undefined;
+        }
+
+        let res = await super.getUserFields(phoneNumber);
 
         let invRes: any[] = [];
 
@@ -119,13 +124,13 @@ export default class ShopItemsAPI extends FirestoreAPI {
 
         if ( await this.isValidId(itemId) ) {
             this._getItemDataByID(itemId).then(async item => {
-                const data = await super.getUserFields('+79991774634');
+                const data = await super.getUserFields(phoneNumber);
                 if (data == null) {
                     return;
                 }
 
                 if (data.money >= item.price) {
-                    await super.setUserFields('+79991774634', { inv: { items: invRes.concat([{ item: item }]) }, money: data.money - item.price }, 'users_data');
+                    await super.setUserFields(phoneNumber, { inv: { items: invRes.concat([{ item: item }]) }, money: data.money - item.price }, 'users_data');
                     await AsyncStorage.setItem('money', (data.money - item.price).toString());
                 }
             });
