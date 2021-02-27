@@ -59,42 +59,6 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         this._musicController = props.musicController;
         this.firestore = new FirestoreAPI();
 
-        AsyncStorage.getItem('phoneNumber').then((phoneNumber) => {
-            if (phoneNumber == null) {
-                return;
-            }
-
-            this.firestore.getUserFields(phoneNumber)
-                .then(async (data) => {
-                    if ( data == undefined ) {
-                        return;
-                    }
-
-                    await AsyncStorage.setItem('eatPoints', String(data.eatPoints));
-                    await AsyncStorage.setItem('clearPoints', String(data.clearPoints));
-                    await AsyncStorage.setItem('moodPoints', String(data.moodPoints));
-                    await AsyncStorage.setItem('sleepPoints', String(data.sleepPoints));
-
-                    HeroStatusBar.state._icons = {
-                        ...HeroStatusBar.state._icons, satiety: {
-                            ...HeroStatusBar.state._icons.satiety, currentState: data.eatPoints
-                        }, sleep: {
-                            ...HeroStatusBar.state._icons.sleep, currentState: data.sleepPoints
-                        }, cleanness: {
-                            ...HeroStatusBar.state._icons.cleanness, currentState: data.clearPoints
-                        }, mood: {
-                            ...HeroStatusBar.state._icons.mood, currentState: data.moodPoints
-                        },
-                    };
-
-                    HeroStatusBar.state._money = { ...HeroStatusBar.state._money, currentState: data.money };
-                    HeroStatusBar.state.level  = { number: Math.ceil(data.xp / 1000), exp: data.xp };
-
-                    await AsyncStorage.setItem('xp', (data.xp).toString());
-                    await AsyncStorage.setItem('money', (data.money).toString());
-                });
-        });
-
         EventTimersManager.initTimers(async() => {
             AsyncStorage.getItem('clearPoints')
                         .then(async (clearPoint) => {
@@ -163,6 +127,44 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                                 }
                             }
                         });
+        });
+    }
+
+    prepareHeroProps(): void {
+        AsyncStorage.getItem('phoneNumber').then((phoneNumber) => {
+            if (phoneNumber == null) {
+                return;
+            }
+
+            this.firestore.getUserFields(phoneNumber)
+                .then(async (data) => {
+                    if ( data == undefined ) {
+                        return;
+                    }
+
+                    await AsyncStorage.setItem('eatPoints', String(data.eatPoints));
+                    await AsyncStorage.setItem('clearPoints', String(data.clearPoints));
+                    await AsyncStorage.setItem('moodPoints', String(data.moodPoints));
+                    await AsyncStorage.setItem('sleepPoints', String(data.sleepPoints));
+
+                    HeroStatusBar.state._icons = {
+                        ...HeroStatusBar.state._icons, satiety: {
+                            ...HeroStatusBar.state._icons.satiety, currentState: data.eatPoints
+                        }, sleep: {
+                            ...HeroStatusBar.state._icons.sleep, currentState: data.sleepPoints
+                        }, cleanness: {
+                            ...HeroStatusBar.state._icons.cleanness, currentState: data.clearPoints
+                        }, mood: {
+                            ...HeroStatusBar.state._icons.mood, currentState: data.moodPoints
+                        },
+                    };
+
+                    HeroStatusBar.state._money = { ...HeroStatusBar.state._money, currentState: data.money };
+                    HeroStatusBar.state.level  = { number: Math.ceil(data.xp / 1000), exp: data.xp };
+
+                    await AsyncStorage.setItem('xp', (data.xp).toString());
+                    await AsyncStorage.setItem('money', (data.money).toString());
+                });
         });
     }
 
@@ -351,6 +353,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     }
 
     render(): JSX.Element {
+        this.prepareHeroProps();
+
         let statusBarItems: JSX.Element[] = [];
 
         for (let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
