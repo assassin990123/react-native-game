@@ -165,5 +165,38 @@ export default class FirestoreAPI {
             });
     }
 
-    // TODO: delete PROPS from db....
+    public async deleteItemFromInv(itemId: number, userName: string, collectionName?: string) {
+        this._setCollectionName(collectionName);
+
+        const userPropsRef = Firestore.collection(this._collectionName).doc(encrypt(userName));
+
+        let inv = (await userPropsRef.get()
+                                    .then((snapshot) => {
+                                        if (snapshot.exists) {
+                                            const snapData = Object(snapshot.data());
+
+                                            if (snapData === undefined) {
+                                                return undefined;
+                                            }
+
+                                            return {
+                                                inv: snapData.inv,
+                                            };
+                                        }
+                                    }))?.inv;
+
+        if (inv !== null) {
+            const itemIndex = inv.items.findIndex((element: any) => {
+                return element.item.id === itemId;
+            });
+
+            if (itemIndex > -1) {
+                inv.items.splice(itemIndex, 1);
+            }
+        }
+
+        await userPropsRef.update({
+            inv: inv
+        });
+    }
 }
