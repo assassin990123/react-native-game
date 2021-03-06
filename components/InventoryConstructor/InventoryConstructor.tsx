@@ -5,6 +5,9 @@ import { Actions } from 'react-native-router-flux';
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
+import Buffs from 'utils/ItemsBuffs';
+import FirestoreAPI from 'api/FirestoreAPI';
+import AsyncStorage from "@react-native-community/async-storage";
 
 const { height } = Dimensions.get('screen');
 
@@ -47,8 +50,11 @@ export class InventoryConstructor extends Component<IInventoryProps> {
 
         this._topButtonData = props.topElemProps;
         this._bottomButtonData = props.bottomElemProps;
+
+        this.firestore = new FirestoreAPI();
     }
 
+    firestore: FirestoreAPI;
     props: any;
 
     state = {
@@ -92,6 +98,60 @@ export class InventoryConstructor extends Component<IInventoryProps> {
     _topButtonData: ButtonProps;
     _bottomButtonData: ButtonProps;
 
+    async _addPoints(propsName: string, additionalVal: number) {
+        console.log('NAME: ' + propsName);
+        const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+        console.log('phoneNumber: ' + phoneNumber);
+        if (phoneNumber != null) {
+            AsyncStorage.getItem(propsName)
+                        .then((points) => {
+                            console.log("Point now grow -> " + points);
+
+                            if (points != null && +points < 100 && (+points + additionalVal > 0)) {
+
+                                AsyncStorage.setItem(propsName, String(+points + additionalVal));
+
+                                let obj: any = {};
+                                obj[propsName] = +points + additionalVal;
+
+                                this.firestore.setUserFields(phoneNumber, obj);
+                            }
+                        });
+        }
+    }
+
+    async _updateUserProps(item: ItemInfo) {
+            switch( item.buff.needBuffName ) {
+                case Buffs.cleanness:
+                    await this._addPoints('clearPoints', item.buff.buffScale);
+                    break;
+                case Buffs.eat:
+                    await this._addPoints('eatPoints', item.buff.buffScale);
+                    break;
+                case Buffs.mood:
+                    await this._addPoints('moodPoints', item.buff.buffScale);
+                    break;
+                case Buffs.sleep:
+                    await this._addPoints('sleepPoints', item.buff.buffScale);
+                    break;
+            }
+
+            switch( item.debuff.needDebuffName ) {
+                case Buffs.cleanness:
+                    await this._addPoints('clearPoints', item.debuff.debuffScale * -1);
+                    break;
+                case Buffs.eat:
+                    await this._addPoints('eatPoints', item.debuff.debuffScale * -1);
+                    break;
+                case Buffs.mood:
+                    await this._addPoints('moodPoints', item.debuff.debuffScale * -1);
+                    break;
+                case Buffs.sleep:
+                    await this._addPoints('sleepPoints', item.debuff.debuffScale * -1);
+                    break;
+            }
+    }
+
     setWarningModalVisible(visible: Boolean): void {
         this.setState({ warningModalVisible: visible });
     }
@@ -120,10 +180,12 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                 borderBottomLeftRadius: 10,
                 borderTopRightRadius: 10
             }}
-                              onPress = {() => {
+                              onPress = {async () => {
                                   if ( this._topButtonData.handler !== undefined ) {
                                       console.log(itemInfo);
                                       this._topButtonData.handler(itemInfo.id);
+
+                                      await this._updateUserProps(itemInfo);
                                   }
 
                                   clickAudioEffect();

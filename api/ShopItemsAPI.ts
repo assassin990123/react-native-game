@@ -2,6 +2,8 @@ import firestore from './FirestoreInit';
 import FirestoreAPI from 'api/FirestoreAPI';
 import AsyncStorage from "@react-native-community/async-storage";
 
+import Buffs from 'utils/ItemsBuffs';
+
 /*
  *
  @brief: API for buying items.
@@ -34,8 +36,8 @@ const data: ShopItem[] = [
         price: 10,
         disc: 'POSOSI OK1??7?',
         room: '123',
-        buff: { needBuffName: 'настроение', buffScale: 6 },
-        debuff: { needDebuffName: 'еда', debuffScale: 3 }
+        buff: { needBuffName: Buffs.mood, buffScale: 6 },
+        debuff: { needDebuffName: Buffs.eat, debuffScale: 3 }
     },
     {
         id: 1,
@@ -43,8 +45,8 @@ const data: ShopItem[] = [
         price: 10,
         disc: 'POSOSI OK2??7?',
         room: '123',
-        buff: { needBuffName: 'еда', buffScale: 10 },
-        debuff: { needDebuffName: 'чистота', debuffScale: 2 }
+        buff: { needBuffName: Buffs.eat, buffScale: 10 },
+        debuff: { needDebuffName: Buffs.cleanness, debuffScale: 2 }
     },
     {
         id: 2,
@@ -52,8 +54,8 @@ const data: ShopItem[] = [
         price: 10,
         disc: 'POSOSI OK3??7?',
         room: '123',
-        buff: { needBuffName: 'чистота', buffScale: 12 },
-        debuff: { needDebuffName: 'настроение', debuffScale: 5 }
+        buff: { needBuffName: Buffs.cleanness, buffScale: 12 },
+        debuff: { needDebuffName: Buffs.mood, debuffScale: 5 }
     },
 ];
 
