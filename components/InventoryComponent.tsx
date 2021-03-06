@@ -26,10 +26,10 @@ type ItemInfo = {
 
 export default class InvComponent extends Component {
     _firestore: FirestoreAPI;
-    _data: ItemInfo[];
+    _data: Array<ItemInfo> = [];
 
     state = {
-        data: []
+        data: this._data
     };
 
     constructor(props: any) {
@@ -48,17 +48,17 @@ export default class InvComponent extends Component {
     }
 
     async _loadInvData() {
+        this._data = [];
+
         const phoneNumber = await AsyncStorage.getItem('phoneNumber');
         if (phoneNumber == null) {
             return;
         }
 
-        this._firestore.getUserFields(phoneNumber).then((res) => {
-            if ( res == undefined ) {
-                return;
-            }
+        const promise = await this._firestore.getUserFields(phoneNumber);
 
-            for (let obj of res.inv.items) {
+        if (promise != undefined) {
+            for (let obj of promise.inv.items) {
                 // @ts-ignore
                 const item = obj.item;
 
@@ -71,10 +71,10 @@ export default class InvComponent extends Component {
                     buff: { needBuffName: item.buff.needBuffName, buffScale: item.buff.buffScale },
                     debuff: { needDebuffName: item.debuff.needDebuffName, debuffScale: item.debuff.debuffScale }
                 } as ItemInfo);
-
-                this.setState({ data: this._data });
             }
-        });
+        }
+
+        this.setState({data: this._data});
     }
 
     render() {
@@ -83,16 +83,20 @@ export default class InvComponent extends Component {
                 topElemProps = {
                     {
                         text: 'Применить',
-                        handler: () => { // TODO:  handler: (id?: number)
-                            console.log(123 + " KEKW");
+                        handler: async (id?: number) => {
+                            const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+                            if (id != undefined && phoneNumber != null) {
+                                await this._firestore.deleteItemFromInv(id, phoneNumber);
+                            }
+
+                            await this._loadInvData();
                         }
                     }
                 }
                 bottomElemProps = {
                     {
                         text: 'Инфо',
-                        handler: () => {
-                        }
+                        handler: () => { }
                     }
                 }
                 data = {this._data}

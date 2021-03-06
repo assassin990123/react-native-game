@@ -43,10 +43,13 @@ export class InventoryConstructor extends Component<IInventoryProps> {
     constructor(props: any) {
         super(props);
 
+        this.props = props;
+
         this._topButtonData = props.topElemProps;
         this._bottomButtonData = props.bottomElemProps;
-        this.data = props.data;
     }
+
+    props: any;
 
     state = {
         sections: {
@@ -97,11 +100,11 @@ export class InventoryConstructor extends Component<IInventoryProps> {
         this.setState({ infoModalVisible: visible });
     }
 
-    _renderTopElement(text: String): JSX.Element {
+    _renderTopElement(itemInfo: ItemInfo): JSX.Element {
         if ( this._topButtonData === undefined ) {
             return (
                 <View style = {{ height: '60%', alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style = {styles.priceText}>{`${text}P`}</Text>
+                    <Text style = {styles.priceText}>{`${itemInfo.price}P`}</Text>
                 </View>
             );
         }
@@ -118,9 +121,9 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                 borderTopRightRadius: 10
             }}
                               onPress = {() => {
-                                  this.setWarningModalVisible( !this.state.warningModalVisible);
                                   if ( this._topButtonData.handler !== undefined ) {
-                                      this._topButtonData.handler();
+                                      console.log(itemInfo);
+                                      this._topButtonData.handler(itemInfo.id);
                                   }
 
                                   clickAudioEffect();
@@ -158,43 +161,6 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                               }}>
                 <Text style = {[styles.priceText, { fontSize: 16 }]}>{this._bottomButtonData.text}</Text>
             </TouchableOpacity>
-        );
-    }
-
-    _modalWarningView(text: String): JSX.Element {
-        return (
-            <View style = {styles.modalContainer}>
-                <View style = {styles.modalView}>
-                    <Text style = {[styles.modalTitle, styles.modalPadding]}>Внимание!</Text>
-
-                    <View style = {[{ justifyContent: 'center', alignItems: 'center' }, styles.modalPadding]}>
-                        <Text style = {styles.modalText}>Вы собираетесь {text.toLocaleUpperCase()} {'\n'} выбранный
-                                                         предмет!</Text>
-                        <Text style = {styles.modalText}> Вы действительно хотите это сделать?</Text>
-                    </View>
-
-                    <View style = {styles.modalButtonGroup}>
-                        <TouchableOpacity
-                            style = {[{ backgroundColor: '#F37052' }, styles.modalButton]}
-                            onPress = {() => {
-                                this.setWarningModalVisible( !this.state.warningModalVisible);
-                                clickAudioEffect();
-                            }}
-                        >
-                            <Text style = {[{ color: 'white' }, styles.modalText]}>Да</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style = {[{ backgroundColor: '#128949' }, styles.modalButton]}
-                            onPress = {() => {
-                                clickAudioEffect();
-                                this.setWarningModalVisible( !this.state.warningModalVisible);
-                            }}
-                        >
-                            <Text style = {[{ color: 'white' }, styles.modalText]}>Нет</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
         );
     }
 
@@ -243,14 +209,6 @@ export class InventoryConstructor extends Component<IInventoryProps> {
             <ImageBackground source = {require('./assets/background.png')} style = {styles.container}>
                 <View
                     style = {[styles.selector, Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null]}>
-                    <Modal animationType = 'fade'
-                           transparent = {true}
-                           visible = {this.state.warningModalVisible}>
-                        {
-                            // @ts-ignore
-                            this._modalWarningView(this._topButtonData === undefined ? this._bottomButtonData.text : this._topButtonData.text)
-                        }
-                    </Modal>
 
                     <Modal animationType = 'fade'
                            transparent = {true}
@@ -313,7 +271,7 @@ export class InventoryConstructor extends Component<IInventoryProps> {
 
                 <View style = {{ height: '75%' }}>
                     <FlatList
-                        data = {this.data}
+                        data = {this.props.data}
                         contentContainerStyle = {styles.listView}
                         showsVerticalScrollIndicator = {false}
                         renderItem = {({ item }) => <View style = {{
@@ -334,7 +292,7 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                                     style = {styles.effectsText}>{`-${item.debuff.debuffScale} ${item.debuff.needDebuffName} +${item.buff.buffScale} ${item.buff.needBuffName}`}</Text>
                             </View>
                             <View style = {{ width: '30%' }}>
-                                {this._renderTopElement(item.price.toString())}
+                                {this._renderTopElement(item)}
                                 {this._renderBottomElement(item)}
                             </View>
                         </View>
