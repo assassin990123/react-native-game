@@ -59,16 +59,28 @@ export class InventoryConstructor extends Component<IInventoryProps> {
 
     state = {
         sections: {
-            clothesSection: { pressed: true, name: 'clothes' },
+            sleepSection: { pressed: true, name: 'sleep' },
             cleanSection: { pressed: false, name: 'clean' },
             eatSection: { pressed: false, name: 'eat' },
             funSection: { pressed: false, name: 'fun' },
 
-            currPressed: 'clothes',
+            currPressed: 'sleep',
         },
 
         warningModalVisible: false,
         infoModalVisible: false
+    }
+
+    filterBySectionName() {
+        if (this.state.sections.currPressed == 'sleep') {
+            return this.props.data.filter((item: ItemInfo) => item.buff.needBuffName === Buffs.sleep);
+        } else if (this.state.sections.currPressed == 'clean') {
+            return this.props.data.filter((item: ItemInfo) => item.buff.needBuffName === Buffs.cleanness);
+        } else if (this.state.sections.currPressed == 'eat') {
+            return this.props.data.filter((item: ItemInfo) => item.buff.needBuffName === Buffs.eat);
+        } else {
+            return this.props.data.filter((item: ItemInfo) => item.buff.needBuffName === Buffs.mood);
+        }
     }
 
     setSection(propName: string): void {
@@ -279,16 +291,16 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                     </Modal>
 
                     <TouchableOpacity
-                        style = {this.state.sections.clothesSection.pressed ? [styles.pressedSection, { flexDirection: 'row' }] : styles.defaultSection}
+                        style = {this.state.sections.sleepSection.pressed ? [styles.pressedSection, { flexDirection: 'row' }] : styles.defaultSection}
                         onPress = {() => {
-                            this.setSection('clothes');
+                            this.setSection('sleep');
                         }}>
                         <Image source = {require('./assets/clothes_icon.png')} />
                         <Text style = {[{
                             fontFamily: 'Montserrat-Regular',
                             fontSize: 20,
                             paddingLeft: 30
-                        }, this.state.sections.clothesSection.pressed ? null : { display: 'none' }]}>Одежда</Text>
+                        }, this.state.sections.sleepSection.pressed ? null : { display: 'none' }]}>Сон</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
@@ -333,7 +345,7 @@ export class InventoryConstructor extends Component<IInventoryProps> {
 
                 <View style = {{ height: '75%' }}>
                     <FlatList
-                        data = {this.props.data}
+                        data = {this.filterBySectionName()}
                         contentContainerStyle = {styles.listView}
                         showsVerticalScrollIndicator = {false}
                         renderItem = {({ item }) => <View style = {{
