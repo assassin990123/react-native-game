@@ -20,7 +20,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 console.disableYellowBox = true;
 
-AsyncStorage.setItem("phoneNumber", '+79991774634').then( () => console.log("[AsyncStorage] -> Set debug phone number") );
+// AsyncStorage.setItem("phoneNumber", '+79991774634').then( () => console.log("[AsyncStorage] -> Set debug phone number") );
 
 const Routes = () => (
    <Router>

@@ -56,6 +56,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
         HeroStatusBar.instance = this;
 
+        HeroStatusBar.instance.prepareHeroProps();
+
         this._musicController = props.musicController;
         this.firestore = new FirestoreAPI();
 
@@ -353,7 +355,7 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     }
 
     render(): JSX.Element {
-        this.prepareHeroProps();
+        HeroStatusBar.instance?.prepareHeroProps();
 
         let statusBarItems: JSX.Element[] = [];
 

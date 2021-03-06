@@ -111,9 +111,7 @@ export class InventoryConstructor extends Component<IInventoryProps> {
     _bottomButtonData: ButtonProps;
 
     async _addPoints(propsName: string, additionalVal: number) {
-        console.log('NAME: ' + propsName);
         const phoneNumber = await AsyncStorage.getItem('phoneNumber');
-        console.log('phoneNumber: ' + phoneNumber);
         if (phoneNumber != null) {
             AsyncStorage.getItem(propsName)
                         .then((points) => {
