@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         position: 'absolute', 
         zIndex: 1, 
         left: width * 0.83, 
-        top: height * 0.09,
+        top: (Dimensions.get('screen').height - Dimensions.get('window').height >= 25 ? 25 : 0) + (height * 0.09),
     },
 
     topButton: {

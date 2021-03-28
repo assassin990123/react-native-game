@@ -15,7 +15,7 @@ import Darts                from './components/Games/Darts/Darts';
 import Tower                from './components/Games/Tower/Tower';
 import Maze                 from './components/Games/Maze/Maze';
 
-import AsyncStorage from "@react-native-community/async-storage";
+// import AsyncStorage from "@react-native-community/async-storage";
 
 
 console.disableYellowBox = true;

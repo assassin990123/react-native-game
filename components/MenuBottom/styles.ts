@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
-        top: height - 77
+        top: height - 77 - (Dimensions.get('screen').height - Dimensions.get('window').height >= 25 ? 43 : 0),
     },
 
     Menu: {

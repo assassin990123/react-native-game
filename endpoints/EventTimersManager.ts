@@ -8,9 +8,7 @@ export default class EventTimersManager {
 
     // @ts-ignore
     static initTimers(clearCallback: Callback, sleepCallback: Callback, moodCallback: Callback, eatCallback: Callback) {
-
         if (EventTimersManager.clearTimer == undefined && EventTimersManager.sleepTimer == undefined && EventTimersManager.moodTimer == undefined && EventTimersManager.eatTimer == undefined) {
-
             console.log("[EventTimersManager] -> CREATE HERO PROPS TIMERS !!!");
 
             EventTimersManager.clearTimer = setInterval(() => {

@@ -134,7 +134,9 @@ export default class GameComponent extends Component {
         console.log("[GameComponent] -> Current room := " + roomName);
         return roomName !== 'home' ? <View/> :
             (
-                <View style={[styles.container, { top: height * 0.82 }]}>
+                <View style={[styles.container, {
+                    top: height * 0.82 - (Dimensions.get('screen').height - Dimensions.get('window').height >= 25 ? 45 : 0)
+                }]}>
                     <TouchableOpacity
                         onPress={ () => {
                             clickAudioEffect();
@@ -161,7 +163,12 @@ export default class GameComponent extends Component {
                     <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
                     <ButtonGroup/>
                     {this._interactiveGame(this.state.roomName)}
-                    <Image style={{justifyContent: 'center', marginLeft: 'auto', marginTop: 20}} source={Pictures.get(this.state.spriteName)}/>
+                    <Image style={{
+                        justifyContent: 'center',
+                        marginLeft: 'auto', marginTop: 20
+                    }}
+                           source={Pictures.get(this.state.spriteName)}
+                    />
                     <MenuButton onSelectRoom={this.handleSelectedRoom} />
                 </ImageBackground>
             : this.mapComponent();

@@ -51,15 +51,16 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     };
 
     constructor(props: any) {
+        console.log("IM HERE 1");
         super(props);
         props.handler();
 
         HeroStatusBar.instance = this;
 
-        HeroStatusBar.instance.prepareHeroProps();
-
         this._musicController = props.musicController;
         this.firestore = new FirestoreAPI();
+
+        HeroStatusBar.instance.prepareHeroProps().then();
 
         EventTimersManager.initTimers(async() => {
             AsyncStorage.getItem('clearPoints')
@@ -132,13 +133,13 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         });
     }
 
-    prepareHeroProps(): void {
-        AsyncStorage.getItem('phoneNumber').then((phoneNumber) => {
+    async prepareHeroProps(): Promise<void> {
+        await AsyncStorage.getItem('phoneNumber').then(async (phoneNumber) => {
             if (phoneNumber == null) {
                 return;
             }
 
-            this.firestore.getUserFields(phoneNumber)
+            await HeroStatusBar.instance?.firestore.getUserFields(phoneNumber)
                 .then(async (data) => {
                     if ( data == undefined ) {
                         return;
@@ -163,6 +164,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
 
                     HeroStatusBar.state._money = { ...HeroStatusBar.state._money, currentState: data.money };
                     HeroStatusBar.state.level  = { number: Math.ceil(data.xp / 1000), exp: data.xp };
+
+                    HeroStatusBar.instance?.setState(HeroStatusBar.state);
 
                     await AsyncStorage.setItem('xp', (data.xp).toString());
                     await AsyncStorage.setItem('money', (data.money).toString());
@@ -355,9 +358,8 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
     }
 
     render(): JSX.Element {
-        HeroStatusBar.instance?.prepareHeroProps();
-
         let statusBarItems: JSX.Element[] = [];
+        let statsItems: JSX.Element[] = [];
 
         for (let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
             statusBarItems.push(<TouchableOpacity onPress = {() => {
@@ -368,8 +370,6 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                 <Image source = {value.link} />
             </TouchableOpacity>);
         }
-
-        let statsItems: JSX.Element[] = [];
 
         for (let [key, value] of Object.entries(HeroStatusBar.state._icons)) {
             statsItems.push(<View style = {{ flexDirection: 'row', marginBottom: 30 }} key = {key}>
