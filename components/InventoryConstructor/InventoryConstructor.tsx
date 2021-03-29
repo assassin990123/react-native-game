@@ -276,6 +276,18 @@ export class InventoryConstructor extends Component<IInventoryProps> {
         );
     }
 
+    getItemPic(item: any): JSX.Element {
+        if (item.buff.needBuffName == 'сон') {
+            return (<Image source = {require('./assets/clothes_icon.png')} />);
+        } else if (item.buff.needBuffName == 'чистота') {
+            return (<Image source = {require('./assets/clean_icon.png')} />);
+        } else if (item.buff.needBuffName == 'еда') {
+            return (<Image source = {require('./assets/eat_icon.png')} />);
+        } else {
+            return (<Image source = {require('./assets/fun_icon.png')} />);
+        }
+    }
+
     render() {
         return (
             <ImageBackground source = {require('./assets/background.png')} style = {styles.container}>
@@ -355,7 +367,7 @@ export class InventoryConstructor extends Component<IInventoryProps> {
                             borderRadius: 10
                         }}>
                             <View style = {{ width: '20%', alignItems: 'center', justifyContent: 'center' }}>
-                                <Image source = {require('./assets/balloon.png')} />
+                                { this.getItemPic(item) }
                             </View>
                             <View style = {{ width: '50%', justifyContent: 'center' }}>
                                 <Text style = {styles.titleText}>{item.name}</Text>

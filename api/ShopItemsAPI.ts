@@ -32,30 +32,129 @@ export type ShopItem = {
 const data: ShopItem[] = [
     {
         id: 0,
-        name: '123',
-        price: 10,
-        disc: 'POSOSI OK1??7?',
+        name: 'Шарик',
+        price: 5,
+        disc: 'Это шарик с гелеем',
         room: '123',
-        buff: { needBuffName: Buffs.mood, buffScale: 6 },
+        buff: { needBuffName: Buffs.mood, buffScale: 7 },
         debuff: { needDebuffName: Buffs.eat, debuffScale: 3 }
     },
     {
         id: 1,
-        name: '123',
+        name: 'Рамен',
         price: 10,
-        disc: 'POSOSI OK2??7?',
+        disc: 'Вкусный рамен',
         room: '123',
         buff: { needBuffName: Buffs.eat, buffScale: 10 },
         debuff: { needDebuffName: Buffs.cleanness, debuffScale: 2 }
     },
     {
         id: 2,
-        name: '123',
+        name: 'Мыло',
         price: 10,
-        disc: 'POSOSI OK3??7?',
+        disc: 'Мыло, но без веревки',
         room: '123',
         buff: { needBuffName: Buffs.cleanness, buffScale: 12 },
         debuff: { needDebuffName: Buffs.mood, debuffScale: 5 }
+    },
+    {
+        id: 3,
+        name: 'Энергетик',
+        price: 10,
+        disc: 'Понижает сотребность во сне, но здровью хана',
+        room: '123',
+        buff: { needBuffName: Buffs.sleep, buffScale: 10 },
+        debuff: { needDebuffName: Buffs.mood, debuffScale: 5 }
+    },
+    {
+        id: 4,
+        name: 'Кофе',
+        price: 7,
+        disc: 'Понижает сотребность во сне',
+        room: '123',
+        buff: { needBuffName: Buffs.sleep, buffScale: 7 },
+        debuff: { needDebuffName: Buffs.eat, debuffScale: 5 }
+    },
+    {
+        id: 5,
+        name: 'Шампунь',
+        price: 8,
+        disc: 'Не щиплет глазки',
+        room: '123',
+        buff: { needBuffName: Buffs.cleanness, buffScale: 7 },
+        debuff: { needDebuffName: Buffs.sleep, debuffScale: 5 }
+    },
+    {
+        id: 6,
+        name: 'Хвостик',
+        price: 15,
+        disc: 'Хвостик для игр в кошечку',
+        room: '123',
+        buff: { needBuffName: Buffs.mood, buffScale: 15 },
+        debuff: { needDebuffName: Buffs.cleanness, debuffScale: 5 }
+    },
+    {
+        id: 7,
+        name: 'Чай',
+        price: 10,
+        disc: 'Кружечка крепкого чайка',
+        room: '123',
+        buff: { needBuffName: Buffs.eat, buffScale: 4 },
+        debuff: { needDebuffName: Buffs.sleep, debuffScale: 5 }
+    },
+    {
+        id: 8,
+        name: 'Конфетки',
+        price: 10,
+        disc: 'Сладкие как жизнь',
+        room: '123',
+        buff: { needBuffName: Buffs.eat, buffScale: 15 },
+        debuff: { needDebuffName: Buffs.cleanness, debuffScale: 7 }
+    },
+    {
+        id: 9,
+        name: 'Косметос',
+        price: 10,
+        disc: 'Лучшая косметика в этой игре',
+        room: '123',
+        buff: { needBuffName: Buffs.mood, buffScale: 15 },
+        debuff: { needDebuffName: Buffs.cleanness, debuffScale: 5 }
+    },
+    {
+        id: 10,
+        name: 'Шоколадный бассейн',
+        price: 100,
+        disc: 'Можно повеселиться с лучшие другом',
+        room: '123',
+        buff: { needBuffName: Buffs.mood, buffScale: 50 },
+        debuff: { needDebuffName: Buffs.cleanness, debuffScale: 20 }
+    },
+    {
+        id: 11,
+        name: 'Заказ в Яндекс.Еда',
+        price: 50,
+        disc: 'Вкусная еда',
+        room: '123',
+        buff: { needBuffName: Buffs.eat, buffScale: 25 },
+        debuff: { needDebuffName: Buffs.mood, debuffScale: 10 }
+    },
+    {
+        id: 12,
+        name: 'СПА',
+        price: 80,
+        disc: 'Лучшие отдых',
+        room: '123',
+        buff: { needBuffName: Buffs.cleanness, buffScale: 40 },
+        debuff: { needDebuffName: Buffs.sleep, debuffScale: 25 }
+    },
+    {
+        id: 13,
+        name: 'Кофеиновые таблетки',
+        price: 80,
+        disc: 'Бодрят не по детски',
+        room: '123',
+        buff: { needBuffName: Buffs.sleep, buffScale: 55 },
+        debuff: { needDebuffName: Buffs.mood, debuffScale: 30 }
     },
 ];
 
