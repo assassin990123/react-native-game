@@ -34,10 +34,10 @@ export default class CreationCharacterMenu extends Component {
                         <Image source={require("../../assets/arrow.png")}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity style   = {styles.refreshButton}
-                                    onPress = { () => {} }>
-                        <Image source={require("../../assets/refresh.png")}/>
-                </TouchableOpacity>
+                {/*<TouchableOpacity style   = {styles.refreshButton}*/}
+                {/*                    onPress = { () => {} }>*/}
+                {/*        <Image source={require("../../assets/refresh.png")}/>*/}
+                {/*</TouchableOpacity>*/}
 
                 <TouchableOpacity onPress = { () => {this.onClickHandler('Header'); clickAudioEffect();} }
                                     style = {styles.headerButton}/>

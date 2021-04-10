@@ -80,10 +80,10 @@ export default class CharacterMenu extends Component {
                         <Image source={require('../../assets/arrow.png')}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity style   = {styles.basketButton}
-                                    onPress = { () => {this.setModalVisible(!this.state.modalVisible); clickAudioEffect();} }>
-                        <Image source={require('../../assets/basket.png')}/>
-                </TouchableOpacity>
+                {/*<TouchableOpacity style   = {styles.basketButton}*/}
+                {/*                    onPress = { () => {this.setModalVisible(!this.state.modalVisible); clickAudioEffect();} }>*/}
+                {/*        <Image source={require('../../assets/basket.png')}/>*/}
+                {/*</TouchableOpacity>*/}
 
                 <TouchableOpacity onPress = { () => {this.onClickHandler('Header'); clickAudioEffect();} }
                                     style = {styles.headerButton}/>

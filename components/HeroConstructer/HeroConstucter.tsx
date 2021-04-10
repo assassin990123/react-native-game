@@ -109,10 +109,10 @@ export default class HeroConstucter extends Component {
           >
             <View style = {styles.content}>
 
-                <TouchableOpacity style   = {styles.backButton}
-                                    onPress = { () => { Actions.LogIn(); } }>
-                        <Image source={require("../../assets/arrow.png")}/>
-                </TouchableOpacity>
+                {/*<TouchableOpacity style   = {styles.backButton}*/}
+                {/*                    onPress = { () => { Actions.LogIn(); } }>*/}
+                {/*        <Image source={require("../../assets/arrow.png")}/>*/}
+                {/*</TouchableOpacity>*/}
 
                 <View style = {styles.header}>
                     <Text style = {styles.headerText}>Настройте внешний вид {'\n'} вашего персонажа!</Text>
