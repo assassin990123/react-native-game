@@ -1,4 +1,4 @@
-import { Image, ImageBackground, TouchableOpacity, Text, StyleSheet, Dimensions, View } from 'react-native';
+import { Image, ImageBackground, TouchableOpacity, Text, StyleSheet, Dimensions, View, Modal } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import React, { Component } from 'react';
 
@@ -7,13 +7,14 @@ import { clickAudioEffect } from 'endpoints/AudioEffects';
 import ButtonGroup from '../ShopAndInventoryGroup/Group';
 
 import Pictures from 'assets/hero_sprites/Pictures';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // View components.
 import MenuButton    from '../MenuBottom/MenuBottom';
 import HeroStatusBar from '../HeroStatusBar/HeroStatusBar';
 
 import { styles } from "../ShopAndInventoryGroup/styles";
+import isNetConnected from '../../endpoints/NetConnectionContoller';
 
 
 const { width, height } = Dimensions.get("screen");
@@ -39,6 +40,57 @@ const style = StyleSheet.create({
         height: height * 0.8,
         width: '100%'
     },
+
+    modalContainer_net: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        width: '100%',
+        height: '100%'
+    },
+
+    modalOkButton: {
+        backgroundColor: 'white',
+        width: '85%',
+        height: '20%',
+        justifyContent: 'center',
+        alignItems:'center',
+        borderColor:'#F37052',
+        borderRadius: 10,
+        borderWidth: 1,
+        marginTop: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+    },
+
+    modalTitle_Net: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 30,
+        marginBottom: 15,
+        textAlign: 'center'
+    },
+
+    modalOkButtonText: {
+        color: '#F37052',
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 20,
+        textAlign: 'center'
+    },
+
+    modalView_Net: {
+        borderRadius: 10,
+        backgroundColor: 'white',
+        width: '80%',
+        height: '35%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
 
 export default class GameComponent extends Component {
@@ -52,7 +104,8 @@ export default class GameComponent extends Component {
     state = {
         room: require('../../assets/rooms/BedRoom.png'),
         roomName: 'home',
-        spriteName: ''
+        spriteName: '',
+        netErrorModalVisible: false
     }
 
     previousState = {
@@ -63,17 +116,35 @@ export default class GameComponent extends Component {
     _backgroundAudio: BackgroundAudioController;
 
     async componentDidMount() {
+        if (! await isNetConnected()) {
+            this.setState({ netErrorModalVisible: true });
+            return;
+        }
+
         this._backgroundAudio.setAudioMode();
 
         this._backgroundAudio.loadNewPlayback(true).then(() => { console.log('[BG Music] -> Music is played!'); });
     }
 
-     async componentWillUnmount() {
+    // async componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any) {
+    //     if (await isNetConnected()) {
+    //         this.setState({ netErrorModalVisible: true });
+    //         return;
+    //     }
+    // }
+
+    async componentWillUnmount() {
         await this._backgroundAudio.unloadBackgroundMusic();
     }
 
     handleSelectedRoom = (selectedRoom: any, name: string) => {
         this.previousState = this.state;
+        isNetConnected().then(res => {
+            if (! res) {
+                this.setState({ netErrorModalVisible: true });
+                return;
+            }
+        });
 
         this.setState({room: selectedRoom, roomName: name});
         console.log("[GameComponent] -> Current room := " + name);
@@ -152,7 +223,7 @@ export default class GameComponent extends Component {
 
     render() {
         if (this.state.spriteName.length === 0) {
-            AsyncStorage.getItem("spriteName").then(key => {
+            AsyncStorage.getItem("spriteName").then((key) => {
                 console.log("[AsyncStorage] -> Sprite name loaded.")
                 this.setState({ spriteName: key });
             }).catch(err => console.error("[AsyncStorage] -> Cant load sprite name!", err));
@@ -160,7 +231,28 @@ export default class GameComponent extends Component {
 
         return this.state.roomName !== 'dirt' ?
                 <ImageBackground source={this.state.room} style = {{flex: 1}}>
-                    <HeroStatusBar handler={(): void => console.log('helloooooooo')} musicController={this._backgroundAudio}/>
+                    <Modal animationType = 'fade'
+                           transparent = {true}
+                           visible = {this.state.netErrorModalVisible}
+                           onRequestClose = {() => {
+                               this.setState({ netErrorModalVisible: false });
+                               Actions.LogIn();
+                           }}>
+                        <TouchableOpacity style = {style.modalContainer_net} activeOpacity = {1} onPress = {() => {
+                            this.setState({ netErrorModalVisible: false });
+                            Actions.LogIn();
+                        }}>
+                            <TouchableOpacity style = {[style.modalView_Net]} activeOpacity = {1}>
+                                <Text style = {[style.modalTitle_Net]}>Отсутсвует подключение к сети!</Text>
+
+                                <TouchableOpacity style={style.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}); Actions.LogIn(); } }>
+                                    <Text style={style.modalOkButtonText}>Понятно</Text>
+                                </TouchableOpacity>
+                            </TouchableOpacity>
+                        </TouchableOpacity>
+                    </Modal>
+
+                    <HeroStatusBar handler={(): void => console.log('')} musicController={this._backgroundAudio}/>
                     <ButtonGroup/>
                     {this._interactiveGame(this.state.roomName)}
                     <Image style={{
