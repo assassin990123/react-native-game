@@ -20,7 +20,6 @@ import { Auth } from 'aws-amplify';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import isNetConnected from 'endpoints/NetConnectionContoller';
 import FirestoreAPI from '../../api/FirestoreAPI';
-import CreateCharacter from '../CreationCharacterMenu/CreationCharacterMenu';
 
 
 export default class LogInMenu extends Component {
