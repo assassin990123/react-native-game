@@ -7,7 +7,7 @@ import { clickAudioEffect } from 'endpoints/AudioEffects';
 import { styles } from './styles';
 import Buffs from 'utils/ItemsBuffs';
 import FirestoreAPI from 'api/FirestoreAPI';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { height } = Dimensions.get('screen');
 
