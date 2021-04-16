@@ -1,10 +1,65 @@
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from "../CharacterMenu/styles";
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 import React, { Component } from "react";
 import { Actions } from "react-native-router-flux";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import FirestoreAPI from "../../api/FirestoreAPI";
+import isNetConnected from '../../endpoints/NetConnectionContoller';
+
+
+const style = StyleSheet.create({
+    modalContainer_net: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        width: '100%',
+        height: '100%'
+    },
+
+    modalOkButton: {
+        backgroundColor: 'white',
+        width: '85%',
+        height: '20%',
+        justifyContent: 'center',
+        alignItems:'center',
+        borderColor:'#F37052',
+        borderRadius: 10,
+        borderWidth: 1,
+        marginTop: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 4,
+        },
+        shadowOpacity: 0.32,
+        shadowRadius: 5.46,
+        elevation: 9,
+    },
+
+    modalTitle_Net: {
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 30,
+        marginBottom: 15,
+        textAlign: 'center'
+    },
+
+    modalOkButtonText: {
+        color: '#F37052',
+        fontFamily: 'Montserrat-Medium',
+        fontSize: 20,
+        textAlign: 'center'
+    },
+
+    modalView_Net: {
+        borderRadius: 10,
+        backgroundColor: 'white',
+        width: '80%',
+        height: '35%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});
 
 
 interface Data {
@@ -15,7 +70,8 @@ interface Data {
 
 export default class EndGameModal extends Component<Data> {
     state = {
-        modalVisible: true
+        modalVisible: true,
+        netErrorModalVisible: false
     };
 
     firestore: FirestoreAPI;
@@ -26,6 +82,12 @@ export default class EndGameModal extends Component<Data> {
         this.firestore = new FirestoreAPI();
     }
 
+    async componentDidMount() {
+        if (! await isNetConnected()) {
+            this.setState({ netErrorModalVisible: true });
+            return;
+        }
+    }
 
     async _addPointsForWinning(xpValue: number, money: number) {
         const phoneNumber = await AsyncStorage.getItem('phoneNumber');
@@ -62,6 +124,28 @@ export default class EndGameModal extends Component<Data> {
 
     render() {
         return (
+            <View>
+            <Modal animationType = 'fade'
+                   transparent = {true}
+                   visible = {this.state.netErrorModalVisible}
+                   onRequestClose = {() => {
+                       this.setState({ netErrorModalVisible: false });
+                       Actions.LogIn();
+                   }}>
+                <TouchableOpacity style = {style.modalContainer_net} activeOpacity = {1} onPress = {() => {
+                    this.setState({ netErrorModalVisible: false });
+                    Actions.LogIn();
+                }}>
+                    <TouchableOpacity style = {[style.modalView_Net]} activeOpacity = {1}>
+                        <Text style = {[style.modalTitle_Net]}>Отсутсвует подключение к сети!</Text>
+
+                        <TouchableOpacity style={style.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}); Actions.LogIn(); } }>
+                            <Text style={style.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </Modal>
+
             <Modal animationType='fade'
                    transparent={true}
                    visible={this.props.win && this.state.modalVisible}>
@@ -78,12 +162,19 @@ export default class EndGameModal extends Component<Data> {
                             <TouchableOpacity
                                 style={[{backgroundColor: '#128949'}, styles.modalButton]}
                                 onPress={() => {
-                                    this.setState({modalVisible: false});
-                                    this._addPointsForWinning(this.props.xp, this.props.money)
-                                        .then(() => { console.log("[Games] -> add point for winning!") });
+                                    isNetConnected().then(res => {
+                                        if (! res) {
+                                            this.setState({ netErrorModalVisible: true });
+                                            return;
+                                        } else {
+                                            this.setState({modalVisible: false});
+                                            this._addPointsForWinning(this.props.xp, this.props.money)
+                                                .then(() => { console.log("[Games] -> add point for winning!") });
 
-                                    clickAudioEffect();
-                                    Actions.pop();
+                                            clickAudioEffect();
+                                            Actions.pop();
+                                        }
+                                    });
                                 }}
                             >
                                 <Text style={[{color: 'white'}, styles.modalText]}>Спасиба!</Text>
@@ -92,6 +183,7 @@ export default class EndGameModal extends Component<Data> {
                     </View>
                 </View>
             </Modal>
+            </View>
         );
     }
 }

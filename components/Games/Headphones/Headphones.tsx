@@ -1,4 +1,4 @@
-import { View, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import { View, ImageBackground, Text, TouchableOpacity, Modal } from 'react-native';
 import { Actions } from "react-native-router-flux";
 import React, { Component } from 'react';
 
@@ -11,6 +11,8 @@ import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
 import EndGameModal from "../EndGameModal";
+import { styles } from '../../CreationCharacterMenu/styles';
+import isNetConnected from '../../../endpoints/NetConnectionContoller';
 
 
 export default class Headphones extends Component {
@@ -24,7 +26,8 @@ export default class Headphones extends Component {
             }, state: { win: false }, update: () => {
                 this.setState({ entities: { state: { win: true } } });
             }
-        }
+        },
+        netErrorModalVisible: false
     }
 
     constructor(props: any) {
@@ -48,8 +51,35 @@ export default class Headphones extends Component {
         console.log(`[Headphones game] -> Finish [${this.state.entities.state.win}]`);
     }
 
+    async componentDidMount() {
+        if (! await isNetConnected()) {
+            this.setState({ netErrorModalVisible: true });
+            return;
+        }
+    }
+
     render() {
         return (<View>
+            <Modal animationType = 'fade'
+                   transparent = {true}
+                   visible = {this.state.netErrorModalVisible}
+                   onRequestClose = {() => {
+                       this.setState({ netErrorModalVisible: false });
+                       Actions.LogIn();
+                   }}>
+                <TouchableOpacity style = {styles.modalContainer_net} activeOpacity = {1} onPress = {() => {
+                    this.setState({ netErrorModalVisible: false });
+                    Actions.LogIn();
+                }}>
+                    <TouchableOpacity style = {[styles.modalView_Net]} activeOpacity = {1}>
+                        <Text style = {[styles.modalTitle_Net]}>Отсутсвует подключение к сети!</Text>
+
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}); Actions.LogIn(); } }>
+                            <Text style={styles.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </Modal>
             <View>
                 <EndGameModal xp = {Math.ceil(50 / 10)}
                               money = {Math.ceil(50 / 10)}
@@ -71,8 +101,15 @@ export default class Headphones extends Component {
                             running = {this.state.running}
                         />
                         <TouchableOpacity onPress = {() => {
-                            Actions.pop();
-                            clickAudioEffect();
+                            isNetConnected().then(res => {
+                                if (! res) {
+                                    this.setState({ netErrorModalVisible: true });
+                                    return;
+                                } else {
+                                    clickAudioEffect();
+                                    Actions.pop();
+                                }
+                            });
                         }}
                                           style = {style.button}
                                           activeOpacity = {1}>

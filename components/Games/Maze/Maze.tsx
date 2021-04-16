@@ -1,4 +1,4 @@
-import { View, ImageBackground, Text, TouchableOpacity } from 'react-native';
+import { View, ImageBackground, Text, TouchableOpacity, Modal } from 'react-native';
 import { GameEngine } from 'react-native-game-engine';
 import { Actions } from "react-native-router-flux";
 import React, { Component } from 'react';
@@ -13,6 +13,8 @@ import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
 import EndGameModal from "../EndGameModal";
+import isNetConnected from '../../../endpoints/NetConnectionContoller';
+import { styles } from '../../CreationCharacterMenu/styles';
 
 
 interface IMazeGame {
@@ -26,7 +28,8 @@ export default class Maze extends Component<IMazeGame> {
     state = {
         running: true, win: false, scorePoints: 0, update: (points: number) => {
             this.setState({ ...this.state, win: true, scorePoints: points });
-        }
+        },
+        netErrorModalVisible: false
     };
 
     props: any;
@@ -50,6 +53,13 @@ export default class Maze extends Component<IMazeGame> {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
+    async componentDidMount() {
+        if (! await isNetConnected()) {
+            this.setState({ netErrorModalVisible: true });
+            return;
+        }
+    }
+
     componentWillUnmount() {
         console.log(`[Maze game] -> Score := ${this.state.scorePoints}`);
         console.log(`[Maze game] -> Finish [${this.state.win}]`);
@@ -57,6 +67,27 @@ export default class Maze extends Component<IMazeGame> {
 
     render() {
         return (<View>
+            <Modal animationType = 'fade'
+                   transparent = {true}
+                   visible = {this.state.netErrorModalVisible}
+                   onRequestClose = {() => {
+                       this.setState({ netErrorModalVisible: false });
+                       Actions.LogIn();
+                   }}>
+                <TouchableOpacity style = {styles.modalContainer_net} activeOpacity = {1} onPress = {() => {
+                    this.setState({ netErrorModalVisible: false });
+                    Actions.LogIn();
+                }}>
+                    <TouchableOpacity style = {[styles.modalView_Net]} activeOpacity = {1}>
+                        <Text style = {[styles.modalTitle_Net]}>Отсутсвует подключение к сети!</Text>
+
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}); Actions.LogIn(); } }>
+                            <Text style={styles.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </Modal>
+
                 <View>
                     <EndGameModal money = {Math.ceil(8 * this.state.scorePoints / 10)} xp = {Math.ceil(8 * this.state.scorePoints / 10)} win = {this.state.win} />
                 </View>
@@ -90,8 +121,15 @@ export default class Maze extends Component<IMazeGame> {
                             running = {this.state.running}
                         />
                         <TouchableOpacity onPress = {() => {
-                            Actions.pop();
-                            clickAudioEffect();
+                            isNetConnected().then(res => {
+                                if (! res) {
+                                    this.setState({ netErrorModalVisible: true });
+                                    return;
+                                } else {
+                                    clickAudioEffect();
+                                    Actions.pop();
+                                }
+                            });
                         }}
                                           style = {style.button}
                                           activeOpacity = {1}>

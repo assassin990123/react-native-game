@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Actions } from "react-native-router-flux";
-import { View, TouchableOpacity, ImageBackground, Text } from 'react-native';
+import { View, TouchableOpacity, ImageBackground, Text, Modal } from 'react-native';
 import { GameEngine } from 'react-native-game-engine';
 
 import Aim from './Aim';
@@ -12,6 +12,8 @@ import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { style } from "../ButtonStyle";
 import EndGameModal from "../EndGameModal";
+import { styles } from '../../CreationCharacterMenu/styles';
+import isNetConnected from '../../../endpoints/NetConnectionContoller';
 
 
 export default class Darts extends Component {
@@ -20,7 +22,8 @@ export default class Darts extends Component {
     state = {
         running: true, win: false, scorePoints: 0, update: (points: number) => {
             this.setState({ ...this.state, win: true, scorePoints: points });
-        }
+        },
+        netErrorModalVisible: false
     }
 
     constructor(props: any) {
@@ -40,6 +43,13 @@ export default class Darts extends Component {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
+    async componentDidMount() {
+        if (! await isNetConnected()) {
+            this.setState({ netErrorModalVisible: true });
+            return;
+        }
+    }
+
     componentWillUnmount() {
         console.log(`[Dart game] -> Score := ${this.state.scorePoints}`);
         console.log(`[Dart game] -> Finish [${this.state.win}]`);
@@ -47,6 +57,27 @@ export default class Darts extends Component {
 
     render() {
         return (<View>
+            <Modal animationType = 'fade'
+                   transparent = {true}
+                   visible = {this.state.netErrorModalVisible}
+                   onRequestClose = {() => {
+                       this.setState({ netErrorModalVisible: false });
+                       Actions.LogIn();
+                   }}>
+                <TouchableOpacity style = {styles.modalContainer_net} activeOpacity = {1} onPress = {() => {
+                    this.setState({ netErrorModalVisible: false });
+                    Actions.LogIn();
+                }}>
+                    <TouchableOpacity style = {[styles.modalView_Net]} activeOpacity = {1}>
+                        <Text style = {[styles.modalTitle_Net]}>Отсутсвует подключение к сети!</Text>
+
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}); Actions.LogIn(); } }>
+                            <Text style={styles.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </Modal>
+
                 <View>
                     <EndGameModal money = {Math.ceil(10 * this.state.scorePoints / 14)} xp = {Math.ceil(10 * this.state.scorePoints / 14)} win = {this.state.win} />
                 </View>
@@ -92,8 +123,15 @@ export default class Darts extends Component {
                                 </ImageBackground>
                             </View>
                             <TouchableOpacity onPress = {() => {
-                                Actions.pop();
-                                clickAudioEffect();
+                                isNetConnected().then(res => {
+                                    if (! res) {
+                                        this.setState({ netErrorModalVisible: true });
+                                        return;
+                                    } else {
+                                        clickAudioEffect();
+                                        Actions.pop();
+                                    }
+                                 });
                             }}
                                               style = {style.button}
                                               activeOpacity = {1}>
