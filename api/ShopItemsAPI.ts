@@ -1,6 +1,6 @@
 import firestore from './FirestoreInit';
 import FirestoreAPI from 'api/FirestoreAPI';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Buffs from 'utils/ItemsBuffs';
 
