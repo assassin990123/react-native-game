@@ -124,7 +124,7 @@ export default class InvComponent extends Component {
                             text: 'Применить',
                             handler: async (id?: number) => {
                                 isNetConnected().then(async res => {
-                                    if (! res) {
+                                    if (!res) {
                                         this.setState({ netErrorModalVisible: true });
                                         return;
                                     }

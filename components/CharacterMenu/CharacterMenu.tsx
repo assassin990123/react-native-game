@@ -5,24 +5,42 @@ import { Actions } from 'react-native-router-flux';
 import { clickAudioEffect } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import FirestoreAPI from "api/FirestoreAPI";
+import isNetConnected from '../../endpoints/NetConnectionContoller';
 
-const DescriptionText: string = 'some text';
-const CharacterName: string ='Name';
+const DescriptionText: string = '';
+// const CharacterName: string ='Name';
 
 export default class CharacterMenu extends Component {
     constructor(props: any) {
         super(props);
+
+        AsyncStorage.getItem("phoneNumber")
+                    .then(key => {
+                            if (key !== null) {
+                                console.log(key);
+                                this._db.getUserFields(key).then(res => {
+                                    if (res != null)
+                                    {
+                                        console.log("IM HERE " + res.name);
+                                        this.setState({username: res.name});
+                                    }
+                                })
+                            }
+                        }
+                    );
     }
 
     state = {
         username: '',
         password: '',
-        modalVisible: false
+        modalVisible: false,
+        netErrorModalVisible: false
     };
 
     _db: FirestoreAPI = new FirestoreAPI();
+    userName = "";
 
     setModalVisible(visible: Boolean) {
         this.setState({ modalVisible: visible });
@@ -33,9 +51,30 @@ export default class CharacterMenu extends Component {
     }
 
     render() {
+        console.log("RES = " + this.userName);
         return (
             <View style = {styles.content}>
-    
+                <Modal animationType = 'fade'
+                       transparent = {true}
+                       visible = {this.state.netErrorModalVisible}
+                       onRequestClose = {() => {
+                           this.setState({ netErrorModalVisible: false });
+                           Actions.LogIn();
+                       }}>
+                    <TouchableOpacity style = {styles.modalContainer_net} activeOpacity = {1} onPress = {() => {
+                        this.setState({ netErrorModalVisible: false });
+                        Actions.LogIn();
+                    }}>
+                        <TouchableOpacity style = {[styles.modalView_Net]} activeOpacity = {1}>
+                            <Text style = {[styles.modalTitle_Net]}>Отсутсвует подключение к сети!</Text>
+
+                            <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}); Actions.LogIn(); } }>
+                                <Text style={styles.modalOkButtonText}>Понятно</Text>
+                            </TouchableOpacity>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </Modal>
+
                 <Modal animationType='fade'
                        transparent={true}
                        visible={this.state.modalVisible}>
@@ -90,7 +129,7 @@ export default class CharacterMenu extends Component {
                 <Text style = {styles.logoText}>PEDO</Text> 
 
                 <View style = {styles.nameContaner}>
-                    <Text style = {styles.buttonsText}>{CharacterName}</Text>
+                    <Text style = {styles.buttonsText}>{this.state.username}</Text>
                 </View>  
 
                 <View style = {styles.descriptionContaner}>
@@ -98,18 +137,25 @@ export default class CharacterMenu extends Component {
                 </View>  
 
                 <TouchableOpacity style = {styles.playButton}
-                                    onPress = { () => {
+                                    onPress = {async () => {
+                                        if (! await isNetConnected()) {
+                                            this.setState({ netErrorModalVisible: true });
+                                            return;
+                                        }
+
                                         AsyncStorage.getItem("phoneNumber")
                                             .then(key => {
                                                 if (key !== null) {
                                                     this._db.getUserFields(key)
                                                         .then(data => {
+                                                            // console.log(data);
                                                             if (data !== undefined) {
                                                                 AsyncStorage.setItem("spriteName", data.skinName)
                                                                     .then(() => {
                                                                         console.log("[AsyncStorage] -> Sprite name saved");
                                                                     })
                                                                     .catch(() => console.log("[AsyncStorage] -> Cant save sprite"));
+                                                                AsyncStorage.getItem("spriteName").then((res) => console.log(res));
                                                             }
                                                         })
                                                         .catch();

@@ -17,7 +17,10 @@ import { styles } from './styles';
 */
 
 import { Auth } from 'aws-amplify';
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import isNetConnected from 'endpoints/NetConnectionContoller';
+import FirestoreAPI from '../../api/FirestoreAPI';
+import CreateCharacter from '../CreationCharacterMenu/CreationCharacterMenu';
 
 
 export default class LogInMenu extends Component {
@@ -26,11 +29,14 @@ export default class LogInMenu extends Component {
         password: '',
         modalVisible: false,
         modalText: '',
+        netErrorModalVisible: false
       }
     
     constructor(props: any) {
         super(props);
     }
+
+    _db: FirestoreAPI = new FirestoreAPI();
 
     fieldsSuccessful() : boolean  {
         return this.state.username.length !== 0 && this.state.password.length !== 0;
@@ -50,7 +56,18 @@ export default class LogInMenu extends Component {
                     .then(() => console.log("[AsyncStorage] -> Username saved in local store."))
                     .catch(() => console.log("[AsyncStorage] -> Cant save user data in local store."));
 
-                Actions.CharacterMenu();
+                this._db.getUserFields(this.state.username).then(res => {
+                    if (res != null)
+                    {
+                        if (res.skinName != "") {
+                            Actions.CharacterMenu();
+                        } else {
+                            Actions.CreateCharacter();
+                        }
+                    }
+                });
+
+
             })
             .catch(error => {
                 console.log("[Auth] -> SingIn error", error);
@@ -68,6 +85,25 @@ export default class LogInMenu extends Component {
         <View
             style={[styles.content, {alignSelf: 'stretch'}]}
           >
+            <Modal animationType = 'fade'
+                   transparent = {true}
+                   visible = {this.state.netErrorModalVisible}
+                   onRequestClose = {() => {
+                       this.setState({ netErrorModalVisible: false });
+                   }}>
+                <TouchableOpacity style = {styles.modalContainer} activeOpacity = {1} onPress = {() => {
+                    this.setState({ netErrorModalVisible: false });
+                }}>
+                    <TouchableOpacity style = {[styles.modalView]} activeOpacity = {1}>
+                        <Text style = {[styles.modalTitle]}>Отсутсвует подключение к сети!</Text>
+
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}) } }>
+                            <Text style={styles.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </Modal>
+
              <Modal animationType='fade'
                        transparent={true}
                        visible={this.state.modalVisible}
@@ -119,15 +155,21 @@ export default class LogInMenu extends Component {
                     </View>
                 
                     <TouchableOpacity style   = {styles.logButton}
-                                      onPress = { () => {
+                                      onPress = { async () => {
                                           clickAudioEffect();
+
+                                          if (! await isNetConnected()) {
+                                              this.setState({ netErrorModalVisible: true });
+                                              return;
+                                          }
+
                                           if (!this.fieldsSuccessful()) {
-                                            this.openWarningModal('Поля входа \n не могут быть пустыми!');
-                                            return;
+                                              this.openWarningModal('Поля входа \n не могут быть пустыми!');
+                                              return;
                                           }
                                         
                                           this.setState({smsSended: true});
-                                          this.SingIn();
+                                          await this.SingIn();
                                       }}>
                         <Text style = {styles.buttonsText}>Войти</Text>
                     </TouchableOpacity>
