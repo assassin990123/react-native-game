@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 
 import { InventoryConstructor } from './InventoryConstructor/InventoryConstructor';
 import FirestoreAPI from 'api/FirestoreAPI';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import isNetConnected from '../endpoints/NetConnectionContoller';
+import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import { styles } from './CreationCharacterMenu/styles';
+import { clickAudioEffect } from '../endpoints/AudioEffects';
+import { Actions } from 'react-native-router-flux';
 
 
 type ItemInfo = {
@@ -23,13 +28,13 @@ type ItemInfo = {
     }
 }
 
-
 export default class InvComponent extends Component {
     _firestore: FirestoreAPI;
     _data: Array<ItemInfo> = [];
 
     state = {
-        data: this._data
+        data: this._data,
+        netErrorModalVisible: false
     };
 
     constructor(props: any) {
@@ -49,6 +54,11 @@ export default class InvComponent extends Component {
 
     async _loadInvData() {
         this._data = [];
+
+        if (! await isNetConnected()) {
+            this.setState({ netErrorModalVisible: true });
+            return;
+        }
 
         const phoneNumber = await AsyncStorage.getItem('phoneNumber');
         if (phoneNumber == null) {
@@ -77,30 +87,67 @@ export default class InvComponent extends Component {
         this.setState({data: this._data});
     }
 
+    async componentDidMount() {
+        if ( !await isNetConnected() ) {
+            this.setState({ netErrorModalVisible: true });
+            return;
+        }
+    }
+
     render() {
         return (
-            <InventoryConstructor
-                topElemProps = {
-                    {
-                        text: 'Применить',
-                        handler: async (id?: number) => {
-                            const phoneNumber = await AsyncStorage.getItem('phoneNumber');
-                            if (id != undefined && phoneNumber != null) {
-                                await this._firestore.deleteItemFromInv(id, phoneNumber);
-                            }
+            <View>
+                <Modal animationType = 'fade'
+                       transparent = {true}
+                       visible = {this.state.netErrorModalVisible}
+                       onRequestClose = {() => {
+                           this.setState({ netErrorModalVisible: false });
+                           Actions.LogIn();
+                       }}>
+                    <TouchableOpacity style = {styles.modalContainer_net} activeOpacity = {1} onPress = {() => {
+                        this.setState({ netErrorModalVisible: false });
+                        Actions.LogIn();
+                    }}>
+                        <TouchableOpacity style = {[styles.modalView_Net]} activeOpacity = {1}>
+                            <Text style = {[styles.modalTitle_Net]}>Отсутсвует подключение к сети!</Text>
 
-                            await this._loadInvData();
+                            <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}); Actions.LogIn(); } }>
+                                <Text style={styles.modalOkButtonText}>Понятно</Text>
+                            </TouchableOpacity>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </Modal>
+
+                <InventoryConstructor
+                    topElemProps = {
+                        {
+                            text: 'Применить',
+                            handler: async (id?: number) => {
+                                isNetConnected().then(async res => {
+                                    if (! res) {
+                                        this.setState({ netErrorModalVisible: true });
+                                        return;
+                                    }
+
+                                    const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+                                    if (id != undefined && phoneNumber != null) {
+                                        await this._firestore.deleteItemFromInv(id, phoneNumber);
+                                    }
+
+                                    await this._loadInvData();
+                                })
+                            }
                         }
                     }
-                }
-                bottomElemProps = {
-                    {
-                        text: 'Инфо',
-                        handler: () => { }
+                    bottomElemProps = {
+                        {
+                            text: 'Инфо',
+                            handler: () => { }
+                        }
                     }
-                }
-                data = {this._data}
-            />
+                    data = {this._data}
+                />
+            </View>
         );
     }
 }

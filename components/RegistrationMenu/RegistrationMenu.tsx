@@ -9,7 +9,8 @@ import { clickAudioEffect } from 'endpoints/AudioEffects';
 import { styles } from './styles';
 import FirestoreAPI from 'api/FirestoreAPI';
 
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import isNetConnected from '../../endpoints/NetConnectionContoller';
 
 /*
 *
@@ -30,6 +31,7 @@ export default class RegistrationMenu extends Component {
         modalText: '',
 
         smsSent: false,
+        netErrorModalVisible: false
     };
 
     _db: FirestoreAPI = new FirestoreAPI();
@@ -100,6 +102,25 @@ export default class RegistrationMenu extends Component {
     render() {
         return (
         <View style={[styles.content, {alignSelf: 'stretch'}]}>
+            <Modal animationType = 'fade'
+                   transparent = {true}
+                   visible = {this.state.netErrorModalVisible}
+                   onRequestClose = {() => {
+                       this.setState({ netErrorModalVisible: false });
+                   }}>
+                <TouchableOpacity style = {styles.modalContainer} activeOpacity = {1} onPress = {() => {
+                    this.setState({ netErrorModalVisible: false });
+                }}>
+                    <TouchableOpacity style = {[styles.modalView]} activeOpacity = {1}>
+                        <Text style = {[styles.modalTitle]}>Отсутсвует подключение к сети!</Text>
+
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); this.setState({netErrorModalVisible: false}) } }>
+                            <Text style={styles.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </Modal>
+
             <Modal animationType='fade'
                        transparent={true}
                        visible={this.state.modalVisible}
@@ -173,13 +194,17 @@ export default class RegistrationMenu extends Component {
                                       onPress = { async () => {
                                             clickAudioEffect();
 
-                                            if (!this.fieldsSuccessful()) {
+                                            if (! await isNetConnected()) {
+                                                this.setState({ netErrorModalVisible: true });
+                                                return;
+                                            } else if (!this.fieldsSuccessful()) {
                                                 this.openWarningModal('Поля регистрации \n не могут быть пустыми!');
                                                 return;
-                                            } 
-                                            
-                                            this.setState({smsSent: true});
-                                            await this.signUp();
+                                            } else {
+                                                this.setState({smsSent: true});
+                                                await this.signUp();
+                                            }
+
                                           }}>
                         <Text style = {styles.buttonsText}>Отправить код</Text>
                     </TouchableOpacity>

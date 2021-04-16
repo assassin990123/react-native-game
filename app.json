@@ -22,7 +22,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false
+      "supportsTablet": false,
+      "bundleIdentifier": "com.afg.afg"
     },
     "android": {
       "package": "com.afg.afg",
