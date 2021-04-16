@@ -6,10 +6,12 @@ import BackgroundAudioController from 'endpoints/BackgroundAudioController';
 import { clickAudioEffect, setAudioEffectVolume } from 'endpoints/AudioEffects';
 
 import { styles } from './styles';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import FirestoreAPI from 'api/FirestoreAPI';
 
 import EventTimersManager from 'endpoints/EventTimersManager';
+import { Actions } from 'react-native-router-flux';
+import isNetConnected from '../../endpoints/NetConnectionContoller';
 
 /*
  *
@@ -47,11 +49,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
         currentBrightness: HeroStatusBar._defaultBrightness,
         soundVolume: 1.0,
         effectsVolume: 1.0,
-        level: { number: 0, exp: 0 }
+        level: { number: 0, exp: 0 },
+        netErrorModalVisible: false
     };
 
     constructor(props: any) {
-        console.log("IM HERE 1");
         super(props);
         props.handler();
 
@@ -66,6 +68,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             AsyncStorage.getItem('clearPoints')
                         .then(async (clearPoint) => {
                             console.log('clear Point now -> ' + clearPoint);
+
+                            if (! await isNetConnected()) {
+                                HeroStatusBar.instance?.setState({ netErrorModalVisible: true });
+                                return;
+                            }
 
                             if ( clearPoint != null && +clearPoint > 0 ) {
                                 await AsyncStorage.setItem('clearPoints', String(+clearPoint - 5));
@@ -84,6 +91,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         .then(async (sleepPoints) => {
                             console.log('sleep Point now -> ' + sleepPoints);
 
+                            if (! await isNetConnected()) {
+                                HeroStatusBar.instance?.setState({ netErrorModalVisible: true });
+                                return;
+                            }
+
                             if ( sleepPoints != null && +sleepPoints > 0 ) {
                                 await AsyncStorage.setItem('sleepPoints', String(+sleepPoints - 5));
 
@@ -101,6 +113,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
                         .then(async (moodPoints) => {
                             console.log('mood Point now -> ' + moodPoints);
 
+                            if (! await isNetConnected()) {
+                                HeroStatusBar.instance?.setState({ netErrorModalVisible: true });
+                                return;
+                            }
+
                             if ( moodPoints != null && +moodPoints > 0 ) {
                                 await AsyncStorage.setItem('moodPoints', String(+moodPoints - 5));
 
@@ -117,6 +134,11 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             AsyncStorage.getItem('eatPoints')
                         .then(async (eatPoint) => {
                             console.log('eat Point now -> ' + eatPoint);
+
+                            if (! await isNetConnected()) {
+                                HeroStatusBar.instance?.setState({ netErrorModalVisible: true });
+                                return;
+                            }
 
                             if ( eatPoint != null && +eatPoint > 0 ) {
                                 await AsyncStorage.setItem('eatPoints', String(+eatPoint - 5));
@@ -408,6 +430,25 @@ export default class HeroStatusBar extends Component<IHeroStatusBar> {
             style = {Dimensions.get('screen').height - Dimensions.get('window').height > 25 ? styles.notchPadding : null}>
             {this._settingsModal()}
             {this._statsModal(statsItems)}
+
+            <Modal animationType = 'fade'
+                   transparent = {true}
+                   visible = {HeroStatusBar.state.netErrorModalVisible}
+                   onRequestClose = {() => {
+                       HeroStatusBar.instance?.setState({ netErrorModalVisible: false });
+                   }}>
+                <TouchableOpacity style = {styles.modalContainer_net} activeOpacity = {1} onPress = {() => {
+                    this.setState({ netErrorModalVisible: false });
+                }}>
+                    <TouchableOpacity style = {[styles.modalView_Net]} activeOpacity = {1}>
+                        <Text style = {[styles.modalTitle_Net]}>Отсутсвует подключение к сети!</Text>
+
+                        <TouchableOpacity style={styles.modalOkButton} onPress={() => { clickAudioEffect(); HeroStatusBar.instance?.setState({netErrorModalVisible: false}); Actions.LogIn(); } }>
+                            <Text style={styles.modalOkButtonText}>Понятно</Text>
+                        </TouchableOpacity>
+                    </TouchableOpacity>
+                </TouchableOpacity>
+            </Modal>
 
             <View style = {styles.StatusBar}>
                 <TouchableOpacity style = {[styles.iconStyle, styles.defaultMargin]} onPress = {() => {
