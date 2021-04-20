@@ -83,12 +83,13 @@ export const GameLoop = (entities: any, { touches }: TouchEvents) => {
             }
         }
 
-        win = true;
-
-        for (let i = 0; block.elements[1].length === block.n && i < block.elements[1].length; i++) {
-            if (block.elements[1][i].width !== (70 - i * 5)) {
-                win = false;
-                break;
+        // win = true;
+        if (win) {
+            for (let i = 0; block.elements[1].length === block.n && i < block.elements[1].length; i++) {
+                if ( block.elements[1][i].width !== (70 - i * 5) ) {
+                    win = false;
+                    break;
+                }
             }
         }
 
